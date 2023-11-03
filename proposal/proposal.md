@@ -79,8 +79,11 @@
 ## Outline of approach:
 
 ### Database schema:
- - *See diagram A.*
+ - *Diagram:*
 
+<img src="../diagrams/Capstone 2 - Database Schema - REV A.png" alt="database schema diagram" style="height:800px">
+
+<br>
 
 ### API potential issues:
  - API downtime
@@ -112,7 +115,11 @@
  - Users should be able to allow a la carte ingredients to their grocery list through a searchable / filterable / sortable ingredients list
  - Users should be able to manage list items for grocery and meal lists
  - User Flow:
-    - *See diagram B.*
+    - *Diagram: (Rough Draft)*
+
+<img src="../diagrams/Capstone 2 User Flow.png" alt="user flow diagram" style="width:1000px">
+
+<br>
 
  ### Features beyond CRUD:
  - Automatically aggregates ingredients into concise grocery list
