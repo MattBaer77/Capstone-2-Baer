@@ -1,3 +1,4 @@
+"use strict";
 
 class ExpressError extends Error {
 
