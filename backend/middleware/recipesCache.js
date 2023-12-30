@@ -2,66 +2,60 @@
 
 /** Middleware to fill recipes cache */
 
-const { RecipesApi, getRandomRecipesAsync } = require("../config");
+const { getRandomRecipesAsync } = require("../config");
 
 let recipesCache = null;
 let cacheTimestamp = null;
 const CACHE_EXPIRATION_THRESHOLD = 59 * 60 * 1000;
 
-const serveRecipesCache = async (req, res, next) => {
+const isCacheValid = () => {
+    return recipesCache && cacheTimestamp && Date.now() - cacheTimestamp < CACHE_EXPIRATION_THRESHOLD;
+};
 
-    // Check if recipesCache data that has not expired.
-
-    if (recipesCache && cacheTimestamp && Date.now() - cacheTimestamp < CACHE_EXPIRATION_THRESHOLD) {
-
-        console.log(`Serving recipesCache - Cached at ${cacheTimestamp} still valid as of ${Date.now()}`)
-
-        req.recipesCache = recipesCache
-
-        return next();
-
-    }
-
-    // Fetch fresh date from API if expired.
-    
+const fetchFreshData = async () => {
     try {
-
-        let opts = {
+        const opts = {
             limitLicense: true,
             number: 1
-        }
+        };
 
-        const data = await getRandomRecipesAsync(opts)
-        recipesCache = data
+        const data = await getRandomRecipesAsync(opts);
+        recipesCache = data;
         cacheTimestamp = Date.now();
-
-        req.recipesCache = data
-        next();
-
-
+        return data;
     } catch (e) {
-
-        return next(e)
-
+        throw e;
     }
+};
 
-
-}
-
-// Schedule a periodic task to clear the cache
-setInterval(() => {
-
+const clearCacheIfExpired = () => {
     if (cacheTimestamp && Date.now() - cacheTimestamp > CACHE_EXPIRATION_THRESHOLD) {
         console.log("Clearing cached data due to expiration");
         recipesCache = null;
         cacheTimestamp = null;
     }
+};
 
-}, CACHE_EXPIRATION_THRESHOLD);
+const serveRecipesCache = async (req, res, next) => {
+    try {
+        if (isCacheValid()) {
+            console.log(`Serving recipesCache - Cached at ${cacheTimestamp} still valid as of ${Date.now()}`);
+            req.recipesCache = recipesCache;
+        } else {
+            const data = await fetchFreshData();
+            req.recipesCache = data;
+        }
+
+        clearCacheIfExpired();
+        return next();
+    } catch (e) {
+        return next(e);
+    }
+};
+
+// Schedule a periodic task to clear the cache
+setInterval(clearCacheIfExpired, CACHE_EXPIRATION_THRESHOLD);
 
 module.exports = {
-
     serveRecipesCache
-
-}
-
+};
