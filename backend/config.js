@@ -6,10 +6,10 @@ require("colors");
 const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
 const PORT = +process.env.PORT || 3001;
 
-// SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
-const spoonacularKey = process.env.spoonacularKey
-
 // 
+// SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
+
+const spoonacularKey = process.env.spoonacularKey
 
 var spoonacularApi = require('../spoonacularSDK/dist/com.spoonacular.client/index.js');
 var defaultClient = spoonacularApi.ApiClient.instance;
@@ -25,6 +25,7 @@ apiKeyScheme.apiKey = spoonacularKey
 let MiscApi = new spoonacularApi.MiscApi();
 
 // SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
+// 
 
 console.log("Config:".green)
 console.log("SECRET_KEY".yellow, SECRET_KEY)

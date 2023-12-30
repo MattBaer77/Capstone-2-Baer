@@ -18,7 +18,8 @@ router.get('/', (req, res, next) => {
       console.error(error);
     } else {
       console.log('API called successfully. Returned data: ' + data);
-      console.log(response.body.text)
+      // console.log(response.body.text)
+      console.log(response.body)
       return res.json(response.body)
     }
   });
