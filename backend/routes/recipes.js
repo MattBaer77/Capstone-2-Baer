@@ -14,7 +14,7 @@ const { serveRecipesCache } = require('../middleware/recipesCache')
 // 
 const { promisify } = require('util')
 
-const getRecipeInformationAsync = promisify(RecipesApi.getRecipeInformation);
+const getRecipeInformationAsync = promisify(RecipesApi.getRecipeInformation.bind(RecipesApi));
 console.log(getRecipeInformationAsync)
 
 // 
@@ -61,7 +61,7 @@ router.get('/:id', async (req, res, next) => {
 
     // })
 
-    const data = await getRecipeInformationAsync.call(RecipesApi, id, opts)
+    const data = await getRecipeInformationAsync(id, opts)
 
     return res.json(data);
 
