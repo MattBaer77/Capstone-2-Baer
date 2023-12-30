@@ -10,6 +10,15 @@ const { RecipesApi } = require("../config");
 
 const { serveRecipesCache } = require('../middleware/recipesCache')
 
+
+// 
+const { promisify } = require('util')
+
+const getRecipeInformationAsync = promisify(RecipesApi.getRecipeInformation);
+console.log(getRecipeInformationAsync)
+
+// 
+
 // GET Recipes from Cache - or - fill cache
 router.get('/cache', serveRecipesCache, (req, res, next) => {
 
@@ -31,7 +40,7 @@ router.get('/cache', serveRecipesCache, (req, res, next) => {
 */
 
 // GET Specific Recipe based on ID
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
 
     console.log("/recipes/ID hit with id of:")
     console.log(req.params.id)
@@ -41,16 +50,22 @@ router.get('/:id', (req, res, next) => {
         'includeNutrition':false
     };
 
-    RecipesApi.getRecipeInformation(id, opts, (error, data, response) => {
+    // RecipesApi.getRecipeInformation(id, opts, (error, data, response) => {
 
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('API called successfully. Returned data:' + data);
-            return res.json(data)
-        }
+    //     if (error) {
+    //         console.error(error);
+    //     } else {
+    //         console.log('API called successfully. Returned data:' + data);
+    //         return res.json(data)
+    //     }
 
-    })
+    // })
+
+    const data = await getRecipeInformationAsync.call(RecipesApi, id, opts)
+
+    return res.json(data);
+
+
 
 });
 
