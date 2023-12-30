@@ -6,18 +6,9 @@ const express = require("express");
 
 const router = express.Router({ mergeParams: true })
 
-const { RecipesApi } = require("../config");
+const { RecipesApi, getRecipeInformationAsync } = require("../config");
 
 const { serveRecipesCache } = require('../middleware/recipesCache')
-
-
-// 
-const { promisify } = require('util')
-
-const getRecipeInformationAsync = promisify(RecipesApi.getRecipeInformation.bind(RecipesApi));
-console.log(getRecipeInformationAsync)
-
-// 
 
 // GET Recipes from Cache - or - fill cache
 router.get('/cache', serveRecipesCache, (req, res, next) => {
@@ -50,21 +41,16 @@ router.get('/:id', async (req, res, next) => {
         'includeNutrition':false
     };
 
-    // RecipesApi.getRecipeInformation(id, opts, (error, data, response) => {
+    try {
 
-    //     if (error) {
-    //         console.error(error);
-    //     } else {
-    //         console.log('API called successfully. Returned data:' + data);
-    //         return res.json(data)
-    //     }
+        const data = await getRecipeInformationAsync(id, opts)
+        return res.json(data);
+        
+    } catch (e) {
 
-    // })
+        return next(e)
 
-    const data = await getRecipeInformationAsync(id, opts)
-
-    return res.json(data);
-
+    }
 
 
 });
