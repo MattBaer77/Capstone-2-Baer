@@ -6,14 +6,52 @@ const express = require("express");
 
 const router = express.Router({ mergeParams: true })
 
+const { RecipesApi } = require("../config");
+
 const { serveRecipesCache } = require('../middleware/recipesCache')
 
-router.get('/', serveRecipesCache, (req, res, next) => {
+// GET Recipes from Cache - or - fill cache
+router.get('/cache', serveRecipesCache, (req, res, next) => {
 
     console.log("Recipes Root")
+    // console.log(recipesCache)
+    console.log("after rCache")
 
     return res.json(req.recipesCache)
 
-})
+});
+
+// GET Recipes from user's Cache - or - fill user's cache
+// router.get('/cache/:id')
+/**
+ * Cache ID = User's ID
+ * Check user recipe cache on database
+ * If no data, load and save to database cache
+ * If data, 
+*/
+
+// GET Specific Recipe based on ID
+router.get('/:id', (req, res, next) => {
+
+    console.log("/recipes/ID hit with id of:")
+    console.log(req.params.id)
+
+    const id = req.params.id
+    const opts = {
+        'includeNutrition':false
+    };
+
+    RecipesApi.getRecipeInformation(id, opts, (error, data, response) => {
+
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data:' + data);
+            return res.json(data)
+        }
+
+    })
+
+});
 
 module.exports = router;
