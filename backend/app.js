@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 // Generic Error Handler
 app.use((err, req, res, next) => {
 
-    // if(process.env.NODE_ENV !== "test") console.error(err.stack);
+    if(process.env.NODE_ENV !== "test") console.error(err.stack);
     const status = err.status || 500;
     const message = err.message;
 
