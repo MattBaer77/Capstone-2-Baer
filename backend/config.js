@@ -28,6 +28,7 @@ let RecipesApi = new spoonacularApi.RecipesApi();
 let MiscApi = new spoonacularApi.MiscApi();
 
 // PROMISIFIED API FUNCTIONS USED IN APP -
+const getRandomRecipesAsync = promisify(RecipesApi.getRandomRecipes.bind(RecipesApi));
 const getRecipeInformationAsync = promisify(RecipesApi.getRecipeInformation.bind(RecipesApi));
 
 // SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
@@ -46,6 +47,7 @@ module.exports = {
     PORT,
     RecipesApi,
     MiscApi,
+    getRandomRecipesAsync,
     getRecipeInformationAsync
     
 }

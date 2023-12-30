@@ -2,7 +2,7 @@
 
 /** Middleware to fill recipes cache */
 
-const { RecipesApi } = require("../config");
+const { RecipesApi, getRandomRecipesAsync } = require("../config");
 
 let recipesCache = null;
 let cacheTimestamp = null;
@@ -23,37 +23,28 @@ const serveRecipesCache = async (req, res, next) => {
     }
 
     // Fetch fresh date from API if expired.
-
-    try{
-
-        console.log("Fetching New Recipes")
+    
+    try {
 
         let opts = {
             limitLicense: true,
             number: 1
         }
 
-        RecipesApi.getRandomRecipes(opts, (error, data, response) => {
+        const data = await getRandomRecipesAsync(opts)
+        recipesCache = data
+        cacheTimestamp = Date.now();
 
-            if(error) {
-                console.error(error)
-            } else {
-                // console.log(response)
-                console.log('API CALLED SUCCESSFULLY');
-                // console.log(data)
-                // console.log(response.body)
-                recipesCache = data
-                cacheTimestamp = Date.now();
-                req.recipesCache = data;
-                next();
-            }
-        })
+        req.recipesCache = data
+        next();
 
-    } catch(error) {
 
-        return error
+    } catch (e) {
+
+        return next(e)
 
     }
+
 
 }
 
