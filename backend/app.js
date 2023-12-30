@@ -8,8 +8,10 @@ const app = express();
 app.use(express.json())
 app.use(morgan("tiny"))
 
+const recipeRoutes = require("./routes/recipes");
 const jokesRoutes = require("./routes/jokes");
 
+app.use("/recipes", recipeRoutes)
 app.use("/jokes", jokesRoutes)
 
 // 404 Error Handling

@@ -22,6 +22,7 @@ apiKeyScheme.apiKey = spoonacularKey
 //apiKeyScheme.apiKeyPrefix['x-api-key'] = "Token"
 
 // CREATE API 
+let RecipesApi = new spoonacularApi.RecipesApi();
 let MiscApi = new spoonacularApi.MiscApi();
 
 // SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
@@ -38,6 +39,7 @@ module.exports = {
 
     SECRET_KEY,
     PORT,
+    RecipesApi,
     MiscApi
-
+    
 }
