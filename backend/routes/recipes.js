@@ -6,9 +6,9 @@ const express = require("express");
 
 const router = express.Router({ mergeParams: true })
 
-const { getRecipeInformationAsync } = require("../config");
-
 const { serveRecipesCache } = require('../middleware/recipesCache')
+
+const { SpoonApi } = require("../models/spoonModel")
 
 // GET Recipes from Cache - or - fill cache
 router.get('/cache', serveRecipesCache, (req, res, next) => {
@@ -40,15 +40,12 @@ router.get('/:id', async (req, res, next) => {
 
     try {
 
-        const data = await getRecipeInformationAsync(id, opts)
-        return res.json(data);
-        
+        const data = await SpoonApi.getRecipeInformation(id, opts)
+        return res.json(data)
+
     } catch (e) {
-
         return next(e)
-
     }
-
 
 });
 
