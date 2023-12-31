@@ -6,7 +6,7 @@ const express = require("express");
 
 const router = express.Router({ mergeParams: true })
 
-const { RecipesApi, getRecipeInformationAsync } = require("../config");
+const { getRecipeInformationAsync } = require("../config");
 
 const { serveRecipesCache } = require('../middleware/recipesCache')
 
@@ -14,9 +14,6 @@ const { serveRecipesCache } = require('../middleware/recipesCache')
 router.get('/cache', serveRecipesCache, (req, res, next) => {
 
     console.log("Recipes Root")
-    // console.log(recipesCache)
-    console.log("after rCache")
-
     return res.json(req.recipesCache)
 
 });
