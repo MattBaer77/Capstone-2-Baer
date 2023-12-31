@@ -2,11 +2,6 @@
 
 const { promisify } = require('util')
 
-// 
-// SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
-
-// const spoonacularKey = process.env.spoonacularKey
-
 const { spoonacularKey } = require('../config.js')
 
 var spoonacularApi = require('../../spoonacularSDK/dist/com.spoonacular.client/index.js');
@@ -18,18 +13,6 @@ apiKeyScheme.apiKey = spoonacularKey
 
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //apiKeyScheme.apiKeyPrefix['x-api-key'] = "Token"
-
-// // CREATE API 
-// let RecipesApi = new spoonacularApi.RecipesApi();
-// let MiscApi = new spoonacularApi.MiscApi();
-
-// // PROMISIFIED API FUNCTIONS USED IN APP -
-// const getARandomFoodJokeAsync = promisify(MiscApi.getARandomFoodJoke.bind(MiscApi));
-// const getRandomRecipesAsync = promisify(RecipesApi.getRandomRecipes.bind(RecipesApi));
-// const getRecipeInformationAsync = promisify(RecipesApi.getRecipeInformation.bind(RecipesApi));
-
-// // SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
-// //
 
 class SpoonApi {
 
