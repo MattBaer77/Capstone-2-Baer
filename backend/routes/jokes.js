@@ -4,25 +4,34 @@
 
 const express = require("express")
 
-const { MiscApi } = require("../config")
+const { SpoonApi } = require("../models/spoonModel")
 
 const router = express.Router({ mergeParams: true });
 
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
 
   console.log("Joke Test Route");
 
-  MiscApi.getARandomFoodJoke((error, data, response) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log('API called successfully. Returned data: ' + data);
-      // console.log(response.body.text)
-      console.log(response.body)
-      return res.json(response.body)
-    }
-  });
+  // MiscApi.getARandomFoodJoke((error, data, response) => {
+  //   if (error) {
+  //     console.error(error);
+  //   } else {
+  //     console.log('API called successfully. Returned data: ' + data);
+  //     // console.log(response.body.text)
+  //     console.log(response.body)
+  //     return res.json(response.body)
+  //   }
+  // });
+
+  try {
+
+    const data = await SpoonApi.getARandomFoodJoke()
+    return res.json(data)
+
+  } catch (e) {
+    return next(e)
+  }
 
 });
 
