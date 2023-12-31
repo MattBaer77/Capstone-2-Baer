@@ -31,6 +31,10 @@ apiKeyScheme.apiKey = spoonacularKey
 
 class SpoonApi {
 
+    static recipesCache = null;
+    static cacheTimestamp = null;
+    static CACHE_EXPIRATION_THRESHOLD = 59 * 60 * 1000;
+
     static recipesApi = new spoonacularApi.RecipesApi();
     static miscApi = new spoonacularApi.MiscApi();
   
