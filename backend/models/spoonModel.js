@@ -43,7 +43,59 @@ class SpoonApi {
     static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi))
     static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi))
 
+    // 
+
+    static isCacheValid = () => {
+        return recipesCache && cacheTimestamp && Date.now() - cacheTimestamp < CACHE_EXPIRATION_THRESHOLD;
+    };
+    
+    static fetchFreshData = async () => {
+        try {
+            const opts = {
+                limitLicense: true,
+                number: 1
+            };
+    
+            const data = await this.getRandomRecipes(opts);
+            recipesCache = data;
+            cacheTimestamp = Date.now();
+            return data;
+        } catch (e) {
+            throw e;
+        }
+    };
+    
+    static clearCacheIfExpired = () => {
+        if (cacheTimestamp && Date.now() - cacheTimestamp > CACHE_EXPIRATION_THRESHOLD) {
+            console.log("Clearing cached data due to expiration");
+            recipesCache = null;
+            cacheTimestamp = null;
+        }
+    };
+    
+    static serveRecipesCache = async (req, res, next) => {
+        try {
+            if (this.isCacheValid()) {
+                console.log(`Serving recipesCache - Cached at ${cacheTimestamp} still valid as of ${Date.now()}`);
+                req.recipesCache = recipesCache;
+            } else {
+                const data = await this.fetchFreshData();
+                req.recipesCache = data;
+            }
+    
+            this.clearCacheIfExpired();
+            return next();
+        } catch (e) {
+            return next(e);
+        }
+    };
+
 }
+
+// Schedule a periodic task to clear the cache
+// setInterval(SpoonApi.clearCacheIfExpired, SpoonApi.CACHE_EXPIRATION_THRESHOLD);
+
+// 
 
 module.exports = {
 
