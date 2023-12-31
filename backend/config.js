@@ -19,5 +19,6 @@ module.exports = {
 
     SECRET_KEY,
     PORT,
+    spoonacularKey
     
 }

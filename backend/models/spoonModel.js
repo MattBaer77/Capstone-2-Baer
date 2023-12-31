@@ -5,7 +5,9 @@ const { promisify } = require('util')
 // 
 // SPOONACULAR TO TEST - COPIED AND MODIFIED FROM spoonacularSDK/README
 
-const spoonacularKey = process.env.spoonacularKey
+// const spoonacularKey = process.env.spoonacularKey
+
+const { spoonacularKey } = require('../config.js')
 
 var spoonacularApi = require('../../spoonacularSDK/dist/com.spoonacular.client/index.js');
 var defaultClient = spoonacularApi.ApiClient.instance;
@@ -46,7 +48,7 @@ class SpoonApi {
     // 
 
     static isCacheValid = () => {
-        return recipesCache && cacheTimestamp && Date.now() - cacheTimestamp < CACHE_EXPIRATION_THRESHOLD;
+        return this.recipesCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
     };
     
     static fetchFreshData = async () => {
@@ -57,8 +59,8 @@ class SpoonApi {
             };
     
             const data = await this.getRandomRecipes(opts);
-            recipesCache = data;
-            cacheTimestamp = Date.now();
+            this.recipesCache = data;
+            this.cacheTimestamp = Date.now();
             return data;
         } catch (e) {
             throw e;
@@ -66,27 +68,28 @@ class SpoonApi {
     };
     
     static clearCacheIfExpired = () => {
-        if (cacheTimestamp && Date.now() - cacheTimestamp > CACHE_EXPIRATION_THRESHOLD) {
+        if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
             console.log("Clearing cached data due to expiration");
-            recipesCache = null;
-            cacheTimestamp = null;
+            this.recipesCache = null;
+            this.cacheTimestamp = null;
         }
     };
     
-    static serveRecipesCache = async (req, res, next) => {
+    static serveRecipesCache = async () => {
         try {
             if (this.isCacheValid()) {
-                console.log(`Serving recipesCache - Cached at ${cacheTimestamp} still valid as of ${Date.now()}`);
-                req.recipesCache = recipesCache;
+                console.log(`Serving recipesCache - Cached at ${this.cacheTimestamp} still valid as of ${Date.now()}`);
+                return this.recipesCache
+
             } else {
                 const data = await this.fetchFreshData();
-                req.recipesCache = data;
+                this.recipesCache = data;
             }
     
             this.clearCacheIfExpired();
-            return next();
+            return this.recipesCache;
         } catch (e) {
-            return next(e);
+            throw e;
         }
     };
 
