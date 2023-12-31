@@ -35,7 +35,7 @@ class SpoonApi {
 
     static recipesCache = null;
     static cacheTimestamp = null;
-    static CACHE_EXPIRATION_THRESHOLD = 59 * 60 * 1000;
+    static CACHE_EXPIRATION_THRESHOLD = 10 * 1000;
 
     static recipesApi = new spoonacularApi.RecipesApi();
     static miscApi = new spoonacularApi.MiscApi();
@@ -74,6 +74,10 @@ class SpoonApi {
             this.cacheTimestamp = null;
         }
     };
+
+    static startCacheTimer = () => {
+        setInterval(this.clearCacheIfExpired, this.CACHE_EXPIRATION_THRESHOLD);
+    }
     
     static serveRecipesCache = async () => {
         try {
@@ -83,6 +87,7 @@ class SpoonApi {
 
             } else {
                 const data = await this.fetchFreshData();
+                this.startCacheTimer();
                 this.recipesCache = data;
             }
     
@@ -94,11 +99,6 @@ class SpoonApi {
     };
 
 }
-
-// Schedule a periodic task to clear the cache
-// setInterval(SpoonApi.clearCacheIfExpired, SpoonApi.CACHE_EXPIRATION_THRESHOLD);
-
-// 
 
 module.exports = {
 
