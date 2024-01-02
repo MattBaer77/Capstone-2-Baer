@@ -15,18 +15,24 @@ function getDatabaseUri() {
 
 const spoonacularKey = process.env.spoonacularKey
 
+const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 13;
+
 console.log("Config:".green)
 console.log("SECRET_KEY".yellow, SECRET_KEY)
 console.log("spoonacularKey:".yellow, spoonacularKey)
+console.log("---");
 console.log("PORT:".yellow, PORT.toString());
+console.log("BCRYPT_WORK_FACTOR".yellow, BCRYPT_WORK_FACTOR);
+console.log("Database:".yellow, getDatabaseUri());
 console.log("---");
 
 
 module.exports = {
 
     SECRET_KEY,
+    spoonacularKey,
     PORT,
+    BCRYPT_WORK_FACTOR,
     getDatabaseUri,
-    spoonacularKey
     
 }
