@@ -8,3 +8,18 @@ CREATE TABLE users (
     CHECK (position('@' IN email) > 1),
   is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+CREATE TABLE ingredients (
+
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL
+
+);
+
+CREATE TABLE allergies (
+
+  username VARCHAR(25) REFERENCES users(username),
+  ingredient_id SERIAL REFERENCES ingredients(id),
+  PRIMARY KEY (username, ingredient_id)
+
+);

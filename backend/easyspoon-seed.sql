@@ -11,3 +11,5 @@ VALUES ('testuser',
         'Admin!',
         'joel@joelburton.com',
         TRUE);
+
+\COPY ingredients (name, id) FROM './top-1k-ingredients.csv' DELIMITER ';' CSV HEADER;
