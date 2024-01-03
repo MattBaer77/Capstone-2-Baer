@@ -13,3 +13,20 @@ VALUES ('testuser',
         TRUE);
 
 \COPY ingredients (name, id) FROM './top-1k-ingredients.csv' DELIMITER ';' CSV HEADER;
+
+INSERT INTO intolerances (name)
+VALUES ('dairy'),
+       ('egg'),
+       ('gluten'),
+       ('grain'),
+       ('peanut'),
+       ('seafood'),
+       ('sesame'),
+       ('shellfish'),
+       ('soy'),
+       ('sulfite'),
+       ('tree Nut'),
+       ('wheat');
+
+INSERT INTO users_intolerances (username, intolerance_id)
+VALUES ('testuser', 5);

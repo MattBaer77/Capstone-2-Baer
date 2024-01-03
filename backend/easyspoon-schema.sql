@@ -23,3 +23,18 @@ CREATE TABLE allergies (
   PRIMARY KEY (username, ingredient_id)
 
 );
+
+CREATE TABLE intolerances (
+
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL
+
+);
+
+CREATE TABLE users_intolerances (
+
+  username VARCHAR(25) REFERENCES users(username),
+  intolerance_id SERIAL REFERENCES intolerances(id),
+  PRIMARY KEY (username, intolerance_id)
+
+);
