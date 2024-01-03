@@ -27,6 +27,7 @@ class SpoonApi {
 
     static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi))
     static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi))
+    static getRecipeBySearch = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi))
 
     // 
 
