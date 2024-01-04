@@ -9,9 +9,8 @@ describe("config can come from env", function () {
     const config = require("./config");
     expect(config.SECRET_KEY).toEqual("abc");
     expect(config.PORT).toEqual(5000);
-
-    expect(config.MiscApi).toBeInstanceOf(Object)
-    expect(config.MiscApi.apiClient.authentications.apiKeyScheme.apiKey).toEqual("spoonkey")
+    expect(config.BCRYPT_WORK_FACTOR).toEqual(1);
+    expect(config.getDatabaseUri()).toEqual("easyspoon_test")
 
     delete process.env.SECRET_KEY;
     delete process.env.PORT;
