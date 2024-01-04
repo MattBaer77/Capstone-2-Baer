@@ -12,9 +12,9 @@ VALUES ('testuser',
         'joel@joelburton.com',
         TRUE);
 
-\COPY ingredients (name, id) FROM './top-1k-ingredients.csv' DELIMITER ';' CSV HEADER;
+-- \COPY ingredients (ingredient_name, id) FROM './top-1k-ingredients.csv' DELIMITER ';' CSV HEADER;
 
-INSERT INTO intolerances (name)
+INSERT INTO intolerances (intolerance_name)
 VALUES ('dairy'),
        ('egg'),
        ('gluten'),
