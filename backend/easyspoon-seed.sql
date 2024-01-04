@@ -30,3 +30,12 @@ VALUES ('dairy'),
 
 INSERT INTO users_intolerances (username, intolerance_id)
 VALUES ('testuser', 5);
+
+INSERT INTO grocery_list (list_name, owner)
+VALUES ('testuser''s wonderful grocery list!', 'testuser');
+
+INSERT INTO grocery_lists_recipes (grocery_list_id, recipe_id)
+VALUES (1, 641435);
+
+INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, unit)
+VALUES (1, 20081, 1, 'cup');
