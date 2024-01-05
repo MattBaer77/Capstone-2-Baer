@@ -37,8 +37,8 @@ CREATE TABLE intolerances (
 
 CREATE TABLE users_intolerances (
 
-  username VARCHAR(25) REFERENCES users(username),
-  intolerance_id SERIAL REFERENCES intolerances(id),
+  username VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE,
+  intolerance_id SERIAL REFERENCES intolerances(id) ON DELETE CASCADE,
   PRIMARY KEY (username, intolerance_id)
 
 );
@@ -47,14 +47,14 @@ CREATE TABLE grocery_list (
 
   id SERIAL PRIMARY KEY,
   list_name TEXT NOT NULL,
-  owner VARCHAR(25) REFERENCES users(username)
+  owner VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE
 
 );
 
 CREATE TABLE grocery_lists_recipes (
 
   id SERIAL PRIMARY KEY,
-  grocery_list_id SERIAL REFERENCES grocery_list(id),
+  grocery_list_id SERIAL REFERENCES grocery_list(id) ON DELETE CASCADE,
   recipe_id INTEGER NOT NULL
   
 );
@@ -62,7 +62,7 @@ CREATE TABLE grocery_lists_recipes (
 CREATE TABLE grocery_lists_ingredients (
 
   id SERIAL PRIMARY KEY,
-  grocery_list_id SERIAL REFERENCES grocery_list(id),
+  grocery_list_id SERIAL REFERENCES grocery_list(id) ON DELETE CASCADE,
   ingredient_id INTEGER NOT NULL,
   amount INTEGER NOT NULL,
   unit TEXT NOT NULL
