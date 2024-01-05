@@ -86,4 +86,16 @@ describe("get", () => {
 
     })
 
+    test("not found if no such user", async function () {
+        try {
+          await User.get("nope");
+          fail();
+        } catch (err) {
+          expect(err instanceof ExpressError).toBeTruthy();
+        }
+      });
+
 });
+
+//  update
+
