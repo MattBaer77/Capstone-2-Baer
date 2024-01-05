@@ -87,15 +87,50 @@ describe("get", () => {
     })
 
     test("not found if no such user", async function () {
+
         try {
           await User.get("nope");
           fail();
         } catch (err) {
           expect(err instanceof ExpressError).toBeTruthy();
         }
-      });
+        
+    });
 
 });
 
-//  update
+//  authenticate
+
+describe("authenticate", function () {
+
+    test("works", async function () {
+      const user = await User.authenticate("u1", "password1");
+      expect(user).toEqual({
+        username: "u1",
+        firstName: "U1F",
+        lastName: "U1L",
+        email: "u1@email.com",
+        isAdmin: false,
+      });
+    });
+  
+    test("unauth if no such user", async function () {
+      try {
+        await User.authenticate("nope", "password1");
+        fail();
+      } catch (err) {
+        expect(err instanceof ExpressError).toBeTruthy();
+      }
+    });
+  
+    test("unauth if wrong password", async function () {
+      try {
+        await User.authenticate("u1", "wrong");
+        fail();
+      } catch (err) {
+        expect(err instanceof ExpressError).toBeTruthy();
+      }
+    });
+
+});
 
