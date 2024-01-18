@@ -353,7 +353,7 @@ describe("delete user's intolerance", function () {
 
   test("works - user which already has intolerances", async function () {
 
-    let intolerances = await User.addIntolerance(newIntoleranceU1);
+    let intolerances = await User.addUserIntolerance(newIntoleranceU1);
 
     expect(intolerances).toEqual({
 
@@ -385,7 +385,7 @@ describe("delete user's intolerance", function () {
 
   test("works - user which had no intolerances", async function () {
 
-    let intolerances = await User.addIntolerance(newIntoleranceU3);
+    let intolerances = await User.addUserIntolerance(newIntoleranceU3);
 
     expect(intolerances).toEqual({
 
@@ -410,7 +410,7 @@ describe("delete user's intolerance", function () {
   test("not found if no such user", async function () {
 
     try {
-      await User.addIntolerance(newIntoleranceInvalidUsername);
+      await User.addUserIntolerance(newIntoleranceInvalidUsername);
       fail();
     } catch (err) {
       expect(err instanceof ExpressError).toBeTruthy();
@@ -421,7 +421,7 @@ describe("delete user's intolerance", function () {
   test("not found if no such intolerance", async function () {
 
     try {
-      await User.addIntolerance(newIntoleranceInvalidIntoleranceId);
+      await User.addUserIntolerance(newIntoleranceInvalidIntoleranceId);
       fail();
     } catch (err) {
       expect(err instanceof ExpressError).toBeTruthy();

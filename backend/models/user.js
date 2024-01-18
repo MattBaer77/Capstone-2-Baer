@@ -275,6 +275,12 @@ class User {
    * 
   */
 
+  static async addUserIntolerance(username, intoleranceId) {
+
+    console.log("called")
+
+  };
+
 
 
 
