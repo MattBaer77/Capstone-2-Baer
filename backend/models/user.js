@@ -290,8 +290,6 @@ class User {
 
     );
 
-    console.log(existingUserCheck.rows[0])
-
     if (!existingUserCheck.rows[0]) {
 
       throw new ExpressError(`No User: ${username}`, 404)
@@ -307,8 +305,6 @@ class User {
       [intoleranceId],
 
     )
-
-    console.log(existingIntoleranceCheck.rows[0])
 
     if (!existingIntoleranceCheck.rows[0]) {
 
@@ -328,17 +324,13 @@ class User {
   
       );
 
-      console.log(insert)
-
       const result = this.getWithIntolerances(username)
   
       return result;
 
     } catch(e) {
 
-      console.log(e)
-
-      throw new ExpressError(`User ${username} already assigned Intolerance with id ${intoleranceId}`)
+      throw new ExpressError(`User: ${username} already assigned Intolerance with id: ${intoleranceId} and intolerance_name: ${existingIntoleranceCheck.rows[0].intoleranceName}`)
 
     }
 
