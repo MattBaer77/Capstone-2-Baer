@@ -101,8 +101,8 @@ async function commonBeforeAll() {
 
     await db.query(`
 
-        INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, unit)
-        VALUES (1, 100, 1, 'Some Unit');
+        INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, minimum_amount, unit)
+        VALUES (1, 100, 2, 1, 'Some Unit');
     
     `);
 
