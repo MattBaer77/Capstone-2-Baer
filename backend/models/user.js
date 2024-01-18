@@ -219,6 +219,61 @@ class User {
 
   };
 
+  // *************************************************
+
+  // users_intolerances methods
+
+  /** Given a username, return data about user + that user's intolerances
+   *
+   * Returns { username, first_name, last_name, is_admin, intolerances }
+   * 
+   * Where intolerances is [{id, intolerance_name, ...]
+   *
+   * Throws ExpressError if user not found.
+   * 
+  */
+
+  // static async getWithIntolerances(username) {
+
+  //   const userRes = await db.query(
+  //           `SELECT username,
+  //                   first_name AS "firstName",
+  //                   last_name AS "lastName",
+  //                   email,
+  //                   is_admin AS "isAdmin"
+  //           FROM users
+  //           WHERE username = $1`,
+  //       [username],
+  //   );
+
+  //   const user = userRes.rows[0];
+
+  //   if (!user) throw new ExpressError(`No user: ${username}`, 404);
+
+  //   return user;
+
+  // };
+
+  
+
+  /** Given a username and intolerance_id
+   * 
+   *  Create a new user_intolerance.
+   * 
+   *  Returns {username, intolerance:{id, intolerance_name}}
+   * 
+  */
+
+
+
+  /** Given a username and intolerance_id
+   * 
+   * Delete an existing intolerance.
+   * 
+   * returns {username, intolerance:{id, intolerance_name}}
+   * 
+  */
+
 }
 
 module.exports = User;
