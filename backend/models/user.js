@@ -233,26 +233,38 @@ class User {
    * 
   */
 
-  // static async getWithIntolerances(username) {
+  static async getWithIntolerances(username) {
 
-  //   const userRes = await db.query(
-  //           `SELECT username,
-  //                   first_name AS "firstName",
-  //                   last_name AS "lastName",
-  //                   email,
-  //                   is_admin AS "isAdmin"
-  //           FROM users
-  //           WHERE username = $1`,
-  //       [username],
-  //   );
+    const userRes = await db.query(
+            `SELECT username,
+                    first_name AS "firstName",
+                    last_name AS "lastName",
+                    email,
+                    is_admin AS "isAdmin"
+            FROM users
+            WHERE username = $1`,
+        [username],
+    );
 
-  //   const user = userRes.rows[0];
+    const user = userRes.rows[0];
 
-  //   if (!user) throw new ExpressError(`No user: ${username}`, 404);
+    if (!user) throw new ExpressError(`No user: ${username}`, 404);
 
-  //   return user;
+    const intolerancesRes = await db.query(
+            `SELECT ui.intolerance_id AS "intoleranceId",
+                    i.intolerance_name AS "intoleranceName"
+              FROM users u
+              JOIN users_intolerances ui ON u.username = ui.username
+              JOIN intolerances i ON ui.intolerance_id = i.id
+              WHERE u.username = $1`,
+          [username],
+    );
 
-  // };
+    user["intolerances"] = intolerancesRes.rows
+
+    return user;
+
+  };
 
   
 

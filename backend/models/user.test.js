@@ -251,20 +251,79 @@ describe("update", function () {
 
 describe("remove", function () {
 
-    test("works", async function () {
-      await User.remove("u1");
-      const res = await db.query(
-          "SELECT * FROM users WHERE username='u1'");
-      expect(res.rows.length).toEqual(0);
-    });
-  
-    test("not found if no such user", async function () {
-      try {
-        await User.remove("nope");
-        fail();
-      } catch (err) {
-        expect(err instanceof ExpressError).toBeTruthy();
-      }
-    });
+  test("works", async function () {
+    await User.remove("u1");
+    const res = await db.query(
+        "SELECT * FROM users WHERE username='u1'");
+    expect(res.rows.length).toEqual(0);
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.remove("nope");
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+  });
     
 });
+
+// users_intolerances methods
+
+// get - by username
+
+describe("getWithIntolerances", () => {
+
+  test("works - user with intolerances", async() => {
+
+    let user = await User.getWithIntolerances("u1");
+    expect(user).toEqual({
+      username: "u1",
+      firstName: "U1F",
+      intolerances: [
+
+        {
+          intoleranceId: 2,
+          intoleranceName:"egg",
+        },
+        {
+          intoleranceId: 3,
+          intoleranceName:"gluten",
+        },
+
+      ],
+      lastName: "U1L",
+      email: "u1@email.com",
+      isAdmin: false
+    });
+
+  })
+
+  test("works - user without intolerances", async() => {
+
+    let user = await User.getWithIntolerances("u3");
+    expect(user).toEqual({
+      username: "u3",
+      firstName: "U3F",
+      intolerances: [],
+      lastName: "U3L",
+      email: "u3@email.com",
+      isAdmin: false
+    });
+
+  })
+
+  test("not found if no such user", async function () {
+
+    try {
+      await User.getWithIntolerances("nope");
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+      
+  });
+
+});
+
