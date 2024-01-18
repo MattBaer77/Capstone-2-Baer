@@ -266,15 +266,16 @@ class User {
 
   };
 
-  
-
   /** Given a username and intolerance_id
    * 
    *  Create a new user_intolerance.
    * 
-   *  Returns {username, intolerance:{id, intolerance_name}}
+   *  Returns {username, intolerances:[{id, intolerance_name}...]} (including the newly created intolerance)
+   * 
    * 
   */
+
+
 
 
 

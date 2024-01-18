@@ -327,3 +327,106 @@ describe("getWithIntolerances", () => {
 
 });
 
+describe("delete user's intolerance", function () {
+
+  const newIntoleranceU1 = {
+    username:"u1",
+    intoleranceId:"1"
+  }
+
+  const newIntoleranceU3 = {
+    username:"u3",
+    intoleranceId:"12"
+  }
+
+  const newIntoleranceInvalidUsername = {
+    username:"ux",
+    intoleranceId:"12"
+  }
+
+  const newIntoleranceInvalidIntoleranceId = {
+
+    username:"u3",
+    intoleranceId:"99"
+
+  }
+
+  test("works - user which already has intolerances", async function () {
+
+    let intolerances = await User.addIntolerance(newIntoleranceU1);
+
+    expect(intolerances).toEqual({
+
+      username: "u1",
+      firstName: "U1F",
+      intolerances: [
+
+        {
+          intoleranceId: 2,
+          intoleranceName:"egg",
+        },
+        {
+          intoleranceId: 3,
+          intoleranceName:"gluten",
+        },
+        {
+          intoleranceId: 1,
+          intoleranceName:"dairy",
+        },
+
+      ],
+      lastName: "U1L",
+      email: "u1@email.com",
+      isAdmin: false
+
+    });
+
+  })
+
+  test("works - user which had no intolerances", async function () {
+
+    let intolerances = await User.addIntolerance(newIntoleranceU3);
+
+    expect(intolerances).toEqual({
+
+      username: "u3",
+      firstName: "U13",
+      intolerances: [
+
+        {
+          intoleranceId: 12,
+          intoleranceName:"wheat",
+        },
+
+      ],
+      lastName: "U3L",
+      email: "u3@email.com",
+      isAdmin: false
+
+    });
+
+  })
+
+  test("not found if no such user", async function () {
+
+    try {
+      await User.addIntolerance(newIntoleranceInvalidUsername);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+      
+  });
+
+  test("not found if no such intolerance", async function () {
+
+    try {
+      await User.addIntolerance(newIntoleranceInvalidIntoleranceId);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+      
+  });
+
+})
