@@ -327,7 +327,7 @@ describe("getWithIntolerances", () => {
 
 });
 
-describe("delete user's intolerance", function () {
+describe("add user's intolerance", function () {
 
   const newIntoleranceU1 = {
     username:"u1",
@@ -353,7 +353,7 @@ describe("delete user's intolerance", function () {
 
   test("works - user which already has intolerances", async function () {
 
-    let intolerances = await User.addUserIntolerance(newIntoleranceU1);
+    let intolerances = await User.addUserIntolerance(newIntoleranceU1.username, newIntoleranceU1.intoleranceId);
 
     expect(intolerances).toEqual({
 
@@ -362,16 +362,16 @@ describe("delete user's intolerance", function () {
       intolerances: [
 
         {
+          intoleranceId: 1,
+          intoleranceName:"dairy",
+        },
+        {
           intoleranceId: 2,
           intoleranceName:"egg",
         },
         {
           intoleranceId: 3,
           intoleranceName:"gluten",
-        },
-        {
-          intoleranceId: 1,
-          intoleranceName:"dairy",
         },
 
       ],
@@ -385,12 +385,12 @@ describe("delete user's intolerance", function () {
 
   test("works - user which had no intolerances", async function () {
 
-    let intolerances = await User.addUserIntolerance(newIntoleranceU3);
+    let intolerances = await User.addUserIntolerance(newIntoleranceU3.username, newIntoleranceU3.intoleranceId);
 
     expect(intolerances).toEqual({
 
       username: "u3",
-      firstName: "U13",
+      firstName: "U3F",
       intolerances: [
 
         {
@@ -407,10 +407,24 @@ describe("delete user's intolerance", function () {
 
   })
 
+  test("does not allow duplicate insertion", async function () {
+
+    await User.addUserIntolerance(newIntoleranceU3.username, newIntoleranceU3.intoleranceId);
+
+    try {
+      await User.addUserIntolerance(newIntoleranceU3.username, newIntoleranceU3.intoleranceId);
+      fail();
+    } catch (err) {
+      console.log(err)
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+
+  })
+
   test("not found if no such user", async function () {
 
     try {
-      await User.addUserIntolerance(newIntoleranceInvalidUsername);
+      await User.addUserIntolerance(newIntoleranceInvalidUsername.username, newIntoleranceInvalidUsername.intoleranceId);
       fail();
     } catch (err) {
       expect(err instanceof ExpressError).toBeTruthy();
@@ -421,7 +435,7 @@ describe("delete user's intolerance", function () {
   test("not found if no such intolerance", async function () {
 
     try {
-      await User.addUserIntolerance(newIntoleranceInvalidIntoleranceId);
+      await User.addUserIntolerance(newIntoleranceInvalidIntoleranceId.username, newIntoleranceInvalidIntoleranceId.intoleranceId);
       fail();
     } catch (err) {
       expect(err instanceof ExpressError).toBeTruthy();
@@ -430,3 +444,5 @@ describe("delete user's intolerance", function () {
   });
 
 })
+
+// FOR EVERYTHING THAT CREATES - ENSURE ADDING DUPLICATE PRODUCES EXPECTED RESULT

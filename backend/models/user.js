@@ -277,13 +277,72 @@ class User {
 
   static async addUserIntolerance(username, intoleranceId) {
 
-    console.log("called")
+    const existingUserCheck = await db.query(
+
+      `SELECT username,
+              first_name AS "firstName",
+              last_name AS "lastName",
+              email,
+              is_admin AS "isAdmin"
+        FROM users
+        WHERE username = $1`,
+      [username],
+
+    );
+
+    console.log(existingUserCheck.rows[0])
+
+    if (!existingUserCheck.rows[0]) {
+
+      throw new ExpressError(`No User: ${username}`, 404)
+
+    }
+
+    const existingIntoleranceCheck = await db.query(
+
+      `SELECT id,
+              intolerance_name AS "intoleranceName"
+        FROM intolerances
+        WHERE id = $1`,
+      [intoleranceId],
+
+    )
+
+    console.log(existingIntoleranceCheck.rows[0])
+
+    if (!existingIntoleranceCheck.rows[0]) {
+
+      throw new ExpressError(`No Intolerance with id of ${intoleranceId}`, 404)
+
+    }
+
+    try{
+
+      const insert = await db.query(
+
+        `INSERT INTO users_intolerances
+         (username, intolerance_id)
+         VALUES ($1, $2)
+         RETURNING username, intolerance_id`,
+        [username, intoleranceId],
+  
+      );
+
+      console.log(insert)
+
+      const result = this.getWithIntolerances(username)
+  
+      return result;
+
+    } catch(e) {
+
+      console.log(e)
+
+      throw new ExpressError(`User ${username} already assigned Intolerance with id ${intoleranceId}`)
+
+    }
 
   };
-
-
-
-
 
   /** Given a username and intolerance_id
    * 
