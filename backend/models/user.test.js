@@ -362,16 +362,16 @@ describe("add user's intolerance", function () {
       intolerances: [
 
         {
-          intoleranceId: 1,
-          intoleranceName:"dairy",
-        },
-        {
           intoleranceId: 2,
           intoleranceName:"egg",
         },
         {
           intoleranceId: 3,
           intoleranceName:"gluten",
+        },
+        {
+          intoleranceId: 1,
+          intoleranceName:"dairy",
         },
 
       ],
