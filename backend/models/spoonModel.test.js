@@ -35,7 +35,7 @@ jest.mock('./spoonModel', () => {
             // getRandomRecipes: jest.fn(),
             // fetchFreshData: jest.fn()
             getRandomRecipes:jest.fn().mockImplementation(() => mockRandomResponse),
-            fetchFreshData:jest.fn().mockImplementation(() => mockRandomResponse),
+            // fetchFreshData:jest.fn().mockImplementation(() => mockRandomResponse),
         },
     };
 });
@@ -67,18 +67,33 @@ describe("getRandomRecipes Mock Test", () => {
 
 });
 
-describe("test serveRecipesCache - success", () => {
+describe("test fetchFreshData", () => {
 
-    test("serveRecipesCache - No Cache Currently Saved", async () => {
+    test("fetchFreshData - success", async () => {
 
         console.log(SpoonApi)
 
-        const fauxResponse = await SpoonApi.serveRecipesCache()
-
-        console.log(fauxResponse)
+        const fauxResponse = await SpoonApi.fetchFreshData();
+        console.log(fauxResponse);
 
         expect(fauxResponse).toEqual(mockRandomResponse)
 
     })
 
-});
+})
+
+// describe("test serveRecipesCache - success", () => {
+
+//     test("serveRecipesCache - No Cache Currently Saved", async () => {
+
+//         console.log(SpoonApi)
+
+//         const fauxResponse = await SpoonApi.serveRecipesCache()
+
+//         console.log(fauxResponse)
+
+//         expect(fauxResponse).toEqual(mockRandomResponse)
+
+//     })
+
+// });
