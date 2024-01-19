@@ -66,7 +66,7 @@ async function commonBeforeAll() {
                ('shellfish'),
                ('soy'),
                ('sulfite'),
-               ('tree Nut'),
+               ('tree nut'),
                ('wheat');
     
     `);

@@ -12,28 +12,23 @@ class Intolerance {
      * 
     */
 
-    // DO NOT IMPLEMENT =>
+    static async findAll() {
 
-    /** Given a username return specific user's intolerances
-     * 
-     * Returns {username, intolerances: [{id, intolerance_name}]}
-     * 
-    */
+        const result = await db.query(
 
-    /** Given a username and intolerance_id
-     * 
-     *  Create a new intolerance.
-     * 
-     *  Returns {username, intolerance:{id, intolerance_name}}
-     * 
-    */
+            `SELECT id,
+                    intolerance_name AS "intoleranceName"
+                FROM intolerances
+                ORDER BY id`
 
-    /** Given a username and intolerance_id
-     * 
-     * Delete an existing intolerance.
-     * 
-     * returns {username, intolerance:{id, intolerance_name}}
-     * 
-     */
+        );
+
+        if(!result) throw new ExpressError("No intolerances found", 404)
+
+        return result.rows
+        
+    }
 
 }
+
+module.exports = Intolerance
