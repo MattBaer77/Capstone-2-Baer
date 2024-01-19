@@ -344,6 +344,32 @@ class User {
    * 
   */
 
+  static async removeUserIntolerance(username, intoleranceId){
+
+    const result = await db.query(
+      `DELETE
+      FROM users_intolerances
+      WHERE username = $1 AND intolerance_id = $2
+      RETURNING username, intolerance_id AS "intoleranceId"`,
+      [username, intoleranceId]
+    )
+
+    const deletedUserIntolerance = result.rows[0];
+
+    console.log(deletedUserIntolerance)
+
+    if (!deletedUserIntolerance) {
+
+      console.log("NO DELETED");
+      
+      throw new ExpressError(`No intolerance: ${intoleranceId} or user:${username}`, 404);
+
+    }
+
+    return deletedUserIntolerance
+
+  }
+
 }
 
 module.exports = User;

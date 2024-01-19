@@ -345,17 +345,15 @@ describe("add user's intolerance", function () {
   }
 
   const newIntoleranceInvalidIntoleranceId = {
-
     username:"u3",
     intoleranceId:"99"
-
   }
 
   test("works - user which already has intolerances", async function () {
 
-    let intolerances = await User.addUserIntolerance(newIntoleranceU1.username, newIntoleranceU1.intoleranceId);
+    let res = await User.addUserIntolerance(newIntoleranceU1.username, newIntoleranceU1.intoleranceId);
 
-    expect(intolerances).toEqual({
+    expect(res).toContain({
 
       username: "u1",
       firstName: "U1F",
@@ -444,5 +442,73 @@ describe("add user's intolerance", function () {
   });
 
 })
+
+// remove
+
+describe("remove user's intolerance", function () {
+
+  test("works", async function () {
+
+    const deletedUserIntolerance = await User.removeUserIntolerance("u1", 3);
+
+    console.log(deletedUserIntolerance);
+
+    const intolerancesRes = await db.query(
+      
+      `SELECT ui.intolerance_id AS "intoleranceId",
+            i.intolerance_name AS "intoleranceName"
+        FROM users u
+        JOIN users_intolerances ui ON u.username = ui.username
+        JOIN intolerances i ON ui.intolerance_id = i.id
+        WHERE u.username = 'u1'`
+      
+    );
+
+    expect(deletedUserIntolerance.username).toEqual('u1')
+    expect(deletedUserIntolerance.intoleranceId).toEqual(3)
+    
+    expect(intolerancesRes.rows.length).toEqual(1);
+    expect(intolerancesRes.rows[0]).toEqual({intoleranceId: 2, intoleranceName: "egg"})
+
+
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.removeUserIntolerance("notValidUser", 1);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+  });
+
+  test("not found if no such user intolerance", async function () {
+    try {
+      await User.removeUserIntolerance("u1", 6);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+  });
+
+  test("not found if no such intolerance", async function () {
+    try {
+      await User.removeUserIntolerance("u1", -1);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+  });
+
+  test("not found if no such user or intolerance", async function () {
+    try {
+      await User.removeUserIntolerance("notValidUser", -1);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+  });
+    
+});
 
 // FOR EVERYTHING THAT CREATES - ENSURE ADDING DUPLICATE PRODUCES EXPECTED RESULT
