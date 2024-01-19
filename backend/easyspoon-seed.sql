@@ -31,7 +31,7 @@ VALUES ('dairy'),
        ('shellfish'),
        ('soy'),
        ('sulfite'),
-       ('tree Nut'),
+       ('tree nut'),
        ('wheat');
 
 INSERT INTO users_intolerances (username, intolerance_id)
