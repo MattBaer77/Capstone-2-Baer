@@ -327,9 +327,9 @@ class User {
   
       );
 
-      const result = this.getWithIntolerances(username)
+      const result = this.getWithIntolerances(username) // REMOVE THIS FUNCTIONALITY - CALL .getWithIntolerances through appropriate route to eliminate redundancy - reload user whole every time
   
-      return result;
+      return result; // This route should return nothing...
 
     } catch(e) {
 
