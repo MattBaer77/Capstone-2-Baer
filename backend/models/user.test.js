@@ -353,12 +353,16 @@ describe("add user's intolerance", function () {
 
     let res = await User.addUserIntolerance(newIntoleranceU1.username, newIntoleranceU1.intoleranceId);
 
-    expect(res).toContain({
+    expect(res).toEqual({
 
       username: "u1",
       firstName: "U1F",
       intolerances: [
 
+        {
+          intoleranceId: 1,
+          intoleranceName:"dairy",
+        },
         {
           intoleranceId: 2,
           intoleranceName:"egg",
@@ -366,10 +370,6 @@ describe("add user's intolerance", function () {
         {
           intoleranceId: 3,
           intoleranceName:"gluten",
-        },
-        {
-          intoleranceId: 1,
-          intoleranceName:"dairy",
         },
 
       ],
@@ -413,7 +413,6 @@ describe("add user's intolerance", function () {
       await User.addUserIntolerance(newIntoleranceU3.username, newIntoleranceU3.intoleranceId);
       fail();
     } catch (err) {
-      console.log(err)
       expect(err instanceof ExpressError).toBeTruthy();
     }
 
@@ -451,8 +450,6 @@ describe("remove user's intolerance", function () {
 
     const deletedUserIntolerance = await User.removeUserIntolerance("u1", 3);
 
-    console.log(deletedUserIntolerance);
-
     const intolerancesRes = await db.query(
       
       `SELECT ui.intolerance_id AS "intoleranceId",
@@ -466,7 +463,7 @@ describe("remove user's intolerance", function () {
 
     expect(deletedUserIntolerance.username).toEqual('u1')
     expect(deletedUserIntolerance.intoleranceId).toEqual(3)
-    
+
     expect(intolerancesRes.rows.length).toEqual(1);
     expect(intolerancesRes.rows[0]).toEqual({intoleranceId: 2, intoleranceName: "egg"})
 

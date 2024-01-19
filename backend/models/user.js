@@ -256,11 +256,14 @@ class User {
               FROM users u
               JOIN users_intolerances ui ON u.username = ui.username
               JOIN intolerances i ON ui.intolerance_id = i.id
-              WHERE u.username = $1`,
+              WHERE u.username = $1
+              ORDER BY ui.intolerance_id`,
           [username],
     );
 
     user["intolerances"] = intolerancesRes.rows
+
+    console.log(user)
 
     return user;
 
@@ -356,11 +359,7 @@ class User {
 
     const deletedUserIntolerance = result.rows[0];
 
-    console.log(deletedUserIntolerance)
-
     if (!deletedUserIntolerance) {
-
-      console.log("NO DELETED");
       
       throw new ExpressError(`No intolerance: ${intoleranceId} or user:${username}`, 404);
 
