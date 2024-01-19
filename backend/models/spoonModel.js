@@ -36,6 +36,7 @@ class SpoonApi {
     };
     
     static fetchFreshData = async () => {
+        console.log("fetchFreshData Actual")
         try {
             const opts = {
                 limitLicense: true,

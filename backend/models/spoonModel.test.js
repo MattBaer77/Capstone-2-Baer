@@ -34,7 +34,10 @@ jest.mock('./spoonModel', () => {
             ...originalSpoonModel.SpoonApi,
             // getRandomRecipes: jest.fn(),
             // fetchFreshData: jest.fn()
-            getRandomRecipes:jest.fn().mockImplementation(() => mockRandomResponse),
+            // getRandomRecipes:jest.fn().mockImplementation(() => mockRandomResponse),
+            getRandomRecipes:jest.fn().mockResolvedValue(mockRandomResponse),
+            // fetchFreshData:
+            // getRandomRecipes:jest.fn().mockImplementation(() => Promise.resolve(mockRandomResponse)),
             // fetchFreshData:jest.fn().mockImplementation(() => mockRandomResponse),
         },
     };
@@ -52,7 +55,7 @@ describe("getRandomRecipes Mock Test", () => {
 
         // SpoonApi.getRandomRecipes.mockReturnValue(mockRandomResponse)
 
-        console.log(SpoonApi)
+        // console.log(SpoonApi)
 
         const opts = {
             limitLicense: true,
@@ -71,7 +74,7 @@ describe("test fetchFreshData", () => {
 
     test("fetchFreshData - success", async () => {
 
-        console.log(SpoonApi)
+        // console.log(SpoonApi)
 
         const fauxResponse = await SpoonApi.fetchFreshData();
         console.log(fauxResponse);
