@@ -170,7 +170,7 @@ describe("get", () => {
 
     });
 
-})
+});
 
 // create
 
@@ -190,9 +190,9 @@ describe("create", () => {
         expect(found.rows[0].id).toEqual(9)
         expect(found.rows[0].owner).toEqual("u1")
 
-    })
+    });
 
-})
+});
 
 // delete
 
@@ -217,7 +217,7 @@ describe("remove", () => {
         )
         expect(recipeCheck.rows.length).toEqual(0)
 
-    })
+    });
 
     test("not found if no such user", async function () {
         try {
@@ -228,7 +228,7 @@ describe("remove", () => {
         }
       });
 
-})
+});
 
 // addIngredient
 
@@ -268,7 +268,8 @@ describe("add ingredient", () => {
             amount,
             unit,
             minimum_amount AS "minimumAmount"
-            FROM grocery_lists_ingredients WHERE ingredient_id = 102`
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 102`
 
         )
 
@@ -277,31 +278,123 @@ describe("add ingredient", () => {
         expect(ingredientCheck.rows[0].amount).toEqual(3)
         expect(ingredientCheck.rows[0].minimumAmount).toEqual(0)
 
-    })
+    });
 
     test("throws error if no such grocery_list", async () => {
 
         try{
-            let res = await GroceryList.addIngredient(fauxNoListIngredient.id, fauxNoListIngredient.ingredientId, fauxNoListIngredient.amount, fauxNoListIngredient.unit, fauxNoListIngredient.minimumAmount);
+            await GroceryList.addIngredient(fauxNoListIngredient.id, fauxNoListIngredient.ingredientId, fauxNoListIngredient.amount, fauxNoListIngredient.unit, fauxNoListIngredient.minimumAmount);
             fail();
         } catch (err) {
             expect(err instanceof ExpressError).toBeTruthy();
         }
 
-    })
+    });
 
     test("throws error if ingredient exists on grocery_list", async () => {
 
         try{
-            let res = await GroceryList.addIngredient(fauxConflictingIngredient.id, fauxConflictingIngredient.ingredientId, fauxConflictingIngredient.amount, fauxConflictingIngredient.unit, fauxConflictingIngredient.minimumAmount);
+            await GroceryList.addIngredient(fauxConflictingIngredient.id, fauxConflictingIngredient.ingredientId, fauxConflictingIngredient.amount, fauxConflictingIngredient.unit, fauxConflictingIngredient.minimumAmount);
             fail();
         } catch (err) {
             expect(err instanceof ExpressError).toBeTruthy();
         }
 
-    })
+    });
 
-})
+});
+
+// setAmount
+
+describe("set amount", () => {
+
+    test("works", async() => {
+
+        let res = await GroceryList.setAmount(1,100,3)
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            amount,
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+
+        )
+
+        expect(ingredientCheck.rows[0].amount).toEqual(3)
+
+    });
+
+    test("throws error if no such grocery_list", async () => {
+
+        try{
+            await GroceryList.setAmount(100,100,3);
+            fail();
+        } catch(err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+    test("throws error if no such ingredient_id on grocery_list", async () => {
+
+        try{
+            await GroceryList.setAmount(1,102,3);
+            fail();
+        } catch(err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+});
+
+// setMinimumAmount
+
+describe("set minimum amount", () => {
+
+    test("works", async() => {
+
+        let res = await GroceryList.setMinimumAmount(1,100,3)
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            minimum_amount AS "minimumAmount,
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+
+        )
+
+        expect(ingredientCheck.rows[0].minimumAmount).toEqual(3)
+
+    });
+
+    test("throws error if no such grocery_list", async () => {
+
+        try{
+            await GroceryList.setMinimumAmount(100,100,3);
+            fail();
+        } catch(err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+    test("throws error if no such ingredient_id on grocery_list", async () => {
+
+        try{
+            await GroceryList.setMinimumAmount(1,102,3);
+            fail();
+        } catch(err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+});
 
 // deleteIngredient
 

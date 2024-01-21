@@ -186,7 +186,7 @@ class GroceryList {
 
         return true
 
-    }
+    };
 
     // Add an ingredient to a grocery list
     /** addIngredient(id, ingredientId, amount, unit, minimumAmount)
@@ -232,10 +232,21 @@ class GroceryList {
 
         return true
 
-    }
+    };
 
     // Set amount on an ingredient on a grocery list
+    /** setAmount(id, ingredientId, amount)
+     * 
+     * return true;
+     * 
+    **/
+
     // Set minimum amount on an ingredient on a grocery list
+    /** setAmount(id, ingredientId, minimumAmount)
+     * 
+     * return true;
+     * 
+    **/
 
     // delete an ingredient from a grocery list
     /** deleteIngredient(id, ingredientId)
