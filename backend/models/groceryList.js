@@ -197,6 +197,9 @@ class GroceryList {
      *
     **/
 
+    // Set amount on an ingredient on a grocery list
+    // Set minimum amount on an ingredient on a grocery list
+
     // delete an ingredient from a grocery list
     /** deleteIngredient(id, ingredientId)
      * 

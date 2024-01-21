@@ -201,7 +201,8 @@ describe("remove", () => {
 
     test("works", async() => {
 
-        await GroceryList.remove(1)
+        const res = await GroceryList.remove(1)
+        expect(res).toEqual(true)
         const groceryListCheck = await db.query(
             "SELECT * FROM grocery_list WHERE id = 1"
         );
@@ -232,25 +233,52 @@ describe("remove", () => {
 
 // addIngredient
 
-// describe("add ingredient", () => {
+describe("add ingredient", () => {
 
-//     const fauxIngredient = {id: 1,
-//                             ingredientId: 101,
-//                             amount: 3,
-//                             unit: "Some Other Unit",
-//                             minimum_amount: 0
-//                         };
+    const fauxIngredient = {id: 1,
+                            ingredientId: 102,
+                            amount: 3,
+                            unit: "Some Other Unit",
+                            minimum_amount: 0
+                        };
 
-//     test("works", async () => {
+    const fauxConflictingIngredient = {id: 1,
+                                       ingredientId: 101,
+                                       amount: 3,
+                                       unit: "Some Other Unit",
+                                       minimum_amount: 0
+                                    };
 
-//         let res = await GroceryList.addIngredient(fauxIngredient);
+    test("works", async () => {
 
-//     })
+        let res = await GroceryList.addIngredient(fauxIngredient);
+        expect(res).toEqual(true)
 
+        const ingredientCheck = db.query(
 
+            "SELECT * FROM grocery_lists_ingredients WHERE ingredient_id = 1 "
 
+        )
 
-// })
+        expect(ingredientCheck.length).toEqual(1)
+        expect(ingredientCheck[0]).ingredientId.toEqual(102)
+        expect(ingredientCheck[0]).amount.toEqual(3)
+        expect(ingredientCheck[0]).minimumAmount.toEqual(0)
+
+    })
+
+    test("throws error if ingredient exists on grocery_list", async () => {
+
+        try{
+            let res = await GroceryList.addIngredient(fauxConflictingIngredient);
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    })
+
+})
 
 // deleteIngredient
 
