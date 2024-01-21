@@ -163,7 +163,6 @@ describe("get", () => {
 
         try {
             const res = await GroceryList.get(0);
-            console.log(res)
             fail();
         } catch (err) {
             expect(err instanceof ExpressError).toBeTruthy();
@@ -239,38 +238,62 @@ describe("add ingredient", () => {
                             ingredientId: 102,
                             amount: 3,
                             unit: "Some Other Unit",
-                            minimum_amount: 0
+                            minimumAmount: 0
                         };
 
     const fauxConflictingIngredient = {id: 1,
                                        ingredientId: 101,
                                        amount: 3,
                                        unit: "Some Other Unit",
-                                       minimum_amount: 0
+                                       minimumAmount: 0
                                     };
+
+    const fauxNoListIngredient = {id: 100,
+                                  ingredientId: 101,
+                                  amount: 3,
+                                  unit: "Some Other Unit",
+                                  minimumAmount: 0
+                                };
 
     test("works", async () => {
 
-        let res = await GroceryList.addIngredient(fauxIngredient);
+        let res = await GroceryList.addIngredient(fauxIngredient.id, fauxIngredient.ingredientId, fauxIngredient.amount, fauxIngredient.unit, fauxIngredient.minimumAmount);
         expect(res).toEqual(true)
 
-        const ingredientCheck = db.query(
+        const ingredientCheck = await db.query(
 
-            "SELECT * FROM grocery_lists_ingredients WHERE ingredient_id = 1 "
+            `SELECT
+            grocery_list_id AS "id",
+            ingredient_id AS "ingredientId",
+            amount,
+            unit,
+            minimum_amount AS "minimumAmount"
+            FROM grocery_lists_ingredients WHERE ingredient_id = 102`
 
         )
 
-        expect(ingredientCheck.length).toEqual(1)
-        expect(ingredientCheck[0]).ingredientId.toEqual(102)
-        expect(ingredientCheck[0]).amount.toEqual(3)
-        expect(ingredientCheck[0]).minimumAmount.toEqual(0)
+        expect(ingredientCheck.rows.length).toEqual(1)
+        expect(ingredientCheck.rows[0].ingredientId).toEqual(102)
+        expect(ingredientCheck.rows[0].amount).toEqual(3)
+        expect(ingredientCheck.rows[0].minimumAmount).toEqual(0)
+
+    })
+
+    test("throws error if no such grocery_list", async () => {
+
+        try{
+            let res = await GroceryList.addIngredient(fauxNoListIngredient.id, fauxNoListIngredient.ingredientId, fauxNoListIngredient.amount, fauxNoListIngredient.unit, fauxNoListIngredient.minimumAmount);
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
 
     })
 
     test("throws error if ingredient exists on grocery_list", async () => {
 
         try{
-            let res = await GroceryList.addIngredient(fauxConflictingIngredient);
+            let res = await GroceryList.addIngredient(fauxConflictingIngredient.id, fauxConflictingIngredient.ingredientId, fauxConflictingIngredient.amount, fauxConflictingIngredient.unit, fauxConflictingIngredient.minimumAmount);
             fail();
         } catch (err) {
             expect(err instanceof ExpressError).toBeTruthy();

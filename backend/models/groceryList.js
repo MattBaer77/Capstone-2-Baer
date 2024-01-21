@@ -180,22 +180,59 @@ class GroceryList {
             [id]
         )
 
-        const listName = result.rows[0]
+        const listId = result.rows[0]
 
-        if(!listName) throw new ExpressError(`No grocery list: ${id}`, 404);
+        if(!listId) throw new ExpressError(`No grocery list: ${id}`, 404);
 
         return true
 
     }
 
     // Add an ingredient to a grocery list
-    /** addIngredient(id, ingredientId, amount, unit, minimum_amount)
+    /** addIngredient(id, ingredientId, amount, unit, minimumAmount)
      * 
      * 
      * return true or false
      * 
      *
     **/
+
+    static async addIngredient(id, ingredientId, amount, unit, minimumAmount) {
+
+        const listCheck = await db.query(
+
+            `SELECT id FROM grocery_list WHERE id = $1`, [id]
+
+        )
+
+        if(!listCheck.rows[0]) throw new ExpressError(`Grocery list ${id} does not exist.`, 404)
+
+        const duplicateCheck = await db.query(
+
+            `SELECT grocery_list_id,
+                    ingredient_id 
+                FROM grocery_lists_ingredients
+                WHERE grocery_list_id = $1
+                AND ingredient_id = $2`,
+                [id, ingredientId]
+
+        );
+
+        if(duplicateCheck.rows[0]) throw new ExpressError(`Grocery list ${id} already contains ingredient ${ingredientId}. Increment instead.`, 400);
+
+        const result = await db.query(
+
+            `INSERT INTO grocery_lists_ingredients
+                   (grocery_list_id, ingredient_id, amount, unit, minimum_amount)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING grocery_list_id, ingredient_id`,
+            [id, ingredientId, amount, unit, minimumAmount]
+
+        );
+
+        return true
+
+    }
 
     // Set amount on an ingredient on a grocery list
     // Set minimum amount on an ingredient on a grocery list
