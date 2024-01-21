@@ -203,6 +203,39 @@ describe("create", () => {
 
 // delete
 
+describe("remove", () => {
+
+    test("works", async() => {
+
+        await GroceryList.remove(1)
+        const groceryListCheck = await db.query(
+            "SELECT * FROM grocery_list WHERE id = 1"
+        );
+        expect(groceryListCheck.rows.length).toEqual(0)
+
+        const ingredientCheck = await db.query(
+            "SELECT * FROM grocery_lists_ingredients WHERE grocery_list_id = 1"
+        )
+        expect(ingredientCheck.rows.length).toEqual(0)
+
+        const recipeCheck = await db.query(
+            "SELECT * FROM grocery_lists_recipes WHERE grocery_list_id = 1"
+        )
+        expect(recipeCheck.rows.length).toEqual(0)
+
+    })
+
+    test("not found if no such user", async function () {
+        try {
+          await GroceryList.remove(0);
+          fail();
+        } catch (err) {
+          expect(err instanceof ExpressError).toBeTruthy();
+        }
+      });
+
+})
+
 // addIngredient
 
 // deleteIngredient

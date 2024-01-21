@@ -172,11 +172,23 @@ class GroceryList {
      * 
     **/
 
-    // static async delete(id){
+    static async remove(id){
 
+        let result = await db.query(
+            `DELETE
+            FROM grocery_list
+            WHERE id = $1
+            RETURNING list_name`,
+            [id]
+        )
 
+        const listName = result.rows[0]
 
-    // }
+        if(!listName) throw new ExpressError(`No grocery list: ${id}`, 404);
+
+        return true
+
+    }
 
     // Add an ingredient to a grocery list
     /** addIngredient(id, ingredientId)
