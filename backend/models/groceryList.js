@@ -19,6 +19,56 @@ class GroceryList {
      * Where recipes - [{id, recipeId}]
      * 
     **/
+    static async findAll(username) {
+
+        const groceryLists = await db.query(
+            `SELECT gl.id,
+                    gl.list_name,
+                    gl.owner
+                FROM grocery_list gl
+                WHERE gl.owner = $1
+                ORDER BY gl.id`,
+                [username],
+        )
+
+        for (let list of groceryLists.rows){
+
+            let ingredients = await db.query(
+
+                `SELECT i.id,
+                        i.ingredient_id,
+                        i.amount,
+                        i.unit,
+                        i.minimum_amount
+                    FROM grocery_list gl
+                    JOIN grocery_lists_ingredients i ON gl.id = i.grocery_list_id
+                    WHERE gl.id = $1
+                    ORDER BY i.id`,
+                    [list.id]
+
+            );
+
+            list.ingredients = ingredients.rows;
+
+            let recipes = await db.query(
+
+                `SELECT r.id,
+                        r.recipe_id
+                    FROM grocery_list gl
+                    JOIN grocery_lists_recipes r ON gl.id = r.grocery_list_id
+                    WHERE gl.id = $1
+                    ORDER BY r.id`,
+                    [list.id]
+
+            );
+
+            list.recipes = recipes.rows;
+
+        }
+
+        return groceryLists.rows
+
+    };
 
     // Search? - would it even be useful???
 

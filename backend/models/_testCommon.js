@@ -84,9 +84,14 @@ async function commonBeforeAll() {
     await db.query(`
 
         INSERT INTO grocery_list (list_name, owner)
-        VALUES ('testlist', 'u1'),
-               ('test2list', 'u2'),
-               ('testAlist', 'uA');
+        VALUES ('testlistU1-1', 'u1'),
+               ('testlistU1-2', 'u1'),
+               ('testlistU1-3', 'u1'),
+               ('testlistU2-1', 'u2'),
+               ('testlistU2-2', 'u2'),
+               ('testlistU2-3', 'u2'),
+               ('testlistA-1', 'uA'),
+               ('testlistA-2', 'uA');
     
     `);
 
@@ -94,6 +99,8 @@ async function commonBeforeAll() {
 
         INSERT INTO grocery_lists_recipes (grocery_list_id, recipe_id)
         VALUES (1,11),
+               (1,12),
+               (1,32),
                (2,22),
                (3,33);
 
@@ -102,7 +109,10 @@ async function commonBeforeAll() {
     await db.query(`
 
         INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, minimum_amount, unit)
-        VALUES (1, 100, 2, 1, 'Some Unit');
+        VALUES (1, 100, 2, 1, 'Some Unit'),
+               (1, 100, 2, 1, 'Some Unit'),
+               (2, 100, 4, 1, 'Some Unit'),
+               (2, 100, 4, 1, 'Some Unit');
     
     `);
 
