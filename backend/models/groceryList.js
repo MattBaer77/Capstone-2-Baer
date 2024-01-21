@@ -21,7 +21,7 @@ class GroceryList {
     **/
     static async findAll(username) {
 
-        const groceryLists = await db.query(
+        const groceryListsRes = await db.query(
             `SELECT gl.id,
                     gl.list_name,
                     gl.owner
@@ -31,7 +31,13 @@ class GroceryList {
                 [username],
         )
 
-        for (let list of groceryLists.rows){
+        const groceryLists = groceryListsRes.rows
+
+        console.log(groceryLists)
+
+        if (!groceryLists.length) throw new ExpressError(`No user: ${username}`, 404);
+
+        for (let list of groceryLists){
 
             let ingredients = await db.query(
 
@@ -66,7 +72,7 @@ class GroceryList {
 
         }
 
-        return groceryLists.rows
+        return groceryLists
 
     };
 

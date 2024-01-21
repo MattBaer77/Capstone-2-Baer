@@ -104,6 +104,18 @@ describe("findAll", () => {
         ])
     });
 
+    test("not found if no such user", async function () {
+
+        try {
+            const res = await GroceryList.findAll("nope");
+            console.log(res)
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
 });
 
 // get
