@@ -35,48 +35,42 @@ class GroceryList {
     // Create a grocery list
     /** create(list_name, username)
      * 
-     * returns newly created grocery list like - {id, listName, username, ingredients, recipes} X - MAY NOT NEED - INGREDIENTS, RECIPES
      * 
-     * Where ingredients - [{id, ingredientId, amount, unit, minimumAmount}] X - MAY NOT NEED
-     * Where recipes - [{id, recipeId}] X - MAY NOT NEED
+     * RETURNS an ID
+     * 
+     * 
      * 
     **/
 
     // Delete a grocery list
     /** delete(id)
      * 
-     * returns undefined
+     * returns true or false - if deleted or not
      * 
     **/
 
     // Add an ingredient to a grocery list
     /** addIngredient(id, ingredientId)
      * 
-     * returns grocery list like - {id, listName, username, ingredients, recipes} X - RETURN NOTHING
      * 
-     * Where ingredients - [{id, ingredientId, amount, unit, minimumAmount}]
-     * Where recipes - [{id, recipeId}]
+     * return true or false
      * 
-     * **USE this.get(groceryListID) to resync/refresh? - NO, RUN get(groceryListID) from frontend each time deletion occurs.
      *
     **/
 
     // delete an ingredient from a grocery list
     /** deleteIngredient(id, ingredientId)
      * 
-     * returns grocery list like - {id, listName, username, ingredients, recipes} X - RETURN NOTHING
      * 
-     * Where ingredients - [{id, ingredientId, amount, unit, minimumAmount}]
-     * Where recipes - [{id, recipeId}]
+     * return true or false
      * 
-     * **USE this.get(groceryListID) to resync/refresh? - NO, RUN get(groceryListID) from frontend each time deletion occurs.
      * 
     **/
 
     // Add a recipe to a grocery list
     /** addRecipe(id, recipeId)
      * 
-     * Returns nothing or undefined
+     * Returns nothing or undefined - THIS MAY RETURN TRUE OR FALSE
      * May need to add ingredients and increment minimum amounts
      *
      *
@@ -85,7 +79,7 @@ class GroceryList {
     // delete a recipe from a grocery list
     /** deleteRecipe(id, recipeId)
      * 
-     * Returns nothing or undefined.
+     * Returns nothing or undefined. - THIS MAY RETURN TRUE OR FALSE
      * May need to remove ingredients and decrement minimum amounts
      * 
     **/
