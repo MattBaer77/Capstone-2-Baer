@@ -161,7 +161,7 @@ class GroceryList {
 
         const groceryList = result.rows[0]
 
-        return groceryList
+        return groceryList.id
 
     };
 
@@ -171,6 +171,12 @@ class GroceryList {
      * returns true or false - if deleted or not
      * 
     **/
+
+    // static async delete(id){
+
+
+
+    // }
 
     // Add an ingredient to a grocery list
     /** addIngredient(id, ingredientId)
