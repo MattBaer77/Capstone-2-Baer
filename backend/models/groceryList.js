@@ -136,7 +136,7 @@ class GroceryList {
 
         return groceryList
 
-    }
+    };
 
     // Create a grocery list
     /** create(list_name, username)
@@ -147,6 +147,23 @@ class GroceryList {
      * 
      * 
     **/
+
+    static async create(list_name, username){
+
+        const result = await db.query(
+            `INSERT INTO grocery_list
+            (list_name,
+            owner)
+            VALUES ($1, $2)
+            RETURNING id`,
+            [list_name, username],
+        );
+
+        const groceryList = result.rows[0]
+
+        return groceryList
+
+    };
 
     // Delete a grocery list
     /** delete(id)

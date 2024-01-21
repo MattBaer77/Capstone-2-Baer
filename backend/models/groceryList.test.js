@@ -181,6 +181,26 @@ describe("get", () => {
 
 // create
 
+describe("create", () => {
+
+    const newGroceryListName = "testlistU1-NEW"
+
+    test("works", async() => {
+
+        let list = await GroceryList.create(newGroceryListName, "u1")
+
+        expect(list.id).toEqual(9)
+
+        const found = await db.query("SELECT * FROM grocery_list WHERE list_name = 'testlistU1-NEW'")
+
+        expect(found.rows.length).toEqual(1);
+        expect(found.rows[0].id).toEqual(9)
+        expect(found.rows[0].owner).toEqual("u1")
+
+    })
+
+})
+
 // delete
 
 // addIngredient
