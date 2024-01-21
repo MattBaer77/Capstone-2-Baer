@@ -32,15 +32,13 @@ describe("findAll", () => {
                     ingredients: [
                         {
                             amount: 2,
-                            id: 1,
                             ingredient_id: 100,
                             minimum_amount: 1,
                             unit: "Some Unit"
                         },
                         {
                             amount: 2,
-                            id: 2,
-                            ingredient_id: 100,
+                            ingredient_id: 101,
                             minimum_amount: 1,
                             unit: "Some Unit"
                         }
@@ -66,15 +64,13 @@ describe("findAll", () => {
                     ingredients: [
                         {
                             amount: 4,
-                            id: 3,
                             ingredient_id: 100,
                             minimum_amount: 1,
                             unit: "Some Unit"
                         },
                         {
                             amount: 4,
-                            id: 4,
-                            ingredient_id: 100,
+                            ingredient_id: 101,
                             minimum_amount: 1,
                             unit: "Some Unit"
                         }
@@ -130,15 +126,13 @@ describe("get", () => {
                 ingredients: [
                     {
                         amount: 2,
-                        id: 1,
                         ingredient_id: 100,
                         minimum_amount: 1,
                         unit: "Some Unit"
                     },
                     {
                         amount: 2,
-                        id: 2,
-                        ingredient_id: 100,
+                        ingredient_id: 101,
                         minimum_amount: 1,
                         unit: "Some Unit"
                     }
@@ -237,6 +231,26 @@ describe("remove", () => {
 })
 
 // addIngredient
+
+// describe("add ingredient", () => {
+
+//     const fauxIngredient = {id: 1,
+//                             ingredientId: 101,
+//                             amount: 3,
+//                             unit: "Some Other Unit",
+//                             minimum_amount: 0
+//                         };
+
+//     test("works", async () => {
+
+//         let res = await GroceryList.addIngredient(fauxIngredient);
+
+//     })
+
+
+
+
+// })
 
 // deleteIngredient
 

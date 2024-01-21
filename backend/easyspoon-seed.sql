@@ -51,4 +51,4 @@ VALUES (1, 641435),
 
 INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, minimum_amount, unit)
 VALUES (1, 20081, 2, 1, 'cup'),
-       (1, 20081, 1, 2, 'cup');
+       (1, 20082, 1, 2, 'cup');

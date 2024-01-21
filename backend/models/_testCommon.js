@@ -10,7 +10,7 @@ async function commonBeforeAll() {
     // SET SERIAL IDs TO 1 (WHERE APPLICABLE)
 
     await db.query("DELETE FROM grocery_lists_ingredients")
-    await db.query("SELECT setval('grocery_lists_ingredients_id_seq', 1, false)")
+    // await db.query("SELECT setval('grocery_lists_ingredients_id_seq', 1, false)")
 
     await db.query("DELETE FROM grocery_lists_recipes")
     await db.query("SELECT setval('grocery_lists_recipes_id_seq', 1, false)")
@@ -110,9 +110,9 @@ async function commonBeforeAll() {
 
         INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, minimum_amount, unit)
         VALUES (1, 100, 2, 1, 'Some Unit'),
-               (1, 100, 2, 1, 'Some Unit'),
+               (1, 101, 2, 1, 'Some Unit'),
                (2, 100, 4, 1, 'Some Unit'),
-               (2, 100, 4, 1, 'Some Unit');
+               (2, 101, 4, 1, 'Some Unit');
     
     `);
 

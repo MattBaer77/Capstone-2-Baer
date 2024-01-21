@@ -39,15 +39,14 @@ class GroceryList {
 
             let ingredients = await db.query(
 
-                `SELECT i.id,
-                        i.ingredient_id,
+                `SELECT i.ingredient_id,
                         i.amount,
                         i.unit,
                         i.minimum_amount
                     FROM grocery_list gl
                     JOIN grocery_lists_ingredients i ON gl.id = i.grocery_list_id
                     WHERE gl.id = $1
-                    ORDER BY i.id`,
+                    ORDER BY i.ingredient_id`,
                     [list.id]
 
             );
@@ -105,15 +104,14 @@ class GroceryList {
 
         let ingredients = await db.query(
 
-            `SELECT i.id,
-                    i.ingredient_id,
+            `SELECT i.ingredient_id,
                     i.amount,
                     i.unit,
                     i.minimum_amount
                 FROM grocery_list gl
                 JOIN grocery_lists_ingredients i ON gl.id = i.grocery_list_id
                 WHERE gl.id = $1
-                ORDER BY i.id`,
+                ORDER BY i.ingredient_id`,
                 [id]
 
         )
@@ -191,7 +189,7 @@ class GroceryList {
     }
 
     // Add an ingredient to a grocery list
-    /** addIngredient(id, ingredientId)
+    /** addIngredient(id, ingredientId, amount, unit, minimum_amount)
      * 
      * 
      * return true or false
