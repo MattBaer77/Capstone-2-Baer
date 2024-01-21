@@ -29,11 +29,9 @@ class GroceryList {
                 WHERE gl.owner = $1
                 ORDER BY gl.id`,
                 [username],
-        )
+        );
 
         const groceryLists = groceryListsRes.rows
-
-        console.log(groceryLists)
 
         if (!groceryLists.length) throw new ExpressError(`No user: ${username}`, 404);
 
@@ -88,9 +86,55 @@ class GroceryList {
      * 
     **/
 
-    static async find(id){
+    static async get(id){
 
-        
+        const groceryListRes = await db.query(
+
+            `SELECT gl.id,
+                    gl.list_name,
+                    gl.owner
+            FROM grocery_list gl
+            WHERE gl.id = $1`,
+            [id],
+
+        );
+
+        const groceryList = groceryListRes.rows[0];
+
+        if(!groceryList) throw new ExpressError(`No grocery list: ${id}`, 404);
+
+        let ingredients = await db.query(
+
+            `SELECT i.id,
+                    i.ingredient_id,
+                    i.amount,
+                    i.unit,
+                    i.minimum_amount
+                FROM grocery_list gl
+                JOIN grocery_lists_ingredients i ON gl.id = i.grocery_list_id
+                WHERE gl.id = $1
+                ORDER BY i.id`,
+                [id]
+
+        )
+
+        groceryList.ingredients = ingredients.rows;
+
+        let recipes = await db.query(
+
+            `SELECT r.id,
+                    r.recipe_id
+                FROM grocery_list gl
+                JOIN grocery_lists_recipes r ON gl.id = r.grocery_list_id
+                WHERE gl.id = $1
+                ORDER BY r.id`,
+                [id]
+
+        );
+
+        groceryList.recipes = recipes.rows;
+
+        return groceryList
 
     }
 

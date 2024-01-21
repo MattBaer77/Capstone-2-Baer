@@ -25,8 +25,6 @@ describe("findAll", () => {
 
         const groceryLists = await GroceryList.findAll('u1');
 
-        console.log(groceryLists)
-
         expect(groceryLists).toEqual(
             [
                 {
@@ -108,7 +106,6 @@ describe("findAll", () => {
 
         try {
             const res = await GroceryList.findAll("nope");
-            console.log(res)
             fail();
         } catch (err) {
             expect(err instanceof ExpressError).toBeTruthy();
@@ -171,7 +168,7 @@ describe("get", () => {
     test("not found if no such id", async function () {
 
         try {
-            const res = await GroceryList.find(0);
+            const res = await GroceryList.get(0);
             console.log(res)
             fail();
         } catch (err) {
