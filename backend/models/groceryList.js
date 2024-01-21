@@ -88,6 +88,12 @@ class GroceryList {
      * 
     **/
 
+    static async find(id){
+
+        
+
+    }
+
     // Create a grocery list
     /** create(list_name, username)
      * 

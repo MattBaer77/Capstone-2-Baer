@@ -64,26 +64,26 @@ describe("findAll", () => {
                     }
                 ]
             }, {
-                id: 2,
-                ingredients: [
-                    {
-                        amount: 4,
-                        id: 3,
-                        ingredient_id: 100,
-                        minimum_amount: 1,
-                        unit: "Some Unit"
-                    },
-                    {
-                        amount: 4,
-                        id: 4,
-                        ingredient_id: 100,
-                        minimum_amount: 1,
-                        unit: "Some Unit"
-                    }
-                ],
-            list_name: "testlistU1-2",
-            owner: "u1",
-            recipes: [
+                    id: 2,
+                    ingredients: [
+                        {
+                            amount: 4,
+                            id: 3,
+                            ingredient_id: 100,
+                            minimum_amount: 1,
+                            unit: "Some Unit"
+                        },
+                        {
+                            amount: 4,
+                            id: 4,
+                            ingredient_id: 100,
+                            minimum_amount: 1,
+                            unit: "Some Unit"
+                        }
+                    ],
+                list_name: "testlistU1-2",
+                owner: "u1",
+                recipes: [
                     {
                         id: 4,
                         recipe_id: 22
@@ -119,6 +119,68 @@ describe("findAll", () => {
 });
 
 // get
+
+describe("get", () => {
+
+    test("works", async() => {
+
+        const groceryList = await GroceryList.get(1);
+
+        expect(groceryList).toEqual(
+
+            {
+                id: 1,
+                ingredients: [
+                    {
+                        amount: 2,
+                        id: 1,
+                        ingredient_id: 100,
+                        minimum_amount: 1,
+                        unit: "Some Unit"
+                    },
+                    {
+                        amount: 2,
+                        id: 2,
+                        ingredient_id: 100,
+                        minimum_amount: 1,
+                        unit: "Some Unit"
+                    }
+                ],
+                list_name: "testlistU1-1",
+                owner: "u1",
+                recipes: [
+                    {
+                        id: 1,
+                        recipe_id: 11
+                    },
+                    {
+                        id: 2,
+                        recipe_id: 12
+                    },
+                    {
+                        id: 3,
+                        recipe_id: 32
+                    }
+                ]
+            }
+
+        )
+
+    });
+
+    test("not found if no such id", async function () {
+
+        try {
+            const res = await GroceryList.find(0);
+            console.log(res)
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+})
 
 // create
 
