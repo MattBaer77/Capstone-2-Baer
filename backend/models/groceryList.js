@@ -352,7 +352,7 @@ class GroceryList {
             [id, recipeId]
         );
 
-        return true
+        return true;
 
     };
 
@@ -363,6 +363,22 @@ class GroceryList {
      * May need to remove ingredients and decrement minimum amounts
      * 
     **/
+
+    static async deleteRecipe(id) {
+
+        const res = await db.query(
+            `DELETE
+            FROM grocery_lists_recipes
+            WHERE id = $1
+            RETURNING id, grocery_list_id, recipe_id`,
+            [id]
+        );
+
+        if(!res.rows.length) throw new ExpressError(`No recipe on grocery list with combined id of ${id}`, 404);
+
+        return true;
+
+    }
 
 }
 
