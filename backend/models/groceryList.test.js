@@ -443,4 +443,100 @@ describe("delete ingredient from grocery list", () => {
 
 // addRecipe
 
+describe("add recipe to grocery list", () => {
+
+    const fauxRecipe = {
+        id:1,
+        recipeId:13
+    };
+
+    const fauxRecipeExisting = {
+        id:1,
+        recipeId:11
+    };
+
+    const fauxRecipeNoValidGroceryList = {
+        id:100,
+        recipeId:11
+    };
+
+    test("works", async() => {
+
+        let res = await GroceryList.addRecipe(fauxRecipe.id, fauxRecipe.recipeId)
+        expect(res).toEqual(true)
+
+        const recipeCheck = await db.query(
+            `SELECT
+            id,
+            grocery_list_id AS "groceryListId"
+            recipe_id AS "recipeId"
+            FROM grocery_lists_recipes
+            WHERE grocery_list_id = 1 AND recipe_id = 13`
+        )
+
+        expect(recipeCheck.rows.length).toEqual(1)
+        expect(recipeCheck.rows[0].id).toEqual(6)
+        expect(recipeCheck.rows[0].groceryListId).toEqual(1)
+        expect(recipeCheck.rows[0].recipeId).toEqual(13)
+
+    });
+
+    test("works if duplicate recipe exists", async() => {
+
+        let res = await GroceryList.addRecipe(fauxRecipeExisting.id, fauxRecipeExisting.recipeId)
+        expect(res).toEqual(true)
+
+        const recipeCheck = await db.query(
+            `SELECT
+            id,
+            grocery_list_id AS "groceryListId",
+            recipe_id AS "recipeId"
+            FROM grocery_lists_recipes
+            WHERE grocery_list_id = 1 AND recipe_id = 11`
+        )
+
+        expect(recipeCheck.rows.length).toEqual(2)
+        expect(recipeCheck.rows[0].id).toEqual(6)
+        expect(recipeCheck.rows[0].groceryListId).toEqual(1)
+        expect(recipeCheck.rows[0].recipeId).toEqual(11)
+        expect(recipeCheck.rows[1].id).toEqual(1)
+        expect(recipeCheck.rows[1].recipeId).toEqual(11)
+
+    });
+
+    test("throws error if grocery list id does not exist", async() => {
+
+        try{
+            await GroceryList.addRecipe(fauxRecipeNoValidGroceryList.id, fauxRecipeNoValidGroceryList.recipeId);
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+});
+
 // deleteRecipe
+
+describe("delete recipe from grocery list", () => {
+
+    test("works", async() => {
+
+        let res = await GroceryList.deleteRecipe(1)
+        expect(res).toEqual(true)
+
+    })
+
+    test("throws error if no recipe on grocery list with specified id", async () => {
+
+        try{
+            await GroceryList.addRecipe(100);
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+})
