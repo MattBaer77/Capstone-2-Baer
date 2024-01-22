@@ -278,6 +278,36 @@ class GroceryList {
      * 
     **/
 
+    static async setMinimumAmount(id, ingredientId, minimumAmount) {
+
+        const validUpdateCheck = await db.query(
+            `SELECT grocery_list_id AS "id",
+                    ingredient_id AS "ingredientId",
+                    minimum_amount AS "minimumAmount"
+                FROM grocery_lists_ingredients
+                WHERE grocery_list_id = $1 AND ingredient_id = $2`,
+                [id, ingredientId]
+        )
+
+        console.log(validUpdateCheck.rows)
+
+        if(!validUpdateCheck.rows[0]) throw new ExpressError(`No grocery list with id ${id}`, 404)
+        if(!validUpdateCheck.rows[0].ingredientId) throw new ExpressError(`No ingredient with id ${ingredientId} on grocery list with id ${id}`, 404)
+
+        const res = await db.query(
+            `UPDATE grocery_lists_ingredients
+                SET minimum_amount = $3
+                WHERE grocery_list_id = $1 AND ingredient_id = $2
+                RETURNING grocery_list_id, ingredient_id, minimum_amount`,
+                [id, ingredientId, minimumAmount]
+        )
+
+        console.log(res.rows)
+
+        return true
+
+    };
+
     // delete an ingredient from a grocery list
     /** deleteIngredient(id, ingredientId)
      * 

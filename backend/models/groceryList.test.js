@@ -363,7 +363,7 @@ describe("set minimum amount", () => {
         const ingredientCheck = await db.query(
 
             `SELECT
-            minimum_amount AS "minimumAmount,
+            minimum_amount AS "minimumAmount"
             FROM grocery_lists_ingredients
             WHERE grocery_list_id = 1 AND ingredient_id = 100`
 
