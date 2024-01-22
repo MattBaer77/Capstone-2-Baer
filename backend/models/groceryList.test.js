@@ -316,7 +316,7 @@ describe("set amount", () => {
         const ingredientCheck = await db.query(
 
             `SELECT
-            amount,
+            amount
             FROM grocery_lists_ingredients
             WHERE grocery_list_id = 1 AND ingredient_id = 100`
 
@@ -332,6 +332,7 @@ describe("set amount", () => {
             await GroceryList.setAmount(100,100,3);
             fail();
         } catch(err) {
+            console.log(err)
             expect(err instanceof ExpressError).toBeTruthy();
         }
 
