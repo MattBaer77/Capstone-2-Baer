@@ -252,8 +252,6 @@ class GroceryList {
                 [id, ingredientId]
         )
 
-        console.log(validUpdateCheck.rows)
-
         if(!validUpdateCheck.rows[0]) throw new ExpressError(`No grocery list with id ${id}`, 404)
         if(!validUpdateCheck.rows[0].ingredientId) throw new ExpressError(`No ingredient with id ${ingredientId} on grocery list with id ${id}`, 404)
 
@@ -264,8 +262,6 @@ class GroceryList {
                 RETURNING grocery_list_id, ingredient_id, amount`,
                 [id, ingredientId, amount]
         )
-
-        console.log(res.rows)
 
         return true
 
@@ -289,8 +285,6 @@ class GroceryList {
                 [id, ingredientId]
         )
 
-        console.log(validUpdateCheck.rows)
-
         if(!validUpdateCheck.rows[0]) throw new ExpressError(`No grocery list with id ${id}`, 404)
         if(!validUpdateCheck.rows[0].ingredientId) throw new ExpressError(`No ingredient with id ${ingredientId} on grocery list with id ${id}`, 404)
 
@@ -301,8 +295,6 @@ class GroceryList {
                 RETURNING grocery_list_id, ingredient_id, minimum_amount`,
                 [id, ingredientId, minimumAmount]
         )
-
-        console.log(res.rows)
 
         return true
 
@@ -317,7 +309,21 @@ class GroceryList {
      * 
     **/
 
-    static async ingredientDelete(){
+    static async ingredientDelete(id, ingredientId){
+
+        const res = await db.query(
+            `DELETE
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = $1 AND ingredient_id = $2
+            RETURNING grocery_list_id, ingredient_id`,
+            [id, ingredientId]
+        );
+
+        console.log(res.rows)
+
+        if(!res.rows.length) throw new ExpressError(`No ingredient with id ${ingredientId} on grocery list with id ${id}`, 404);
+
+        return true;
 
     }
 

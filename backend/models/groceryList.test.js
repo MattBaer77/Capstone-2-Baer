@@ -332,7 +332,6 @@ describe("set amount", () => {
             await GroceryList.setAmount(100,100,3);
             fail();
         } catch(err) {
-            console.log(err)
             expect(err instanceof ExpressError).toBeTruthy();
         }
 
@@ -409,7 +408,7 @@ describe("delete ingredient from grocery list", () => {
         const ingredientCheck = await db.query(
             `SELECT
             grocery_list_id AS "id",
-            ingredient_id AS "ingredientId",
+            ingredient_id AS "ingredientId"
             FROM grocery_lists_ingredients
             WHERE grocery_list_id = 1 AND ingredient_id = 100`
         )
