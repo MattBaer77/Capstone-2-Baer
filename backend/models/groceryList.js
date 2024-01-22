@@ -317,6 +317,10 @@ class GroceryList {
      * 
     **/
 
+    static async ingredientDelete(){
+
+    }
+
     // Add a recipe to a grocery list
     /** addRecipe(id, recipeId)
      * 

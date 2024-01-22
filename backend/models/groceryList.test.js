@@ -399,6 +399,49 @@ describe("set minimum amount", () => {
 
 // deleteIngredient
 
+describe("delete ingredient from grocery list", () => {
+
+    test("works", async() => {
+
+        let res = await GroceryList.ingredientDelete(1,100);
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+            `SELECT
+            grocery_list_id AS "id",
+            ingredient_id AS "ingredientId",
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+        )
+
+        expect(ingredientCheck.rows.length).toEqual(0)
+
+    });
+
+    test("throws error if no such grocery list", async() => {
+
+        try{
+            await GroceryList.ingredientDelete(100,100);
+            fail();
+        } catch(err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+    test("throws error if no such ingredient on grocery list", async() => {
+
+        try{
+            await GroceryList.ingredientDelete(1,102);
+            fail();
+        } catch(err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
+
+    });
+
+});
+
 // addRecipe
 
 // deleteRecipe
