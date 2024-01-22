@@ -402,7 +402,7 @@ describe("delete ingredient from grocery list", () => {
 
     test("works", async() => {
 
-        let res = await GroceryList.ingredientDelete(1,100);
+        let res = await GroceryList.deleteIngredient(1,100);
         expect(res).toEqual(true)
 
         const ingredientCheck = await db.query(
@@ -420,7 +420,7 @@ describe("delete ingredient from grocery list", () => {
     test("throws error if no such grocery list", async() => {
 
         try{
-            await GroceryList.ingredientDelete(100,100);
+            await GroceryList.deleteIngredient(100,100);
             fail();
         } catch(err) {
             expect(err instanceof ExpressError).toBeTruthy();
@@ -431,7 +431,7 @@ describe("delete ingredient from grocery list", () => {
     test("throws error if no such ingredient on grocery list", async() => {
 
         try{
-            await GroceryList.ingredientDelete(1,102);
+            await GroceryList.deleteIngredient(1,102);
             fail();
         } catch(err) {
             expect(err instanceof ExpressError).toBeTruthy();

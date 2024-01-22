@@ -309,7 +309,7 @@ class GroceryList {
      * 
     **/
 
-    static async ingredientDelete(id, ingredientId){
+    static async deleteIngredient(id, ingredientId){
 
         const res = await db.query(
             `DELETE
