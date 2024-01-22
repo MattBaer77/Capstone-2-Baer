@@ -203,9 +203,9 @@ class GroceryList {
 
             `SELECT id FROM grocery_list WHERE id = $1`, [id]
 
-        )
+        );
 
-        if(!listCheck.rows[0]) throw new ExpressError(`Grocery list ${id} does not exist.`, 404)
+        if(!listCheck.rows[0]) throw new ExpressError(`Grocery list ${id} does not exist.`, 404);
 
         const duplicateCheck = await db.query(
 
@@ -319,13 +319,11 @@ class GroceryList {
             [id, ingredientId]
         );
 
-        console.log(res.rows)
-
         if(!res.rows.length) throw new ExpressError(`No ingredient with id ${ingredientId} on grocery list with id ${id}`, 404);
 
         return true;
 
-    }
+    };
 
     // Add a recipe to a grocery list
     /** addRecipe(id, recipeId)
@@ -335,6 +333,28 @@ class GroceryList {
      *
      *
     **/
+
+    static async addRecipe(id, recipeId) {
+
+        const listCheck = await db.query(
+
+            `SELECT id FROM grocery_list WHERE id = $1`, [id]
+
+        );
+
+        if(!listCheck.rows[0]) throw new ExpressError(`Grocery list ${id} does not exist.`, 404);
+
+        const result = await db.query(
+            `INSERT INTO grocery_lists_recipes
+            (grocery_list_id, recipe_id)
+            VALUES ($1, $2)
+            RETURNING grocery_list_id, recipe_id`,
+            [id, recipeId]
+        );
+
+        return true
+
+    };
 
     // delete a recipe from a grocery list
     /** deleteRecipe(id, recipeId)

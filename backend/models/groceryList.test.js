@@ -468,7 +468,7 @@ describe("add recipe to grocery list", () => {
         const recipeCheck = await db.query(
             `SELECT
             id,
-            grocery_list_id AS "groceryListId"
+            grocery_list_id AS "groceryListId",
             recipe_id AS "recipeId"
             FROM grocery_lists_recipes
             WHERE grocery_list_id = 1 AND recipe_id = 13`
@@ -496,10 +496,11 @@ describe("add recipe to grocery list", () => {
         )
 
         expect(recipeCheck.rows.length).toEqual(2)
-        expect(recipeCheck.rows[0].id).toEqual(6)
+        expect(recipeCheck.rows[0].id).toEqual(1)
         expect(recipeCheck.rows[0].groceryListId).toEqual(1)
         expect(recipeCheck.rows[0].recipeId).toEqual(11)
-        expect(recipeCheck.rows[1].id).toEqual(1)
+        expect(recipeCheck.rows[1].id).toEqual(7)
+        expect(recipeCheck.rows[1].groceryListId).toEqual(1)
         expect(recipeCheck.rows[1].recipeId).toEqual(11)
 
     });
@@ -531,7 +532,7 @@ describe("delete recipe from grocery list", () => {
     test("throws error if no recipe on grocery list with specified id", async () => {
 
         try{
-            await GroceryList.addRecipe(100);
+            await GroceryList.deleteRecipe(100);
             fail();
         } catch (err) {
             expect(err instanceof ExpressError).toBeTruthy();
