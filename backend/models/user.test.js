@@ -310,10 +310,11 @@ describe("update", function () {
 describe("remove", function () {
 
   test("works", async function () {
-    await User.remove("u1");
-    const res = await db.query(
+    const res = await User.remove("u1");
+    expect(res).toEqual(true)
+    const removeCheck = await db.query(
         "SELECT * FROM users WHERE username='u1'");
-    expect(res.rows.length).toEqual(0);
+    expect(removeCheck.rows.length).toEqual(0);
   });
 
   test("not found if no such user", async function () {

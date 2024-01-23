@@ -35,7 +35,7 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, is_admin }
+   * Returns { username, firstName, lastName, isAdmin }
    *
    * Throws ExpressError if user not found.
    * 
@@ -64,7 +64,7 @@ class User {
 
   /** Given a username, return data about user + that user's cache and intolerances
    *
-   * Returns { username, first_name, last_name, is_admin, cache, intolerances }
+   * Returns { username, firstName, lastName, isAdmin, cache, intolerances }
    * 
    * Where intolerances is [{id, intolerance_name, ...]
    *
@@ -262,6 +262,8 @@ class User {
 
       if (!user) throw new ExpressError(`No user: ${username}`, 404);
 
+      return true
+
   };
 
   // *************************************************
@@ -386,7 +388,7 @@ class User {
    * 
    * Delete an existing intolerance.
    * 
-   * returns {username, intolerance:{id, intolerance_name}}
+   * returns {username, intolerance:{id, intolerance_name...}} (excludes newly created intolerances)
    * 
   */
 
