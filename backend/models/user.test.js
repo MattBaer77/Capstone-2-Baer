@@ -412,7 +412,10 @@ describe("add user's intolerance", function () {
 
     let res = await User.addUserIntolerance(newIntoleranceU1.username, newIntoleranceU1.intoleranceId);
 
-    expect(res).toEqual({
+    expect(res).toEqual(true);
+
+    /**
+     * {
 
       username: "u1",
       firstName: "U1F",
@@ -436,7 +439,8 @@ describe("add user's intolerance", function () {
       email: "u1@email.com",
       isAdmin: false
 
-    });
+    }
+     */
 
   })
 
@@ -444,7 +448,10 @@ describe("add user's intolerance", function () {
 
     let intolerances = await User.addUserIntolerance(newIntoleranceU3.username, newIntoleranceU3.intoleranceId);
 
-    expect(intolerances).toEqual({
+    expect(intolerances).toEqual(true);
+
+    /**
+     * {
 
       username: "u3",
       firstName: "U3F",
@@ -460,7 +467,8 @@ describe("add user's intolerance", function () {
       email: "u3@email.com",
       isAdmin: false
 
-    });
+    }
+     */
 
   })
 

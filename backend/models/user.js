@@ -362,7 +362,7 @@ class User {
 
     try{
 
-      const insert = await db.query(
+      await db.query(
 
         `INSERT INTO users_intolerances
          (username, intolerance_id)
@@ -372,15 +372,14 @@ class User {
   
       );
 
-      const result = this.getWithIntolerances(username) // REMOVE THIS FUNCTIONALITY - CALL .getWithIntolerances through appropriate route to eliminate redundancy - reload user whole every time
-  
-      return result; // This route should return nothing...
 
     } catch(e) {
 
-      throw new ExpressError(`User: ${username} already assigned Intolerance with id: ${intoleranceId} and intolerance_name: ${existingIntoleranceCheck.rows[0].intoleranceName}`)
-
+      throw new ExpressError(`Conflict - Duplicate Data - Could not update intolerances for ${username} to add ${intoleranceId}`, 409)
+      
     }
+
+    return true
 
   };
 
@@ -509,7 +508,7 @@ class User {
 
     const user = result.rows[0]
 
-    if (!user) throw new ExpressError(`Could not update cache for ${username} to ${data}`)
+    if (!user) throw new ExpressError(`Could not update cache for ${username} to ${data}`, 500)
 
     return true
 
