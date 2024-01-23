@@ -107,7 +107,6 @@ class User {
 
   };
 
-
   /** authenticate user with username, password.
    *
    * Returns { username, first_name, last_name, email, is_admin }
