@@ -516,7 +516,7 @@ describe("retrieve a user's cached data", function() {
 
     const res = await User.getCache("u1");
 
-    expect(res.rows[0]).toEqual(
+    expect(res).toEqual(
       {faux: "json", some: "more"}
     )
 

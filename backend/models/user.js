@@ -263,8 +263,6 @@ class User {
 
     user["intolerances"] = intolerancesRes.rows
 
-    console.log(user)
-
     return user;
 
   };
@@ -371,19 +369,43 @@ class User {
 
   /** Given a username
    * 
-   * retrieve Cached Recipes
+   * get Cached Recipes
    * 
   */
+
+  static async getCache(username){
+
+    const result = await db.query(
+      `SELECT username,
+              cache
+      FROM users
+      WHERE username = $1`,
+      [username]
+    )
+
+    const user = result.rows[0]
+
+    if (!user) throw new ExpressError(`No such user ${username}`)
+
+    const cache = result.rows[0].cache
+
+    return cache
+
+  }
 
   /** Given a username
    * 
    * set Cached Recipes
+   * 
+   * returns true or error
    * 
   */
 
   /** Given a username
    * 
    * clear Cached Recipes
+   * 
+   * returns true or error
    * 
   */
 
