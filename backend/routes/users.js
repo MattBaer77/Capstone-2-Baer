@@ -55,6 +55,3 @@ const router = express.Router();
 // ADD INTOLERANCE *
 
 // REMOVE INTOLERANCE *
-
-
-
