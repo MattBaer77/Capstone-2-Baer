@@ -99,6 +99,51 @@ describe("get", () => {
 
 });
 
+// getWithCache - by username
+
+describe("get with cache", () => {
+
+  test("works", async() => {
+
+      let user = await User.getWithCache("u1");
+      expect(user).toEqual({
+        username: "u1",
+        firstName: "U1F",
+        lastName: "U1L",
+        email: "u1@email.com",
+        isAdmin: false,
+        cache:{faux: "json", some: "more"}
+      });
+
+  })
+
+  test("works - user has no cached recipes", async() => {
+
+      let user = await User.getWithCache("u1");
+      expect(user).toEqual({
+        username: "u3",
+        firstName: "U3F",
+        lastName: "U3L",
+        email: "u3@email.com",
+        isAdmin: false,
+        cache:null
+      });
+
+  })
+
+  test("not found if no such user", async function () {
+
+      try {
+        await User.getWithCache("nope");
+        fail();
+      } catch (err) {
+        expect(err instanceof ExpressError).toBeTruthy();
+      }
+      
+  });
+
+});
+
 //  authenticate
 
 describe("authenticate", function () {
