@@ -369,6 +369,24 @@ class User {
 
   }
 
+  /** Given a username
+   * 
+   * retrieve Cached Recipes
+   * 
+  */
+
+  /** Given a username
+   * 
+   * set Cached Recipes
+   * 
+  */
+
+  /** Given a username
+   * 
+   * clear Cached Recipes
+   * 
+  */
+
 }
 
 module.exports = User;

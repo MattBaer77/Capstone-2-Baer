@@ -508,4 +508,131 @@ describe("remove user's intolerance", function () {
     
 });
 
+// Retrieve Cache
+
+describe("retrieve a user's cached data", function() {
+
+  test("works if there is cached data", async function () {
+
+    const res = await User.getCache("u1");
+
+    expect(res.rows[0]).toEqual(
+      {faux: "json", some: "more"}
+    )
+
+  })
+
+  test("throws error if no such user", async function () {
+
+    try {
+      await User.getCache("notValidUser");
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+
+  })
+
+})
+
+// Set Cache
+
+describe("set a user's cached data", function() {
+
+  test("works if there is cached data", async function () {
+
+    const res = await User.setCache("u1", fauxCacheData);
+
+    expect(res.rows[0]).toEqual(true)
+
+    const cacheCheck = await db.query(
+      `SELECT cache
+      FROM users
+      WHERE username = 'u1`
+      )
+
+    expect(cacheCheck.rows[0]).toEqual(fauxCacheData)
+
+  })
+
+  test("works if there is no cached data", async function () {
+
+    const res = await User.setCache("u3", fauxCacheData);
+
+    expect(res.rows[0]).toEqual(true)
+
+    const cacheCheck = await db.query(
+      `SELECT cache
+      FROM users
+      WHERE username = 'u3`
+      )
+
+    expect(cacheCheck.rows[0]).toEqual(fauxCacheData)
+
+  })
+
+  test("throws error if no such user", async function () {
+
+    try {
+      await User.setCache("notValidUser", fauxCacheData);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+
+  })
+
+})
+
+// Clear cache
+
+describe("clear a user's cached data", function() {
+
+  test("works if there is cached data", async function () {
+
+    const res = await User.clearCache("u1");
+
+    expect(res.rows[0]).toEqual(true)
+
+    const cacheCheck = await db.query(
+      `SELECT cache
+      FROM users
+      WHERE username = 'u3`
+      )
+
+    expect(cacheCheck.rows[0]).toEqual(null)
+
+  })
+
+  test("works if there is no cached data", async function () {
+
+    const res = await User.clearCache("u3");
+
+    expect(res.rows[0]).toEqual(true)
+
+    const cacheCheck = await db.query(
+      `SELECT cache
+      FROM users
+      WHERE username = 'u3`
+      )
+
+    expect(cacheCheck.rows[0]).toEqual(null)
+
+  })
+
+  test("throws error if no such user", async function () {
+
+    try {
+      await User.clearCache("notValidUser");
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+
+  })
+
+})
+
+
+
 // FOR EVERYTHING THAT CREATES - ENSURE ADDING DUPLICATE PRODUCES EXPECTED RESULT
