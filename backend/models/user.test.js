@@ -539,19 +539,21 @@ describe("retrieve a user's cached data", function() {
 
 describe("set a user's cached data", function() {
 
+  const fauxCacheData = {fauxDataForSet : "data"}
+
   test("works if there is cached data", async function () {
 
     const res = await User.setCache("u1", fauxCacheData);
 
-    expect(res.rows[0]).toEqual(true)
+    expect(res).toEqual(true)
 
     const cacheCheck = await db.query(
       `SELECT cache
       FROM users
-      WHERE username = 'u1`
+      WHERE username = 'u1'`
       )
 
-    expect(cacheCheck.rows[0]).toEqual(fauxCacheData)
+    expect(cacheCheck.rows[0].cache).toEqual(fauxCacheData)
 
   })
 
@@ -559,15 +561,15 @@ describe("set a user's cached data", function() {
 
     const res = await User.setCache("u3", fauxCacheData);
 
-    expect(res.rows[0]).toEqual(true)
+    expect(res).toEqual(true)
 
     const cacheCheck = await db.query(
       `SELECT cache
       FROM users
-      WHERE username = 'u3`
+      WHERE username = 'u3'`
       )
 
-    expect(cacheCheck.rows[0]).toEqual(fauxCacheData)
+    expect(cacheCheck.rows[0].cache).toEqual(fauxCacheData)
 
   })
 

@@ -401,6 +401,43 @@ class User {
    * 
   */
 
+  static async setCache(username, data){
+
+    const existingUserCheck = await db.query(
+
+      `SELECT username,
+              first_name AS "firstName",
+              last_name AS "lastName",
+              email,
+              is_admin AS "isAdmin"
+        FROM users
+        WHERE username = $1`,
+      [username],
+
+    );
+
+    if (!existingUserCheck.rows[0]) {
+
+      throw new ExpressError(`No User: ${username}`, 404)
+
+    }
+
+    const result = await db.query(
+      `UPDATE users
+      SET cache = $2
+      WHERE username = $1
+      RETURNING username`,
+      [username,data]
+    )
+
+    const user = result.rows[0]
+
+    if (!user) throw new ExpressError(`Could not update cache for ${username} to ${data}`)
+
+    return true
+
+  }
+
   /** Given a username
    * 
    * clear Cached Recipes
