@@ -594,15 +594,15 @@ describe("clear a user's cached data", function() {
 
     const res = await User.clearCache("u1");
 
-    expect(res.rows[0]).toEqual(true)
+    expect(res).toEqual(true)
 
     const cacheCheck = await db.query(
       `SELECT cache
       FROM users
-      WHERE username = 'u3`
+      WHERE username = 'u1'`
       )
 
-    expect(cacheCheck.rows[0]).toEqual(null)
+    expect(cacheCheck.rows[0].cache).toEqual(null)
 
   })
 
@@ -610,15 +610,15 @@ describe("clear a user's cached data", function() {
 
     const res = await User.clearCache("u3");
 
-    expect(res.rows[0]).toEqual(true)
+    expect(res).toEqual(true)
 
     const cacheCheck = await db.query(
       `SELECT cache
       FROM users
-      WHERE username = 'u3`
+      WHERE username = 'u3'`
       )
 
-    expect(cacheCheck.rows[0]).toEqual(null)
+    expect(cacheCheck.rows[0].cache).toEqual(null)
 
   })
 
