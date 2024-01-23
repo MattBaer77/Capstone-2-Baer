@@ -62,6 +62,36 @@ class User {
 
   };
 
+  /** Given a username, return data about user - including cache.
+   *
+   * Returns { username, first_name, last_name, is_admin, cache }
+   *
+   * Throws ExpressError if user not found.
+   * 
+  **/
+
+  static async getWithCache(username) {
+
+      const userRes = await db.query(
+              `SELECT username,
+                      first_name AS "firstName",
+                      last_name AS "lastName",
+                      email,
+                      is_admin AS "isAdmin",
+                      cache
+              FROM users
+              WHERE username = $1`,
+          [username],
+      );
+
+      const user = userRes.rows[0];
+
+      if (!user) throw new ExpressError(`No user: ${username}`, 404);
+
+      return user;
+
+  };
+
   /** authenticate user with username, password.
    *
    * Returns { username, first_name, last_name, email, is_admin }

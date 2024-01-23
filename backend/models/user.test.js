@@ -119,7 +119,7 @@ describe("get with cache", () => {
 
   test("works - user has no cached recipes", async() => {
 
-      let user = await User.getWithCache("u1");
+      let user = await User.getWithCache("u3");
       expect(user).toEqual({
         username: "u3",
         firstName: "U3F",
