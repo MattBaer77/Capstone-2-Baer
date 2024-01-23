@@ -62,35 +62,16 @@ class User {
 
   };
 
-  /** Given a username, return data about user - including cache.
+  /** Given a username, return data about user + that user's cache and intolerances
    *
-   * Returns { username, first_name, last_name, is_admin, cache }
+   * Returns { username, first_name, last_name, is_admin, cache, intolerances }
+   * 
+   * Where intolerances is [{id, intolerance_name, ...]
    *
    * Throws ExpressError if user not found.
    * 
-  **/
+  */
 
-  static async getWithCache(username) {
-
-      const userRes = await db.query(
-              `SELECT username,
-                      first_name AS "firstName",
-                      last_name AS "lastName",
-                      email,
-                      is_admin AS "isAdmin",
-                      cache
-              FROM users
-              WHERE username = $1`,
-          [username],
-      );
-
-      const user = userRes.rows[0];
-
-      if (!user) throw new ExpressError(`No user: ${username}`, 404);
-
-      return user;
-
-  };
 
   /** authenticate user with username, password.
    *
@@ -396,6 +377,36 @@ class User {
     return deletedUserIntolerance
 
   }
+
+  /** Given a username, return data about user + that user's cache.
+   *
+   * Returns { username, first_name, last_name, is_admin, cache }
+   *
+   * Throws ExpressError if user not found.
+   * 
+  **/
+
+  static async getWithCache(username) {
+
+    const userRes = await db.query(
+            `SELECT username,
+                    first_name AS "firstName",
+                    last_name AS "lastName",
+                    email,
+                    is_admin AS "isAdmin",
+                    cache
+            FROM users
+            WHERE username = $1`,
+        [username],
+    );
+
+    const user = userRes.rows[0];
+
+    if (!user) throw new ExpressError(`No user: ${username}`, 404);
+
+    return user;
+
+  };
 
   /** Given a username
    * 

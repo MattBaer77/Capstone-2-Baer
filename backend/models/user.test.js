@@ -99,46 +99,59 @@ describe("get", () => {
 
 });
 
-// getWithCache - by username
+// getWithCacheAndIntolerances - by username
 
-describe("get with cache", () => {
+describe("getWithCacheAndIntolerances", () => {
 
-  test("works", async() => {
+  test("works - user with intolerances", async() => {
 
-      let user = await User.getWithCache("u1");
-      expect(user).toEqual({
-        username: "u1",
-        firstName: "U1F",
-        lastName: "U1L",
-        email: "u1@email.com",
-        isAdmin: false,
-        cache:{faux: "json", some: "more"}
-      });
+    let user = await User.getWithCacheAndIntolerances("u1");
+    expect(user).toEqual({
+      username: "u1",
+      firstName: "U1F",
+      intolerances: [
+
+        {
+          intoleranceId: 2,
+          intoleranceName:"egg",
+        },
+        {
+          intoleranceId: 3,
+          intoleranceName:"gluten",
+        },
+
+      ],
+      lastName: "U1L",
+      email: "u1@email.com",
+      isAdmin: false,
+      cache:{faux: "json", some: "more"}
+    });
 
   })
 
-  test("works - user has no cached recipes", async() => {
+  test("works - user without intolerances", async() => {
 
-      let user = await User.getWithCache("u3");
-      expect(user).toEqual({
-        username: "u3",
-        firstName: "U3F",
-        lastName: "U3L",
-        email: "u3@email.com",
-        isAdmin: false,
-        cache:null
-      });
+    let user = await User.getWithCacheAndIntolerances("u3");
+    expect(user).toEqual({
+      username: "u3",
+      firstName: "U3F",
+      intolerances: [],
+      lastName: "U3L",
+      email: "u3@email.com",
+      isAdmin: false,
+      cache: null
+    });
 
   })
 
   test("not found if no such user", async function () {
 
-      try {
-        await User.getWithCache("nope");
-        fail();
-      } catch (err) {
-        expect(err instanceof ExpressError).toBeTruthy();
-      }
+    try {
+      await User.getWithCacheAndIntolerances("nope");
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
       
   });
 
@@ -551,6 +564,51 @@ describe("remove user's intolerance", function () {
     }
   });
     
+});
+
+// getWithCache - by username
+
+describe("get with cache", () => {
+
+  test("works", async() => {
+
+      let user = await User.getWithCache("u1");
+      expect(user).toEqual({
+        username: "u1",
+        firstName: "U1F",
+        lastName: "U1L",
+        email: "u1@email.com",
+        isAdmin: false,
+        cache:{faux: "json", some: "more"}
+      });
+
+  })
+
+  test("works - user has no cached recipes", async() => {
+
+      let user = await User.getWithCache("u3");
+      expect(user).toEqual({
+        username: "u3",
+        firstName: "U3F",
+        lastName: "U3L",
+        email: "u3@email.com",
+        isAdmin: false,
+        cache:null
+      });
+
+  })
+
+  test("not found if no such user", async function () {
+
+      try {
+        await User.getWithCache("nope");
+        fail();
+      } catch (err) {
+        expect(err instanceof ExpressError).toBeTruthy();
+      }
+      
+  });
+
 });
 
 // Retrieve Cache
