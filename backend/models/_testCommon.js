@@ -34,12 +34,13 @@ async function commonBeforeAll() {
                           first_name,
                           last_name,
                           email,
-                          is_admin)
-        VALUES ('u1', $1, 'U1F', 'U1L', 'u1@email.com', false),
-               ('u2', $2, 'U2F', 'U2L', 'u2@email.com', false),
-               ('u3', $3, 'U3F', 'U3L', 'u3@email.com', false),
-               ('uA', $4, 'UAF', 'UAL', 'uA@email.com', true),
-               ('uAB', $5, 'UABF', 'UABL', 'uAB@email.com', true)
+                          is_admin,
+                          cache)
+        VALUES ('u1', $1, 'U1F', 'U1L', 'u1@email.com', false, '{"faux": "json", "some": "more"}'),
+               ('u2', $2, 'U2F', 'U2L', 'u2@email.com', false, '[{"faux":"json2", "some":"more2"}, {"another":"obj"}]'),
+               ('u3', $3, 'U3F', 'U3L', 'u3@email.com', false, null),
+               ('uA', $4, 'UAF', 'UAL', 'uA@email.com', true, null),
+               ('uAB', $5, 'UABF', 'UABL', 'uAB@email.com', true, null)
                RETURNING username`,
                [
                 await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
