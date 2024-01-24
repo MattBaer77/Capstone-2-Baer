@@ -1,23 +1,25 @@
 "use strict";
 
 const express = require("express");
-const morgan = require("morgan")
+const morgan = require("morgan");
 const ExpressError = require("./expressError");
 
 const app = express();
-app.use(express.json())
-app.use(morgan("tiny"))
+app.use(express.json());
+app.use(morgan("tiny"));
 
+const authRoutes = require("./routes/auth");
 const recipeRoutes = require("./routes/recipes");
 const jokesRoutes = require("./routes/jokes");
 
-app.use("/recipes", recipeRoutes)
-app.use("/jokes", jokesRoutes)
+app.use("/auth", authRoutes);
+app.use("/recipes", recipeRoutes);
+app.use("/jokes", jokesRoutes);
 
 // 404 Error Handling
 app.use((req, res, next) => {
 
-    const notFoundError = new ExpressError("Not Found!!!", 404)
+    const notFoundError = new ExpressError("Not Found!!!", 404);
 
     return next(notFoundError);
 
