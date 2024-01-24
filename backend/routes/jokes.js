@@ -4,7 +4,7 @@
 
 const express = require("express")
 
-const { SpoonApi } = require("../models/spoonModel")
+const SpoonApi = require("../models/spoonModel")
 
 const router = express.Router({ mergeParams: true });
 
