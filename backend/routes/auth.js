@@ -8,8 +8,7 @@ const User = require("../models/user");
 const express = require("express");
 const router = new express.Router();
 
-// create token
-// schemas...
+const createToken = require("../helpers/token")
 const userAuthSchema = require("../schemas/userAuth.json")
 const userRegisterSchema = require("../schemas/userRegister.json")
 
