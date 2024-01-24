@@ -10,6 +10,8 @@ const router = new express.Router();
 
 // create token
 // schemas...
+const userAuthSchema = require("../schemas/userAuth.json")
+const userRegisterSchema = require("../schemas/userRegister.json")
 
 const ExpressError = require("../expressError")
 
