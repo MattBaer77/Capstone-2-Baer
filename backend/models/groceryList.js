@@ -192,7 +192,7 @@ class GroceryList {
     /** addIngredient(id, ingredientId, amount, unit, minimumAmount)
      * 
      * 
-     * return true or false
+     * return true or error
      * 
      *
     **/

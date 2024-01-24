@@ -85,8 +85,6 @@ class SpoonApi {
 
 }
 
-module.exports = {
+module.exports = SpoonApi
 
-    SpoonApi
 
-}

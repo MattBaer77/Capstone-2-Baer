@@ -4,9 +4,9 @@
 
 const jsonschema = require("jsonschema");
 
-const express = require("express")
-const ExpressError = require("../expressError")
-const User = require('../models/user')
+const express = require("express");
+const ExpressError = require("../expressError");
+const User = require('../models/user');
 
 // add Schemas Here
 
@@ -25,7 +25,7 @@ const router = express.Router();
 // (MUST BE SAME USER - OR ADMIN)
 
 // GET USER *
-/** GET USER - /user/[username]
+/** GET USER - /users/[username]
  * 
  * Accepts ?username
  * 
@@ -34,7 +34,7 @@ const router = express.Router();
 */
 
 // GET USER WITH CACHE AND INTOLERANCES *
-/** GET USER - /user/[username]/details
+/** GET USER - /users/[username]/details
  * 
  * Accepts ?username
  * 
@@ -43,7 +43,7 @@ const router = express.Router();
 */
 
 // PATCH USER *
-/** PATCH USER - /user/[username]
+/** PATCH USER - /users/[username]
  * 
  * Accepts any {firstName, lastName, password, email}
  * 
@@ -67,7 +67,7 @@ const router = express.Router();
 // (MUST BE SAME USER)
 
 // GET USER WITH CACHE *
-/** GET USER CACHE - /user/[username]/cache
+/** GET USER CACHE - /users/[username]/cache
  * 
  * Accepts ?username
  * 
@@ -76,7 +76,7 @@ const router = express.Router();
 */
 
 // GET CACHE *
-/** GET USER CACHE - /user/[username]/cache-only
+/** GET USER CACHE - /users/[username]/cache-only
  * 
  * Accepts ?username
  * 
@@ -85,7 +85,7 @@ const router = express.Router();
 */
 
 // SET CACHE *
-/** PUT USER CACHE - /user/[username]/cache
+/** PUT USER CACHE - /users/[username]/cache
  * 
  * Accepts ?username and {data}
  * 
@@ -94,7 +94,7 @@ const router = express.Router();
 */
 
 // CLEAR CACHE *
-/** DELETE USER CACHE - /user/[username]/cache
+/** DELETE USER CACHE - /users/[username]/cache
  * 
  * Accepts ?username
  * 
@@ -108,7 +108,7 @@ const router = express.Router();
 // (MUST BE SAME USER)
 
 // GET USER WITH INTOLERANCES
-/** GET USER WITH INTOLERANCES - /user/[username]/intolerances
+/** GET USER WITH INTOLERANCES - /users/[username]/intolerances
  * 
  * Accepts ?username
  * 
@@ -117,7 +117,7 @@ const router = express.Router();
 */
 
 // ADD INTOLERANCE *
-/** POST USER INTOLERANCE - /user/[username]/intolerances
+/** POST USER INTOLERANCE - /users/[username]/intolerances
  * 
  * Accepts {intoleranceId}
  * 
@@ -126,7 +126,7 @@ const router = express.Router();
 */
 
 // REMOVE INTOLERANCE *
-/** DELETE USER INTOLERANCE - /user/[username]/intolerances
+/** DELETE USER INTOLERANCE - /users/[username]/intolerances
  * 
  * Accepts {intoleranceId}
  * 
