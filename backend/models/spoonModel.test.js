@@ -25,37 +25,26 @@ const mockRandomResponse = {
 };
 
 jest.mock('./spoonModel', () => {
-    // Import the actual module and store it in a variable
+
     const originalSpoonModel = jest.requireActual('./spoonModel');
 
-    return {
-        ...originalSpoonModel,
-        SpoonApi: {
-            ...originalSpoonModel.SpoonApi,
-            // getRandomRecipes: jest.fn(),
-            // fetchFreshData: jest.fn()
-            // getRandomRecipes:jest.fn().mockImplementation(() => mockRandomResponse),
-            getRandomRecipes:jest.fn().mockResolvedValue(mockRandomResponse),
-            // fetchFreshData:
-            // getRandomRecipes:jest.fn().mockImplementation(() => Promise.resolve(mockRandomResponse)),
-            // fetchFreshData:jest.fn().mockImplementation(() => mockRandomResponse),
-        },
-    };
+    originalSpoonModel.getRandomRecipes = jest.fn().mockResolvedValue(mockRandomResponse)
+
+    return originalSpoonModel;
+
 });
 
-// Test the mock (This tests nothing - just ensure code works to test in this commit)
-// Now you can safely import SpoonApi from the mock
-const { SpoonApi } = require('./spoonModel');
+const SpoonApi = require('./spoonModel');
 
-console.log(SpoonApi.getRandomRecipes)
+// SpoonApi.getRandomRecipes = () => {return mockRandomResponse}
+
+// SpoonApi.getRandomRecipes = jest.fn().mockResolvedValue(mockRandomResponse)
+
+// console.log(SpoonApi)
 
 describe("getRandomRecipes Mock Test", () => {
 
     test("mock test works", async () => {
-
-        // SpoonApi.getRandomRecipes.mockReturnValue(mockRandomResponse)
-
-        // console.log(SpoonApi)
 
         const opts = {
             limitLicense: true,
@@ -63,7 +52,7 @@ describe("getRandomRecipes Mock Test", () => {
         };
 
         const fauxResponse = await SpoonApi.getRandomRecipes(opts)
-        console.log(fauxResponse)
+        // console.log(fauxResponse)
         expect(fauxResponse).toEqual(mockRandomResponse)
 
     });
@@ -77,7 +66,7 @@ describe("test fetchFreshData", () => {
         // console.log(SpoonApi)
 
         const fauxResponse = await SpoonApi.fetchFreshData();
-        console.log(fauxResponse);
+        // console.log(fauxResponse);
 
         expect(fauxResponse).toEqual(mockRandomResponse)
 
