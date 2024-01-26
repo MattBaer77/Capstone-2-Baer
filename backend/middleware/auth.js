@@ -95,8 +95,6 @@ function ensureAdminOrEffectedUser(req, res, next){
 
     } catch (e) {
 
-        console.log(e)
-
         return next(e);
 
     }

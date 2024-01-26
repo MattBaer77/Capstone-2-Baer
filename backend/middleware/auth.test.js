@@ -147,7 +147,7 @@ describe("ensureAdminLoggedIn", () => {
 
     test("works: - throws error if not Admin", () => {
 
-        expect.assertions(1)
+        expect.assertions(3)
 
         const req = {headers: {}};
 
@@ -163,6 +163,8 @@ describe("ensureAdminLoggedIn", () => {
         const next =  function(e) {
 
             expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - Admin must be logged in")
+            expect(e.status).toEqual(401)
 
         }
 
@@ -173,7 +175,7 @@ describe("ensureAdminLoggedIn", () => {
 
     test("works: - throws error if no user", () => {
 
-        expect.assertions(1)
+        expect.assertions(3)
 
         const req = {headers: {}};
 
@@ -182,6 +184,8 @@ describe("ensureAdminLoggedIn", () => {
         const next =  function(e) {
 
             expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - Admin must be logged in")
+            expect(e.status).toEqual(401)
 
         }
 
@@ -296,7 +300,7 @@ describe("ensureAdminOrEffectedUser", () => {
 
     test("works: - throws error if not Admin and Not User", () => {
 
-        expect.assertions(1)
+        expect.assertions(3)
 
         const req = {headers: {}, params: {username:"invalid"}};
 
@@ -312,6 +316,8 @@ describe("ensureAdminOrEffectedUser", () => {
         const next =  function(e) {
 
             expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - Must be Admin or Effected User")
+            expect(e.status).toEqual(401)
 
         }
 
@@ -322,7 +328,7 @@ describe("ensureAdminOrEffectedUser", () => {
 
     test("works: - throws error if not Admin and No User Param", () => {
 
-        expect.assertions(1)
+        expect.assertions(3)
 
         const req = {headers: {}, params:{}};
 
@@ -338,6 +344,8 @@ describe("ensureAdminOrEffectedUser", () => {
         const next =  function(e) {
 
             expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - Must be Admin or Effected User")
+            expect(e.status).toEqual(401)
 
         }
 
@@ -348,7 +356,7 @@ describe("ensureAdminOrEffectedUser", () => {
 
     test("works: - throws error if no user", () => {
 
-        expect.assertions(1)
+        expect.assertions(3)
 
         const req = {headers: {}, params:{}};
 
@@ -357,6 +365,8 @@ describe("ensureAdminOrEffectedUser", () => {
         const next =  function(e) {
 
             expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - Must be Admin or Effected User")
+            expect(e.status).toEqual(401)
 
         }
 
