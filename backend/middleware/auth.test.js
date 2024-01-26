@@ -191,3 +191,178 @@ describe("ensureAdminLoggedIn", () => {
     });
 
 });
+
+describe("ensureAdminOrEffectedUser", () => {
+
+    test("works: - no error if Admin and User", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {username:"test"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"test",
+                isAdmin: true
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+    });
+
+    test("works: - no error if Admin No User", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"test",
+                isAdmin: true
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+    });
+
+    test("works: - no error if Admin Wrong User", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {username: "invalid"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"test",
+                isAdmin: true
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+    });
+
+    test("works: - no error if Effected User", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {username:"test"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"test",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+    });
+
+    test("works: - throws error if not Admin and Not User", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {username:"invalid"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"test",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+
+    });
+
+    test("works: - throws error if not Admin and No User Param", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params:{}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"test",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+
+    });
+
+    test("works: - throws error if no user", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params:{}};
+
+        const res = {locals:{}};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+
+        }
+
+        ensureAdminOrEffectedUser(req, res, next);
+
+
+    });
+
+});

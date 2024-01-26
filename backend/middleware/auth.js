@@ -69,7 +69,6 @@ function ensureAdminLoggedIn(req, res, next){
     try {
 
         if(!res.locals.user || !res.locals.user.isAdmin) throw new ExpressError("Unauthorized - Admin must be logged in", 401);
-
         return next();
 
     } catch (e) {
@@ -87,7 +86,23 @@ function ensureAdminLoggedIn(req, res, next){
  * If user not logged in and user identified in route, or logged in and an admin, throw ExpressError("Unauthorized - User must be logged in.", 401)
  * 
 */
-function ensureAdminOrEffectedUser(req, res, next){};
+function ensureAdminOrEffectedUser(req, res, next){
+
+    try {
+
+        if (!res.locals.user || !res.locals.user.isAdmin && res.locals.user.username != req.params.username) throw new ExpressError("Unauthorized - Must be Admin or Effected User", 401);
+        return next();
+
+    } catch (e) {
+
+        console.log(e)
+
+        return next(e);
+
+    }
+
+
+};
 
 
 module.exports = {
