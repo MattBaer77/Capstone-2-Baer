@@ -118,93 +118,76 @@ describe("ensureUserLoggedIn", () => {
 
 });
 
-// describe("ensureAdminLoggedIn", () => {
+describe("ensureAdminLoggedIn", () => {
 
-//     test("works: - no error if admin", () => {
+    test("works: - no error if Admin", () => {
 
-//         const req = {headers: {}};
+        expect.assertions(1)
 
-//         const res = {locals:{
+        const req = {headers: {}};
+
+        const res = {locals:{
             
-//             user:{
-//                 username:"test",
-//                 isAdmin: true
-//             }
+            user:{
+                username:"test",
+                isAdmin: true
+            }
 
-//         }};
+        }};
 
-//         const next = jest.fn();
+        const next =  function(e) {
 
-//         try {
+            expect(e instanceof ExpressError).toBeFalsy();
 
-//             ensureAdminLoggedIn(req,res,next)
+        }
 
-//         } catch {
+        ensureAdminLoggedIn(req, res, next);
 
-//             throw new Error("Unexpected Error")
+    });
 
-//         }
+    test("works: - throws error if not Admin", () => {
 
-//         expect(next).toHaveBeenCalled();
+        expect.assertions(1)
 
-//     })
+        const req = {headers: {}};
 
-//     test("works: - throws error if user not admin", () => {
-
-//         const req = {headers: {}};
-
-//         const res = {locals:{
+        const res = {locals:{
             
-//             user:{
-//                 username:"test",
-//                 isAdmin: false
-//             }
+            user:{
+                username:"test",
+                isAdmin: false
+            }
 
-//         }};
+        }};
 
-//         const next = jest.fn();
+        const next =  function(e) {
 
-//         try {
+            expect(e instanceof ExpressError).toBeTruthy();
 
-//             ensureAdminLoggedIn(req,res,next)
+        }
 
-//         } catch(e) {
+        ensureAdminLoggedIn(req, res, next);
 
-//             expect(e).toBeInstanceOf(ExpressError);
-//             expect(e.message).toBe("Unauthorized - Admin must be logged in")
-//             expect(e.status).toBe(401)
 
-//         }
+    });
 
-//         expect(next).not.toHaveBeenCalled();
+    test("works: - throws error if no user", () => {
 
-//     })
+        expect.assertions(1)
 
-//     test("works: - throws error if no user or admin logged in", () => {
+        const req = {headers: {}};
 
-//         const req = {headers: {}};
+        const res = {locals:{}};
 
-//         const res = {locals:{}};
+        const next =  function(e) {
 
-//         const next = jest.fn();
+            expect(e instanceof ExpressError).toBeTruthy();
 
-//         try {
+        }
 
-//             ensureAdminLoggedIn(req,res,next)
+        ensureAdminLoggedIn(req, res, next);
 
-//         } catch(e) {
 
-//             console.log(e)
+    });
 
-//             expect(e).toBeInstanceOf(ExpressError);
-//             console.log(e.message)
-//             expect(e.message).toBe("Unauthorized - Admin must be logged in")
-//             expect(e.status).toBe(401)
-
-//         }
-
-//         expect(next).not.toHaveBeenCalled();
-
-//     })
-
-// })
+});
