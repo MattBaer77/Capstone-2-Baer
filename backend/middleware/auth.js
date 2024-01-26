@@ -64,7 +64,21 @@ function ensureUserLoggedIn(req, res, next){
  * If user not logged in and an admin, throw ExpressError("Unauthorized - Admin must be logged in.", 401)
  * 
 */
-function ensureAdminLoggedIn(req, res, next){};
+function ensureAdminLoggedIn(req, res, next){
+
+    try {
+
+        if(!res.locals.user || !res.locals.user.isAdmin) throw new ExpressError("Unauthorized - Admin must be logged in", 401);
+
+        return next();
+
+    } catch (e) {
+
+        return next(e);
+
+    }
+
+};
 
 /**Confirm a user is logged in and the user identified in the route, or is logged in and an Admin
  * 
