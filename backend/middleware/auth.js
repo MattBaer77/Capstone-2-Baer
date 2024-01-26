@@ -42,16 +42,29 @@ function authenticateJWT(req, res, next) {
  * 
 */
 
-function ensureUserLoggedIn(req, res, next){};
+function ensureUserLoggedIn(req, res, next){
+
+    try {
+
+        if(!res.locals.user) throw new ExpressError("Unauthorized - User must be logged in", 401);
+        return next();
+
+    } catch (e) {
+
+        return (e);
+        
+    }
+
+};
 
 /**Confirm a user is logged in and is an Admin
  * 
  * If user logged in and an admin, return next();
  * 
- * If user not logged in and an admin, throw ExpressError("Unauthorized - User must be logged in.", 401)
+ * If user not logged in and an admin, throw ExpressError("Unauthorized - Admin must be logged in.", 401)
  * 
 */
-function ensureUserLoggedInAndAdmin(req, res, next){};
+function ensureAdminLoggedIn(req, res, next){};
 
 /**Confirm a user is logged in and the user identified in the route, or is logged in and an Admin
  * 
@@ -60,12 +73,12 @@ function ensureUserLoggedInAndAdmin(req, res, next){};
  * If user not logged in and user identified in route, or logged in and an admin, throw ExpressError("Unauthorized - User must be logged in.", 401)
  * 
 */
-function ensureUserLoggedInAdminOrEffectedUser(req, res, next){};
+function ensureAdminOrEffectedUser(req, res, next){};
 
 
 module.exports = {
     authenticateJWT,
     ensureUserLoggedIn,
-    ensureUserLoggedInAndAdmin,
-    ensureUserLoggedInAdminOrEffectedUser
+    ensureAdminLoggedIn,
+    ensureAdminOrEffectedUser
 }
