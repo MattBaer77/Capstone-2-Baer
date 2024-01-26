@@ -1,32 +1,43 @@
 "use strict";
 
-const request = require("supertest")
-const app = require("../app")
+// // WORKING BLOCK
+// const SpoonApi = require("../models/spoonModel")
+// jest.mock("../models/spoonModel")
+// SpoonApi.getARandomFoodJoke.mockResolvedValue({ text: "Mocked food joke data" });
+// // WORKING BLOCK
 
-const { MiscApi } = require("../config")
+jest.mock('../models/spoonModel', () => {
 
-//
+    const originalSpoonModel = jest.requireActual('../models/spoonModel');
 
-// MOCK FOR MiscApi
-
-jest.mock("../config")
-
-// Mock implementation for getARandomFoodJoke
-MiscApi.getARandomFoodJoke.mockImplementation((callback) => {
-
-    // Simulate a successful API call with mock data
-    callback(null, null, { body: { text: "Mocked food joke data" } });
+    return {...originalSpoonModel,
+        getARandomFoodJoke:jest.fn().mockResolvedValue({ text: "Mocked food joke data" })
+    };
 
 });
 
-// MOCK FOR MiscApi
+const request = require("supertest")
+const app = require("../app")
 
-// 
+const {
+
+    commonBeforeAll,
+    commonBeforeEach,
+    commonAfterEach,
+    commonAfterAll
+
+} = require ("../models/_testCommon.js");
+
+beforeAll(commonBeforeAll);
+beforeEach(commonBeforeEach);
+afterEach(commonAfterEach);
+afterAll(commonAfterAll);
+
+// ROUTE TESTS
 
 test("OK - returns Joke", async () => {
 
-    const resp = await request(app).get("/jokes");
-  
+    const resp = await request(app).get("/jokes");  
     expect(resp.statusCode).toEqual(200);
     expect(resp.body).toEqual({ text: "Mocked food joke data" });
     
