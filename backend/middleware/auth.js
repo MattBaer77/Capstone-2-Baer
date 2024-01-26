@@ -51,8 +51,8 @@ function ensureUserLoggedIn(req, res, next){
 
     } catch (e) {
 
-        return (e);
-        
+        return next(e);
+
     }
 
 };
