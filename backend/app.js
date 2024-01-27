@@ -3,18 +3,22 @@
 const express = require("express");
 const morgan = require("morgan");
 const ExpressError = require("./expressError");
+const { authenticateJWT } = require("./middleware/auth");
 
 const app = express();
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(authenticateJWT)
 
 const authRoutes = require("./routes/auth");
 const recipeRoutes = require("./routes/recipes");
 const jokesRoutes = require("./routes/jokes");
+const usersRoutes = require("./routes/users");
 
 app.use("/auth", authRoutes);
 app.use("/recipes", recipeRoutes);
 app.use("/jokes", jokesRoutes);
+app.use("/users", usersRoutes);
 
 // 404 Error Handling
 app.use((req, res, next) => {
