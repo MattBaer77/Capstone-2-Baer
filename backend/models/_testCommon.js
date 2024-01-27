@@ -36,8 +36,8 @@ async function commonBeforeAll() {
                           email,
                           is_admin,
                           cache)
-        VALUES ('u1', $1, 'U1F', 'U1L', 'u1@email.com', false, '{"faux": "json", "some": "more"}'),
-               ('u2', $2, 'U2F', 'U2L', 'u2@email.com', false, '[{"faux":"json2", "some":"more2"}, {"another":"obj"}]'),
+        VALUES ('u1', $1, 'U1F', 'U1L', 'u1@email.com', false, '{"data":{"faux": "json", "some": "more"}}'),
+               ('u2', $2, 'U2F', 'U2L', 'u2@email.com', false, '{"data":[{"faux":"json2", "some":"more2"}, {"another":"obj"}]}'),
                ('u3', $3, 'U3F', 'U3L', 'u3@email.com', false, null),
                ('uA', $4, 'UAF', 'UAL', 'uA@email.com', true, null),
                ('uAB', $5, 'UABF', 'UABL', 'uAB@email.com', true, null)

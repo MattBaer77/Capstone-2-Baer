@@ -124,7 +124,7 @@ describe("getWithCacheAndIntolerances", () => {
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
-      cache:{faux: "json", some: "more"}
+      cache:{data:{faux: "json", some: "more"}}
     });
 
   })
@@ -588,7 +588,7 @@ describe("get with cache", () => {
         lastName: "U1L",
         email: "u1@email.com",
         isAdmin: false,
-        cache:{faux: "json", some: "more"}
+        cache:{data:{faux: "json", some: "more"}}
       });
 
   })
@@ -629,7 +629,7 @@ describe("retrieve a user's cached data", function() {
     const res = await User.getCache("u1");
 
     expect(res).toEqual(
-      {faux: "json", some: "more"}
+      {data:{faux: "json", some: "more"}}
     )
 
   })
