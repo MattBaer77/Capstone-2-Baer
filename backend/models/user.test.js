@@ -652,6 +652,7 @@ describe("retrieve a user's cached data", function() {
 describe("set a user's cached data", function() {
 
   const fauxCacheData = {fauxDataForSet : "data"}
+  const fauxCacheDataArray = [{fauxDataForSetOne : "data1"}, {fauxDataForSetTwo : "data2"}]
 
   test("works if there is cached data", async function () {
 
@@ -665,7 +666,7 @@ describe("set a user's cached data", function() {
       WHERE username = 'u1'`
       )
 
-    expect(cacheCheck.rows[0].cache).toEqual(fauxCacheData)
+    expect(cacheCheck.rows[0].cache).toEqual({data:fauxCacheData})
 
   })
 
@@ -681,7 +682,39 @@ describe("set a user's cached data", function() {
       WHERE username = 'u3'`
       )
 
-    expect(cacheCheck.rows[0].cache).toEqual(fauxCacheData)
+    expect(cacheCheck.rows[0].cache).toEqual({data:fauxCacheData})
+
+  })
+
+  test("works if there is cached data - and array of data", async function () {
+
+    const res = await User.setCache("u1", fauxCacheDataArray);
+
+    expect(res).toEqual(true)
+
+    const cacheCheck = await db.query(
+      `SELECT cache
+      FROM users
+      WHERE username = 'u1'`
+      )
+
+    expect(cacheCheck.rows[0].cache).toEqual({data:fauxCacheDataArray})
+
+  })
+
+  test("works if there is no cached data - and array of data", async function () {
+
+    const res = await User.setCache("u3", fauxCacheDataArray);
+
+    expect(res).toEqual(true)
+
+    const cacheCheck = await db.query(
+      `SELECT cache
+      FROM users
+      WHERE username = 'u3'`
+      )
+
+    expect(cacheCheck.rows[0].cache).toEqual({data:fauxCacheDataArray})
 
   })
 

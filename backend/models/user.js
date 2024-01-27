@@ -479,6 +479,8 @@ class User {
 
   static async setCache(username, data){
 
+    const dataAsSingleObj = {data: data}
+
     const existingUserCheck = await db.query(
 
       `SELECT username,
@@ -503,7 +505,7 @@ class User {
       SET cache = $2
       WHERE username = $1
       RETURNING username`,
-      [username,data]
+      [username,dataAsSingleObj]
     )
 
     const user = result.rows[0]
