@@ -84,8 +84,8 @@ async function commonBeforeAll() {
         }
     );
 
-    await User.setCache("u1", {faux: "json", some: "more"});
-    await User.setCache("u2", [{"faux":"json2", "some":"more2"}, {"another":"obj"}]);
+    await User.setCache("u1", {data:[{faux: "json", some: "more"}]});
+    await User.setCache("u2", {data:[{faux:"json2", some:"more2"}, {another:"obj"}]});
 
     //
 

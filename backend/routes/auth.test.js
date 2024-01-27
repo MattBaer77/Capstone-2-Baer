@@ -13,7 +13,7 @@ const {
     commonAfterEach,
     commonAfterAll
 
-} = require ("../models/_testCommon.js");
+} = require ("./_testCommon.js");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
