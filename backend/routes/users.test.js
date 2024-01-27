@@ -111,6 +111,127 @@ describe('GET /users/username', () => {
 
 // GET USER WITH CACHE AND INTOLERANCES
 
+describe('GET /users/username/details', () => {
+
+    // ANON
+
+    test("unauth for anon", async () => {
+
+        const resp = await request(app).get(`/users/u1/details`);
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+    })
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u1/details`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache:{
+
+                    data: {
+                        faux: "json",
+                        some: "more",
+                    },
+
+                },
+                email: "u1@email.com",
+                firstName: "U1F",
+                intolerances:[
+                    {
+                        intoleranceId: 2,
+                        intoleranceName: "egg",
+                    },
+                    {
+                        intoleranceId: 3,
+                        intoleranceName: "gluten",
+                    },
+                ],
+                isAdmin: false,
+                lastName: "U1L",
+                username: "u1",
+
+            },
+        });
+    });
+
+    test("not found if user not found - ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/users/nope/details`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.statusCode).toEqual(404);
+
+    });
+
+    // NOT ADMIN IS USER
+
+    test("works for users - NOT ADMIN IS USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u1/details`)
+            .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache:{
+
+                    data: {
+                        faux: "json",
+                        some: "more",
+                    },
+
+                },
+                email: "u1@email.com",
+                firstName: "U1F",
+                intolerances:[
+                    {
+                        intoleranceId: 2,
+                        intoleranceName: "egg",
+                    },
+                    {
+                        intoleranceId: 3,
+                        intoleranceName: "gluten",
+                    },
+                ],
+                isAdmin: false,
+                lastName: "U1L",
+                username: "u1",
+
+            },
+        });
+    });
+
+    // NOT ADMIN NOT USER
+
+    test("unauth for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u2/details`)
+            .set("authorization", `Bearer ${u1Token}`);
+        
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauth for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/nope/details`)
+            .set("authorization", `Bearer ${u1Token}`);
+        
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+})
+
 // PATCH USER
 
 // DELETE USER

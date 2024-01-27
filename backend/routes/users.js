@@ -54,6 +54,17 @@ router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
  * 
 */
 
+router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+        const user = await User.getWithCacheAndIntolerances(req.params.username);
+        return res.json({user});
+    } catch (e) {
+        return next(e);
+    }
+
+})
+
 // PATCH USER *
 /** PATCH USER - /users/[username]
  * 
