@@ -241,6 +241,12 @@ describe("add ingredient", () => {
                             minimumAmount: 0
                         };
 
+    const fauxIngredientNoMin = {id: 1,
+                            ingredientId: 104,
+                            amount: 3,
+                            unit: "Some Other Unit"
+                        };
+
     const fauxConflictingIngredient = {id: 1,
                                        ingredientId: 101,
                                        amount: 3,
@@ -275,6 +281,31 @@ describe("add ingredient", () => {
 
         expect(ingredientCheck.rows.length).toEqual(1)
         expect(ingredientCheck.rows[0].ingredientId).toEqual(102)
+        expect(ingredientCheck.rows[0].amount).toEqual(3)
+        expect(ingredientCheck.rows[0].minimumAmount).toEqual(0)
+
+    });
+
+    test("works - no minimum included", async () => {
+
+        let res = await GroceryList.addIngredient(fauxIngredientNoMin.id, fauxIngredientNoMin.ingredientId, fauxIngredientNoMin.amount, fauxIngredientNoMin.unit);
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            grocery_list_id AS "id",
+            ingredient_id AS "ingredientId",
+            amount,
+            unit,
+            minimum_amount AS "minimumAmount"
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 104`
+
+        )
+
+        expect(ingredientCheck.rows.length).toEqual(1)
+        expect(ingredientCheck.rows[0].ingredientId).toEqual(104)
         expect(ingredientCheck.rows[0].amount).toEqual(3)
         expect(ingredientCheck.rows[0].minimumAmount).toEqual(0)
 

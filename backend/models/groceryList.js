@@ -197,7 +197,7 @@ class GroceryList {
      *
     **/
 
-    static async addIngredient(id, ingredientId, amount, unit, minimumAmount) {
+    static async addIngredient(id, ingredientId, amount, unit, minimumAmount = 0) {
 
         const listCheck = await db.query(
 
