@@ -10,6 +10,7 @@ const User = require('../models/user');
 const { ensureAdminOrEffectedUser } = require("../middleware/auth");
 
 // add Schemas Here
+const userUpdateSchema = require("../schemas/userUpdate.json")
 
 const router = express.Router();
 
@@ -73,6 +74,22 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
  * Returns (updated) {firstName, lastName, password, email}
  * 
 */
+
+router.patch("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+        const validator = jsonschema.validate(req.body, userUpdateSchema);
+        if(!validator.valid) {
+            const e = validator.errors.map(e => e.stack);
+            throw new ExpressError(e, 400)
+        }
+        const user = await User.update(req.params.username, req.body);
+        return res.json({user});
+    } catch (e) {
+        return next(e)
+    }
+
+})
 
 // DELETE USER *
 

@@ -234,6 +234,54 @@ describe('GET /users/username/details', () => {
 
 // PATCH USER
 
+describe("PATCH /users/:username", () => {
+
+    // ANON
+
+    test("unauth for anon", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u1`)
+        .send({
+            firstName: "New",
+        });
+
+        expect(resp.statusCode).toEqual(401);
+
+    })
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            firstName: "New"
+        })
+        .set("authorization", `Bearer ${adminToken}`);
+
+        expect(resp.body).toEqual({
+
+            user: {
+
+                username: "u2",
+                firstName: "New",
+                lastName: "U2L",
+                email: "u2@email.com",
+                isAdmin: false,
+
+            }
+
+        })
+    })
+
+    // NOT ADMIN IS USER
+
+    // NOT ADMIN NOT USER
+
+});
+
 // DELETE USER
 
 // **********

@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "required": [],
+    "properties": {
+
+        "password": {
+            "type": "string",
+            "default": "",
+            "title": "The password Schema",
+            "examples": [
+                "password"
+            ],
+            "minLength":6,
+            "maxLength":30
+        },
+        "firstName": {
+            "type": "string",
+            "default": "",
+            "title": "The firstName Schema",
+            "examples": [
+                "Stephen"
+            ],
+            "minLength":1,
+            "maxLength":30
+        },
+        "lastName": {
+            "type": "string",
+            "default": "",
+            "title": "The lastName Schema",
+            "examples": [
+                "Doe"
+            ],
+            "minLength":1,
+            "maxLength":30
+        },
+        "email": {
+            "type": "string",
+            "default": "",
+            "title": "The email Schema",
+            "examples": [
+                "steven.doe@gmail.com"
+            ],
+            "minLength":6,
+            "maxLength":60,
+            "format":"email"
+        }
+    },
+    "examples": [{
+        "username": "phteven01",
+        "password": "password",
+        "firstName": "Stephen",
+        "lastName": "Doe",
+        "email": "steven.doe@gmail.com"
+    }],
+    "additionalProperties":false
+}
