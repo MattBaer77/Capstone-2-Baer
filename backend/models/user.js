@@ -203,7 +203,7 @@ class User {
    *
    * Throws ExpressError if not found.
    *
-   * WARNING: this function can set a new password or make a user an admin.
+   * WARNING: this function can set a new password.
    * Callers of this function must be certain they have validated inputs to this
    * or a serious security risks are opened.
    * 
@@ -221,8 +221,6 @@ class User {
         {
           firstName: "first_name",
           lastName: "last_name",
-          isAdmin: "is_admin",
-
         }
         
     );

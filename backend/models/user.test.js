@@ -255,14 +255,16 @@ describe("update", function () {
       firstName: "NewF",
       lastName: "NewF",
       email: "new@email.com",
-      isAdmin: true,
     };
   
     test("works", async function () {
       let job = await User.update("u1", updateData);
       expect(job).toEqual({
         username: "u1",
-        ...updateData,
+        firstName: "NewF",
+        lastName: "NewF",
+        email: "new@email.com",
+        isAdmin: false,
       });
     });
   
