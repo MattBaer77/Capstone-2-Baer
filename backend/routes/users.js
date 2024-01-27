@@ -7,6 +7,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 const ExpressError = require("../expressError");
 const User = require('../models/user');
+const { ensureAdminOrEffectedUser } = require("../middleware/auth");
 
 // add Schemas Here
 
@@ -32,6 +33,17 @@ const router = express.Router();
  * Returns {username, firstName, lastName, isAdmin}
  * 
 */
+
+router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+        const user = await User.get(req.params.username);
+        return res.json({user});
+    } catch (e) {
+        return next(e);
+    }
+
+})
 
 // GET USER WITH CACHE AND INTOLERANCES *
 /** GET USER - /users/[username]/details

@@ -7,7 +7,121 @@ const app = require("../app");
 
 const User = require("../models/user");
 
-// _testCommon Here
+const {
+    commonBeforeAll,
+    commonBeforeEach,
+    commonAfterEach,
+    commonAfterAll,
+    u1Token,
+    adminToken,
+} = require("./_testCommon");
+  
+beforeAll(commonBeforeAll);
+beforeEach(commonBeforeEach);
+afterEach(commonAfterEach);
+afterAll(commonAfterAll);
 
-// run test commons
+// GET USER
+
+describe('GET /users/username', () => {
+
+    // ANON
+
+    test("unauth for anon", async () => {
+
+        const resp = await request(app).get(`/users/u1`);
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+    })
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u1`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                email: "u1@email.com",
+                firstName: "U1F",
+                isAdmin: false,
+                lastName: "U1L",
+                username: "u1",
+
+            },
+        });
+    });
+
+    test("not found if user not found - ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/users/nope`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.statusCode).toEqual(404);
+
+    });
+
+    // NOT ADMIN IS USER
+
+    test("works for users - NOT ADMIN IS USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u1`)
+            .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                email: "u1@email.com",
+                firstName: "U1F",
+                isAdmin: false,
+                lastName: "U1L",
+                username: "u1",
+
+            },
+        });
+    });
+
+    // NOT ADMIN NOT USER
+
+    test("unauth for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u2`)
+            .set("authorization", `Bearer ${u1Token}`);
+        
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauth for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/nope`)
+            .set("authorization", `Bearer ${u1Token}`);
+        
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+})
+
+
+// GET USER WITH CACHE AND INTOLERANCES
+
+// PATCH USER
+
+// DELETE USER
+
+// **********
+
+// GET USER WITH CACHE
+
+// GET CACHE
+
+// SET CACHE
+
+// CLEAR CACHE
 
