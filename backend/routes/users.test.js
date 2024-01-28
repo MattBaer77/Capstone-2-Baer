@@ -230,7 +230,7 @@ describe('GET /users/username/details', () => {
 
     });
 
-})
+});
 
 // PATCH USER
 
@@ -273,12 +273,243 @@ describe("PATCH /users/:username", () => {
 
             }
 
+        });
+    });
+
+    test("works set new password - ADMIN", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            password: "new-password",
         })
-    })
+        .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual({
+
+            user: {
+
+                username: "u2",
+                firstName: "U2F",
+                lastName: "U2L",
+                email: "u2@email.com",
+                isAdmin: false,
+
+            }
+
+        })
+
+        const isSuccessful = await User.authenticate("u2","new-password");
+        expect(isSuccessful).toBeTruthy();
+
+    });
+
+    test("not found if no such user - ADMIN", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/nope`)
+        .send({
+            firstName: "New",
+        })
+        .set("authorization", `Bearer ${adminToken}`);
+
+        expect(resp.statusCode).toEqual(404);
+
+    });
+
+    test("bad request if invalid data - ADMIN", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            firstName: 42
+        })
+        .set("authorization", `Bearer ${adminToken}`);
+
+        expect(resp.statusCode).toEqual(400);
+
+    });
+
+    test("bad request if invalid data - additional fields (change isAdmin) - ADMIN", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            firstName: "New",
+            isAdmin: true
+        })
+        .set("authorization", `Bearer ${adminToken}`);
+
+        expect(resp.statusCode).toEqual(400);
+
+    });
 
     // NOT ADMIN IS USER
 
+    test("works for users - SAME USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u1`)
+        .send({
+            firstName: "New"
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.body).toEqual({
+
+            user: {
+
+                username: "u1",
+                firstName: "New",
+                lastName: "U1L",
+                email: "u1@email.com",
+                isAdmin: false,
+
+            }
+
+        });
+    });
+
+    test("works set new password - SAME USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u1`)
+        .send({
+            password: "new-password",
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.body).toEqual({
+
+            user: {
+
+                username: "u1",
+                firstName: "U1F",
+                lastName: "U1L",
+                email: "u1@email.com",
+                isAdmin: false,
+
+            }
+
+        })
+
+        const isSuccessful = await User.authenticate("u1","new-password");
+        expect(isSuccessful).toBeTruthy();
+
+    });
+
+    test("unauthorized if no such user - SAME USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/nope`)
+        .send({
+            firstName: "New",
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("bad request if invalid data - SAME USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u1`)
+        .send({
+            firstName: 42
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(400);
+
+    });
+
+    test("bad request if invalid data - additional fields (change isAdmin) - SAME USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u1`)
+        .send({
+            firstName: "New",
+            isAdmin: true
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(400);
+
+    });
+
     // NOT ADMIN NOT USER
+
+    test("works for users - OTHER USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            firstName: "New"
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401)
+
+
+    });
+
+    test("unauthorized set new password - OTHER USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            password: "new-password",
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401)
+
+        try {
+            await User.authenticate("u1","new-password")
+        } catch (e) {
+            expect(e.message).toEqual("Invalid username/password")
+        }
+
+    });
+
+    test("unauthorized if no such user - OTHER USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/nope`)
+        .send({
+            firstName: "New",
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauthorized request if invalid data - OTHER USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            firstName: 42
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauthorized if invalid data - additional fields (change isAdmin) - SAME USER", async () => {
+
+        const resp = await request(app)
+        .patch(`/users/u2`)
+        .send({
+            firstName: "New",
+            isAdmin: true
+        })
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401);
+
+    });
 
 });
 
