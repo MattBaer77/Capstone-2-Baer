@@ -79,14 +79,17 @@ class SpoonApi {
     static serveRecipesCache = async () => {
         try {
             if (this.isCacheValid()) {
+
                 console.log(`Serving recipesCache - Cached at ${this.cacheTimestamp} still valid as of ${Date.now()}`);
                 return this.recipesCache
 
             } else {
+
                 console.log(`Filling recipesCache`)
                 const data = await this.fetchFreshRandomData();
                 this.startCacheTimer();
                 this.recipesCache = data;
+                
             }
     
             this.clearCacheIfExpired();
