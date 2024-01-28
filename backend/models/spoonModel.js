@@ -16,30 +16,34 @@ apiKeyScheme.apiKey = spoonacularKey
 
 class SpoonApi {
 
+    // PUBLIC CACHE MANAGEMENT
     static recipesCache = null;
     static cacheTimestamp = null;
     static CACHE_EXPIRATION_THRESHOLD = 10 * 1000;
 
+    // API
     static recipesApi = new spoonacularApi.RecipesApi();
     static miscApi = new spoonacularApi.MiscApi();
-  
+
+    // RECIPE(S) ENDPOINTS
     static getARandomFoodJoke = promisify(SpoonApi.miscApi.getARandomFoodJoke.bind(this.miscApi));
     static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi));
 
     static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi));
     static getRecipeBySearch = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi));
 
-    // 
-
+    // METHODS FOR USE IN ROUTES -
     static isCacheValid = () => {
         return this.recipesCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
     };
     
     static fetchFreshRandomData = async (number=10) => {
 
+        // LIMIT API USE
         if (number > 10) number = 10;
 
         try {
+
             const opts = {
                 limitLicense: true,
                 number: number
@@ -49,6 +53,7 @@ class SpoonApi {
             this.recipesCache = data;
             this.cacheTimestamp = Date.now();
             return data;
+
         } catch (e) {
             throw e;
         }
@@ -57,7 +62,7 @@ class SpoonApi {
     
     static clearCacheIfExpired = () => {
         if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
-            console.log("Clearing cached data due to expiration");
+            console.log("Clearing PUBLIC cache due to expiration");
             this.recipesCache = null;
             this.cacheTimestamp = null;
         }
@@ -84,6 +89,47 @@ class SpoonApi {
         } catch (e) {
             throw e;
         }
+    };
+
+    static searchRecipes = async (query=null, intolerances=null, diet=null, number=10) => {
+
+        // LIMIT API USE
+        if (number > 10) number = 10;
+
+        const opts = {
+
+            query: query,
+            intolerances: intolerances,
+            diet: diet,
+            number: number,
+    
+        };
+
+        try {
+
+            const { results } = await SpoonApi.getRecipeBySearch(opts);
+            return results;
+
+        } catch (e) {
+            throw (e)
+        };
+
+    }
+
+    static getRecipeDetail = async (id, includeNutrition=false) => {
+
+        const opts = {includeNutrition: includeNutrition};
+
+        try {
+
+            const results = await SpoonApi.getRecipeInformation(id, opts);
+            console.log(results)
+            return results
+
+        } catch (e) {
+            throw (e)
+        };
+
     };
 
 }
