@@ -459,7 +459,7 @@ class User {
 
     const user = result.rows[0]
 
-    if (!user) throw new ExpressError(`No such user ${username}`)
+    if (!user) throw new ExpressError(`No user: ${username}`, 404)
 
     const cache = result.rows[0].cache
 

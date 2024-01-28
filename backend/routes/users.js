@@ -146,6 +146,18 @@ router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next)
  * 
 */
 
+
+router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+        const cache = await User.getCache(req.params.username);
+        return res.json({cache});
+    } catch (e) {
+        return next(e);
+    }
+
+})
+
 // SET CACHE *
 /** PUT USER CACHE - /users/[username]/cache
  * 

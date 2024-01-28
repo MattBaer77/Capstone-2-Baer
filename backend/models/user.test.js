@@ -642,6 +642,7 @@ describe("retrieve a user's cached data", function() {
       await User.getCache("notValidUser");
       fail();
     } catch (err) {
+      console.log(err)
       expect(err instanceof ExpressError).toBeTruthy();
     }
 
