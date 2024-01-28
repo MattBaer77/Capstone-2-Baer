@@ -61,6 +61,7 @@ describe('GET /users/username', () => {
             .get(`/users/nope`)
             .set("authorization", `Bearer ${adminToken}`);
         expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No user: nope")
 
     });
 
@@ -167,6 +168,7 @@ describe('GET /users/username/details', () => {
             .get(`/users/nope/details`)
             .set("authorization", `Bearer ${adminToken}`);
         expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No user: nope")
 
     });
 
@@ -313,6 +315,7 @@ describe("PATCH /users/:username", () => {
         .set("authorization", `Bearer ${adminToken}`);
 
         expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No user: nope")
 
     });
 
@@ -438,7 +441,7 @@ describe("PATCH /users/:username", () => {
 
     // NOT ADMIN NOT USER
 
-    test("works for users - OTHER USER", async () => {
+    test("unauthorized for users - OTHER USER", async () => {
 
         const resp = await request(app)
         .patch(`/users/u2`)
@@ -514,6 +517,75 @@ describe("PATCH /users/:username", () => {
 });
 
 // DELETE USER
+
+describe("DELETE /users/:username", () => {
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+        const resp = await request(app)
+        .delete(`/users/u1`);
+
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+        const resp = await request(app)
+        .delete(`/users/u1`)
+        .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual(true);
+
+    });
+
+    test("not found if user missing - ADMIN", async() => {
+
+        const resp = await request(app)
+        .delete(`/users/nope`)
+        .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No user: nope")
+
+    });
+
+    // NOT ADMIN IS USER
+
+    test("works for users - NOT ADMIN IS USER", async () => {
+
+        const resp = await request(app)
+        .delete(`/users/u1`)
+        .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.body).toEqual(true);
+
+    });
+
+    test("unauthorized found if user missing - NOT ADMIN IS USER", async() => {
+
+        const resp = await request(app)
+        .delete(`/users/nope`)
+        .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    // NOT ADMIN NOT USER
+
+    test("unauthorized for - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+        .delete(`/users/u2`)
+        .set("authorization", `Bearer ${u1Token}`);
+
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+});
+
 
 // **********
 

@@ -101,6 +101,17 @@ router.patch("/:username", ensureAdminOrEffectedUser, async (req, res, next) => 
  * 
 */
 
+router.delete("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try{
+        const user = await User.remove(req.params.username, req.body);
+        return res.json(user)
+    } catch (e) {
+        return next(e)
+    }
+
+})
+
 // **********
 
 // CACHE ROUTES -
