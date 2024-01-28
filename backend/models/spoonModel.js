@@ -24,10 +24,10 @@ class SpoonApi {
     static miscApi = new spoonacularApi.MiscApi();
   
     static getARandomFoodJoke = promisify(SpoonApi.miscApi.getARandomFoodJoke.bind(this.miscApi));
+    static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi));
 
-    static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi))
-    static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi))
-    static getRecipeBySearch = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi))
+    static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi));
+    static getRecipeBySearch = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi));
 
     // 
 
@@ -35,12 +35,14 @@ class SpoonApi {
         return this.recipesCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
     };
     
-    static fetchFreshData = async () => {
-        console.log("fetchFreshData Actual")
+    static fetchFreshRandomData = async (number=10) => {
+
+        if (number > 10) number = 10;
+
         try {
             const opts = {
                 limitLicense: true,
-                number: 1
+                number: number
             };
     
             const data = await this.getRandomRecipes(opts);
@@ -50,6 +52,7 @@ class SpoonApi {
         } catch (e) {
             throw e;
         }
+
     };
     
     static clearCacheIfExpired = () => {
@@ -71,7 +74,7 @@ class SpoonApi {
                 return this.recipesCache
 
             } else {
-                const data = await this.fetchFreshData();
+                const data = await this.fetchFreshRandomData();
                 this.startCacheTimer();
                 this.recipesCache = data;
             }

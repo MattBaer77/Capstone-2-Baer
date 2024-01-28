@@ -36,12 +36,7 @@ jest.mock('./spoonModel', () => {
 
 const SpoonApi = require('./spoonModel');
 
-// SpoonApi.getRandomRecipes = () => {return mockRandomResponse}
-
-// SpoonApi.getRandomRecipes = jest.fn().mockResolvedValue(mockRandomResponse)
-
-// console.log(SpoonApi)
-
+// CHECKING THAT MOCKS HAVE REPLACED API CALLS
 describe("getRandomRecipes Mock Test", () => {
 
     test("mock test works", async () => {
@@ -52,22 +47,18 @@ describe("getRandomRecipes Mock Test", () => {
         };
 
         const fauxResponse = await SpoonApi.getRandomRecipes(opts)
-        // console.log(fauxResponse)
         expect(fauxResponse).toEqual(mockRandomResponse)
 
     });
 
 });
 
-describe("test fetchFreshData", () => {
+// TESTS -
+describe("test fetchFreshRandomData", () => {
 
     test("fetchFreshData - success", async () => {
 
-        // console.log(SpoonApi)
-
-        const fauxResponse = await SpoonApi.fetchFreshData();
-        // console.log(fauxResponse);
-
+        const fauxResponse = await SpoonApi.fetchFreshRandomData();
         expect(fauxResponse).toEqual(mockRandomResponse)
 
     })
