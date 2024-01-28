@@ -83,6 +83,7 @@ class SpoonApi {
                 return this.recipesCache
 
             } else {
+                console.log(`Filling recipesCache`)
                 const data = await this.fetchFreshRandomData();
                 this.startCacheTimer();
                 this.recipesCache = data;

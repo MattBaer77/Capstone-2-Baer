@@ -97,13 +97,16 @@ jest.mock('./spoonModel', () => {
 
     originalSpoonModel.getRandomRecipes = jest.fn().mockResolvedValue(mockResponseGetRandomRecipes);
     originalSpoonModel.getSearchRecipes = jest.fn().mockResolvedValue(mockResponseGetSearchRecipesOptsNullNum10);
-    originalSpoonModel.getRecipeInformation = jest.fn().mockResolvedValue(mockResponseGetRecipeInformation)
+    originalSpoonModel.getRecipeInformation = jest.fn().mockResolvedValue(mockResponseGetRecipeInformation);
+    originalSpoonModel.startCacheTimer = jest.fn();
 
     return originalSpoonModel;
 
 });
 
 const SpoonApi = require('./spoonModel');
+
+beforeAll(() => SpoonApi.recipesCache = null)
 
 // CHECKING THAT MOCKS HAVE REPLACED API CALLS
 describe("confirms mock replace API calls", () => {
@@ -227,21 +230,33 @@ describe("test cache management", () => {
     
     })
     
-    // describe("test serveRecipesCache - success", () => {
+    describe("test serveRecipesCache", () => {
+
+        console.log(SpoonApi.recipesCache);
+
+        test("serveRecipesCache - No Cache Currently Saved", async () => {
+
+            console.log(SpoonApi.recipesCache);
+            SpoonApi.recipesCache = null
+            console.log(SpoonApi.recipesCache);
+
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(8);
+            const fauxResponse = await SpoonApi.serveRecipesCache()    
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(9);
     
-    //     test("serveRecipesCache - No Cache Currently Saved", async () => {
+        })
     
-    //         console.log(SpoonApi)
+        test("serveRecipesCache - Cache Currently Saved", async () => {
+
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(9);
+            const fauxResponse = await SpoonApi.serveRecipesCache()    
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(9);
+
+        })
     
-    //         const fauxResponse = await SpoonApi.serveRecipesCache()
-    
-    //         console.log(fauxResponse)
-    
-    //         expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
-    
-    //     })
-    
-    // });
+    });
 
 });
 
