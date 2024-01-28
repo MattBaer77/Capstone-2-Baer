@@ -169,11 +169,60 @@ describe("test cache management", () => {
 
     describe("test fetchFreshRandomData", () => {
 
-        test("fetchFreshData - success", async () => {
+        test("fetchFreshData - success - no number", async () => {
     
             const fauxResponse = await SpoonApi.fetchFreshRandomData();
             expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledWith({limitLicense: true, number: 10})
     
+        })
+
+        test("fetchFreshData - success - 10", async () => {
+    
+            const fauxResponse = await SpoonApi.fetchFreshRandomData(10);
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledWith({limitLicense: true, number: 10})
+
+        })
+
+        test("fetchFreshData - success - > 10", async () => {
+    
+            const fauxResponse = await SpoonApi.fetchFreshRandomData(50);
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).not.toHaveBeenCalledWith({limitLicense: true, number: 50})
+
+        })
+
+        test("fetchFreshData - success - 0", async () => {
+    
+            const fauxResponse = await SpoonApi.fetchFreshRandomData(0);
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).not.toHaveBeenCalledWith({limitLicense: true, number: 0})
+
+        })
+
+        test("fetchFreshData - success - -5", async () => {
+    
+            const fauxResponse = await SpoonApi.fetchFreshRandomData(-5);
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).not.toHaveBeenCalledWith({limitLicense: true, number: -5})
+
+        })
+
+        test("fetchFreshData - success - 5", async () => {
+    
+            const fauxResponse = await SpoonApi.fetchFreshRandomData(5);
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).toHaveBeenCalledWith({limitLicense: true, number: 5})
+
+        })
+
+        test("fetchFreshData - success - invalid number", async () => {
+    
+            const fauxResponse = await SpoonApi.fetchFreshRandomData("not a number");
+            expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
+            expect(SpoonApi.getRandomRecipes).not.toHaveBeenCalledWith({limitLicense: true, number: "not a number"})
+
         })
     
     })
@@ -239,6 +288,32 @@ describe("test main methods", () => {
 
         });
 
+        test("works - opts: null, limited to > 0", async () => {
+
+            const results = await SpoonApi.searchRecipes(null, null, null, 0);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                diet:null,
+                number: 0,
+            })
+
+        });
+
+        test("works - opts: null, limited to > 0", async () => {
+
+            const results = await SpoonApi.searchRecipes(null, null, null, -50);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                diet:null,
+                number: -50,
+            })
+
+        });
+
         test("works - all opts, limited to 10", async () => {
 
             const results = await SpoonApi.searchRecipes("Asparagus", "gluten", "vegetarian", 5);
@@ -256,11 +331,11 @@ describe("test main methods", () => {
 
             const results = await SpoonApi.searchRecipes("Asparagus", "gluten", "vegetarian", 'not a number');
             expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
-            expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+            expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
                 query:"Asparagus",
                 intolerances:"gluten",
                 diet:"vegetarian",
-                number:10,
+                number:'not a number',
             })
 
         });

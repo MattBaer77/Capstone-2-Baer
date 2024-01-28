@@ -44,7 +44,7 @@ class SpoonApi {
     static fetchFreshRandomData = async (number=10) => {
 
         // LIMIT API USE
-        if (number > 10) number = 10;
+        if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
 
         try {
 
@@ -100,7 +100,8 @@ class SpoonApi {
     static searchRecipes = async (query=null, intolerances=null, diet=null, number=10) => {
 
         // LIMIT API USE
-        if (number === null || number > 10 || typeof number !== "number") number = 10;
+        if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
+
 
         const opts = {
 
