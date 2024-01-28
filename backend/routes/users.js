@@ -126,6 +126,17 @@ router.delete("/:username", ensureAdminOrEffectedUser, async (req, res, next) =>
  * 
 */
 
+router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+        const user = await User.getWithCache(req.params.username);
+        return res.json({user});
+    } catch (e) {
+        return next(e);
+    }
+
+})
+
 // GET CACHE *
 /** GET USER CACHE - /users/[username]/cache-only
  * 

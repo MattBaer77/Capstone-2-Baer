@@ -591,6 +591,104 @@ describe("DELETE /users/:username", () => {
 
 // GET USER WITH CACHE
 
+describe('GET /users/username/cache', () => {
+
+    // ANON
+
+    test("unauth for anon", async () => {
+
+        const resp = await request(app).get(`/users/u1/cache`);
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+    })
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u1/cache`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache:{
+                    data: {
+                        faux: "json",
+                        some: "more",
+                    },
+                },
+                email: "u1@email.com",
+                firstName: "U1F",
+                isAdmin: false,
+                lastName: "U1L",
+                username: "u1",
+
+            },
+        });
+    });
+
+    test("not found if user not found - ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/users/nope/cache`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No user: nope")
+
+    });
+
+    // NOT ADMIN IS USER
+
+    test("works for users - NOT ADMIN IS USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u1/cache`)
+            .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache:{
+                    data: {
+                        faux: "json",
+                        some: "more",
+                    },
+                },
+                email: "u1@email.com",
+                firstName: "U1F",
+                isAdmin: false,
+                lastName: "U1L",
+                username: "u1",
+
+            },
+        });
+    });
+
+    // NOT ADMIN NOT USER
+
+    test("unauth for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u2/cache`)
+            .set("authorization", `Bearer ${u1Token}`);
+        
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauth for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .get(`/users/nope/cache`)
+            .set("authorization", `Bearer ${u1Token}`);
+        
+        expect(resp.statusCode).toEqual(401);
+
+    });
+
+})
+
 // GET CACHE
 
 // SET CACHE
