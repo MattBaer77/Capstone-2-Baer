@@ -198,7 +198,7 @@ describe("test cache management", () => {
 
 describe("test main methods", () => {
 
-    describe("test searchRecipes", ()=> {
+    describe("test searchRecipes", () => {
 
         test("works - opts: null", async () => {
 
@@ -252,6 +252,74 @@ describe("test main methods", () => {
 
         });
 
+        test("works - bad data entered into 'number'", async () => {
+
+            const results = await SpoonApi.searchRecipes("Asparagus", "gluten", "vegetarian", 'not a number');
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+                query:"Asparagus",
+                intolerances:"gluten",
+                diet:"vegetarian",
+                number:10,
+            })
+
+        });
+
     });
+
+    describe("test recipeInformation", () => {
+
+        test("works - id: valid, includeNutrition: null", async () => {
+
+            const results = await SpoonApi.recipeInformation(3)
+            expect(results).toEqual(mockResponseGetRecipeInformation);
+            expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: false})
+
+
+        })
+
+        test("works - id: valid, includeNutrition: false", async () => {
+
+            const results = await SpoonApi.recipeInformation(3)
+            expect(results).toEqual(mockResponseGetRecipeInformation);
+            expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: false})
+
+
+        })
+
+        test("works - id: valid, includeNutrition: true", async () => {
+
+            const results = await SpoonApi.recipeInformation(3, true)
+            expect(results).toEqual(mockResponseGetRecipeInformation);
+            expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: true})
+
+
+        })
+
+        test("error - id: invalid, includeNutrition null", async () => {
+
+            try {
+                await SpoonApi.recipeInformation("not a number")
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getRecipeInformation).not.toHaveBeenCalledWith("not a number", {includeNutrition: false})
+
+        })
+
+        test("error - id: invalid, includeNutrition true", async () => {
+
+            try {
+                await SpoonApi.recipeInformation("not a number", true)
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getRecipeInformation).not.toHaveBeenCalledWith("not a number", {includeNutrition: true})
+
+        })
+
+    })
 
 });

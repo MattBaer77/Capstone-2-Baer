@@ -5,6 +5,7 @@ const { promisify } = require('util')
 const { spoonacularKey } = require('../config.js')
 
 var spoonacularApi = require('../../spoonacularSDK/dist/com.spoonacular.client/index.js');
+const ExpressError = require('../expressError.js');
 var defaultClient = spoonacularApi.ApiClient.instance;
 
 // Configure API key authorization: apiKeyScheme
@@ -99,7 +100,7 @@ class SpoonApi {
     static searchRecipes = async (query=null, intolerances=null, diet=null, number=10) => {
 
         // LIMIT API USE
-        if (number === null || number > 10) number = 10;
+        if (number === null || number > 10 || typeof number !== "number") number = 10;
 
         const opts = {
 
@@ -122,6 +123,8 @@ class SpoonApi {
     }
 
     static recipeInformation = async (id, includeNutrition=false) => {
+
+        if(typeof id !== "number") throw new ExpressError(`Bad Request - id:${id} must be a number`, 400)
 
         const opts = {includeNutrition: includeNutrition};
 
