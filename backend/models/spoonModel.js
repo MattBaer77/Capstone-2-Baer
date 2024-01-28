@@ -25,10 +25,11 @@ class SpoonApi {
     static recipesApi = new spoonacularApi.RecipesApi();
     static miscApi = new spoonacularApi.MiscApi();
 
-    // RECIPE(S) ENDPOINTS
+    // RECIPE(S) DIRECT ENDPOINTS METHODS - RANDOM
     static getARandomFoodJoke = promisify(SpoonApi.miscApi.getARandomFoodJoke.bind(this.miscApi));
     static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi));
 
+    // RECIPE(S) DIRECT ENDPOINTS METHODS - DETAIL & SEARCH
     static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi));
     static getRecipeBySearch = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi));
 
