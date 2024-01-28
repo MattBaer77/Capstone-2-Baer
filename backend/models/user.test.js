@@ -388,6 +388,52 @@ describe("getWithIntolerances", () => {
 
 });
 
+describe("getIntolerances", () => {
+
+  test("works - user with intolerances", async() => {
+
+    let user = await User.getIntolerances("u1");
+    expect(user).toEqual({
+
+      intolerances: [
+
+        {
+          intoleranceId: 2,
+          intoleranceName:"egg",
+        },
+        {
+          intoleranceId: 3,
+          intoleranceName:"gluten",
+        },
+
+      ],
+
+    });
+
+  })
+
+  test("works - user without intolerances", async() => {
+
+    let user = await User.getIntolerances("u3");
+    expect(user).toEqual({
+      intolerances: [],
+    });
+
+  })
+
+  test("not found if no such user", async function () {
+
+    try {
+      await User.getIntolerances("nope");
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+      
+  });
+
+});
+
 describe("add user's intolerance", function () {
 
   const newIntoleranceU1 = {
@@ -642,7 +688,6 @@ describe("retrieve a user's cached data", function() {
       await User.getCache("notValidUser");
       fail();
     } catch (err) {
-      console.log(err)
       expect(err instanceof ExpressError).toBeTruthy();
     }
 

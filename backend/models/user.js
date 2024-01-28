@@ -312,6 +312,54 @@ class User {
 
   };
 
+  /** Given a username, return data about a user's intolerances
+   *
+   * Returns { intolerances }
+   * 
+   * Where intolerances is [{id, intolerance_name, ...]
+   *
+   * Throws ExpressError if user not found.
+   * 
+  */
+
+  static async getIntolerances(username) {
+
+    const existingUserCheck = await db.query(
+
+      `SELECT username,
+              first_name AS "firstName",
+              last_name AS "lastName",
+              email,
+              is_admin AS "isAdmin"
+        FROM users
+        WHERE username = $1`,
+      [username],
+
+    );
+
+    if (!existingUserCheck.rows[0]) {
+
+      throw new ExpressError(`No User: ${username}`, 404)
+
+    }
+
+    const result = await db.query(
+          `SELECT ui.intolerance_id AS "intoleranceId",
+                  i.intolerance_name AS "intoleranceName"
+            FROM users u
+            JOIN users_intolerances ui ON u.username = ui.username
+            JOIN intolerances i ON ui.intolerance_id = i.id
+            WHERE u.username = $1
+            ORDER BY ui.intolerance_id`,
+        [username],
+    );
+
+    const intolerances = { intolerances : result.rows }
+
+    return intolerances;
+
+  }
+
   /** Given a username and intolerance_id
    * 
    *  Create a new user_intolerance.
