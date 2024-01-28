@@ -29,11 +29,13 @@ class SpoonApi {
     static getARandomFoodJoke = promisify(SpoonApi.miscApi.getARandomFoodJoke.bind(this.miscApi));
     static getRandomRecipes = promisify(SpoonApi.recipesApi.getRandomRecipes.bind(this.recipesApi));
 
-    // RECIPE(S) DIRECT ENDPOINTS METHODS - DETAIL & SEARCH
+    // RECIPE(S) DIRECT ENDPOINTS METHODS - SEARCH & DETAIL
+    static getSearchRecipes = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi));
     static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi));
-    static getRecipeBySearch = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi));
 
     // METHODS FOR USE IN ROUTES -
+
+    // CACHE -
     static isCacheValid = () => {
         return this.recipesCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
     };
@@ -92,10 +94,12 @@ class SpoonApi {
         }
     };
 
+    // MAIN -
+
     static searchRecipes = async (query=null, intolerances=null, diet=null, number=10) => {
 
         // LIMIT API USE
-        if (number > 10) number = 10;
+        if (number === null || number > 10) number = 10;
 
         const opts = {
 
@@ -108,7 +112,7 @@ class SpoonApi {
 
         try {
 
-            const { results } = await SpoonApi.getRecipeBySearch(opts);
+            const { results } = await SpoonApi.getSearchRecipes(opts);
             return results;
 
         } catch (e) {
@@ -117,7 +121,7 @@ class SpoonApi {
 
     }
 
-    static getRecipeDetail = async (id, includeNutrition=false) => {
+    static recipeInformation = async (id, includeNutrition=false) => {
 
         const opts = {includeNutrition: includeNutrition};
 
