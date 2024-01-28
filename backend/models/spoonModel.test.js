@@ -232,14 +232,9 @@ describe("test cache management", () => {
     
     describe("test serveRecipesCache", () => {
 
-        console.log(SpoonApi.recipesCache);
-
         test("serveRecipesCache - No Cache Currently Saved", async () => {
 
-            console.log(SpoonApi.recipesCache);
             SpoonApi.recipesCache = null
-            console.log(SpoonApi.recipesCache);
-
             expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(8);
             const fauxResponse = await SpoonApi.serveRecipesCache()    
             expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
