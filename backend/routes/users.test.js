@@ -6,6 +6,20 @@ const db = require("../db.js");
 const app = require("../app");
 
 const User = require("../models/user");
+// BRING IN SPOON MODEL - MOCK SPOON MODEL - ADD FUNCTIONALITY TO ROUTES:
+/**
+ * IF NO USER CACHE AT DATABASE - GET USER CACHE AT SPOON MODEL
+ * 
+ *  - (***OPTIONAL - SAVE CACHE TO DATABASE***) - (Will need to set up helper to troll at regular intervals and delete user caches.)
+ *  - OR MAY NOT NEED TO SAVE CACHE TO DATABASE - START WITH THIS ASSUMPTION
+ * 
+ *  - SERVE USER-SPECIFIC CACHE TO FRONT END - WITH TIMER?
+ * 
+ *  - MUST FIRST ADD USER-SPECIFIC CACHE FUNCTIONALITY TO SPOON MODEL
+ *  - MUST THEN ADD TEST CASES FOR:
+ * 
+ *  - GET ROUTES - /:username, /:username/details, /:username/cache, /:username, 
+ */
 
 const {
     commonBeforeAll,
