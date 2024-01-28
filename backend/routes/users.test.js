@@ -793,3 +793,6 @@ describe('GET /users/username/cache-only', () => {
 
 // CLEAR CACHE
 
+// ADD INTOLERANCE
+
+// REMOVE INTOLERANCE

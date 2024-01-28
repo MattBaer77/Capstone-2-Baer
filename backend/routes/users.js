@@ -158,7 +158,7 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
 
 })
 
-// SET CACHE *
+// SET CACHE
 /** PUT USER CACHE - /users/[username]/cache
  * 
  * Accepts ?username and {data}
@@ -167,7 +167,7 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
  * 
 */
 
-// CLEAR CACHE *
+// CLEAR CACHE
 /** DELETE USER CACHE - /users/[username]/cache
  * 
  * Accepts ?username
