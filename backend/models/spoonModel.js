@@ -89,7 +89,7 @@ class SpoonApi {
                 const data = await this.fetchFreshRandomData();
                 this.startCacheTimer();
                 this.recipesCache = data;
-                
+
             }
     
             this.clearCacheIfExpired();
@@ -136,7 +136,6 @@ class SpoonApi {
         try {
 
             const results = await SpoonApi.getRecipeInformation(id, opts);
-            console.log(results)
             return results
 
         } catch (e) {
