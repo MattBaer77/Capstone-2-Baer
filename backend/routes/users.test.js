@@ -19,7 +19,7 @@ const User = require("../models/user");
  *  - MUST THEN ADD TEST CASES FOR:
  * 
  *  - GET ROUTES - /:username, /:username/details, /:username/cache, /:username, 
- */
+*/
 
 const {
     commonBeforeAll,
