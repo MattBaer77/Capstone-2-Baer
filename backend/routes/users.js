@@ -7,6 +7,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 const ExpressError = require("../expressError");
 const User = require('../models/user');
+const SpoonApi = require('../models/spoonModel')
 const { ensureAdminOrEffectedUser } = require("../middleware/auth");
 
 // add Schemas Here
@@ -130,6 +131,15 @@ router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next)
 
     try {
         const user = await User.getWithCache(req.params.username);
+
+        if(!user.cache){
+
+            const intolerances = await User.getIntolerances(req.params.username)
+            const fillUserCache = await SpoonApi.searchRecipes(null, intolerances, null, null)
+            user.cache = fillUserCache
+
+        }
+
         return res.json({user});
     } catch (e) {
         return next(e);

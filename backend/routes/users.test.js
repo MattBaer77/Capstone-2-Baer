@@ -22,11 +22,22 @@ const User = require("../models/user");
 */
 
 const {
+    mockResponseGetRandomRecipes,
+    mockResponseGetSearchRecipesOptsNullNum10,
+    mockResponseGetRecipeInformation
+} = require("../models/spoonModelTestSetup.js")
+
+const SpoonApi = require('../models/spoonModel.js');
+
+beforeAll(() => SpoonApi.recipesCache = null)
+
+const {
     commonBeforeAll,
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll,
     u1Token,
+    u3Token,
     adminToken,
 } = require("./_testCommon");
   
@@ -643,6 +654,25 @@ describe('GET /users/username/cache', () => {
         });
     });
 
+    test("works for users - ADMIN - user has no cache", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u3/cache`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache: mockResponseGetSearchRecipesOptsNullNum10.results,
+                email: "u3@email.com",
+                firstName: "U3F",
+                isAdmin: false,
+                lastName: "U3L",
+                username: "u3",
+
+            },
+        });
+    });
+
     test("not found if user not found - ADMIN", async () => {
 
         const resp = await request(app)
@@ -674,6 +704,25 @@ describe('GET /users/username/cache', () => {
                 isAdmin: false,
                 lastName: "U1L",
                 username: "u1",
+
+            },
+        });
+    });
+
+    test("works for users - NOT ADMIN IS USER - no cache", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u3/cache`)
+            .set("authorization", `Bearer ${u3Token}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache: mockResponseGetSearchRecipesOptsNullNum10.results,
+                email: "u3@email.com",
+                firstName: "U3F",
+                isAdmin: false,
+                lastName: "U3L",
+                username: "u3",
 
             },
         });
