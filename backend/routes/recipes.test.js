@@ -407,4 +407,70 @@ describe('GET /recipes/search', () => {
 
 // GET RECIPE BY ID
 
+describe('GET /recipes/:id', () => {
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+        const resp = await request(app).get(`/recipes/12`)
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+    })
+
+    // USER
+
+    test("authorized for user", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/12`)
+            .set("authorization", `Bearer ${u1Token}`)
+
+        expect(resp.statusCode).toEqual(200);
+        expect(resp.body).toEqual(mockResponseGetRecipeInformation)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledTimes(1)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(12, {includeNutrition:false})
+
+    })
+
+    test("authorized for user - fail ID not valid", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/nope`)
+            .set("authorization", `Bearer ${u1Token}`)
+
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+    })
+
+    // ADMIN
+
+    test("authorized for ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/12`)
+            .set("authorization", `Bearer ${adminToken}`)
+
+        expect(resp.statusCode).toEqual(200);
+        expect(resp.body).toEqual(mockResponseGetRecipeInformation)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledTimes(2)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(12, {includeNutrition:false})
+
+    })
+
+    test("authorized for ADMIN - fail ID not valid", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/nope`)
+            .set("authorization", `Bearer ${adminToken}`)
+
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+    })
+
+})
+
 // GET RECIPE BY ID - INCLUDE NUTRITION

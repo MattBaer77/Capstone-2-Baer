@@ -105,21 +105,15 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
  * 
 */
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', ensureUserLoggedIn, async (req, res, next) => {
 
-    // REFACTOR TO USE SpoonApi.recipeInformation
-
-    console.log("/recipes/ID hit with id of:")
-    console.log(req.params.id)
-
-    const id = req.params.id
-    const opts = {
-        'includeNutrition':false
-    };
+    console.log("/recipes/:id hit with id of:")
+    const id = parseInt(req.params.id)
+    console.log(id)
 
     try {
 
-        const data = await SpoonApi.getRecipeInformation(id, opts)
+        const data = await SpoonApi.recipeInformation(id)
         return res.json(data)
 
     } catch (e) {
@@ -140,21 +134,15 @@ router.get('/:id', async (req, res, next) => {
  * 
 */
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id/nutrition', ensureUserLoggedIn, async (req, res, next) => {
 
-    // REFACTOR TO USE SpoonApi.recipeInformation
-
-    console.log("/recipes/ID hit with id of:")
-    console.log(req.params.id)
-
-    const id = req.params.id
-    const opts = {
-        'includeNutrition':true
-    };
+    console.log("/recipes/:id/nutrition hit with id of:")
+    const id = parseInt(req.params.id)
+    console.log(id)
 
     try {
 
-        const data = await SpoonApi.getRecipeInformation(id, opts)
+        const data = await SpoonApi.recipeInformation(id, true)
         return res.json(data)
 
     } catch (e) {
