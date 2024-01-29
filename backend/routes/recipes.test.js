@@ -64,6 +64,9 @@ describe('GET /recipes/search', () => {
 
     const fauxQueryAll = '?query=chicken%20noodle&intolerances=dairy&diet=vegetarian'
 
+    const fauxQueryMultipleIntolerances = '?query=chicken%20noodle&intolerances=dairy,wheat'
+    const fauxQueryMultipleIntolerancesArr = '?query=chicken%20noodle&intolerances=dairy&intolerances=wheat&diet=vegan'
+
     const fauxQueryOnly = '?query=chicken%20noodle'
 
     // ANON
@@ -111,6 +114,126 @@ describe('GET /recipes/search', () => {
             query: 'chicken noodle',
             intolerances: 'dairy',
             diet: 'vegetarian',
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - all options - no user intolerances - multiple query intolerances passed as string", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryMultipleIntolerances}`)
+            .set("authorization", `Bearer ${u3Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(3)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'dairy',
+            diet: 'vegetarian',
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - all options - no user intolerances - multiple query intolerances passed as array", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryMultipleIntolerancesArr}`)
+            .set("authorization", `Bearer ${u3Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(4)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'dairy,wheat',
+            diet: null,
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - with user intolerances", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryOnly}`)
+            .set("authorization", `Bearer ${u1Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(5)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'dairy,wheat',
+            diet: 'vegan',
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - all options - with user intolerances", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryAll}`)
+            .set("authorization", `Bearer ${u1Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(6)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'egg,gluten,dairy',
+            diet: 'vegetarian',
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - all options - with user intolerances - multiple query intolerances passed as string", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryMultipleIntolerances}`)
+            .set("authorization", `Bearer ${u1Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(7)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'egg,gluten,dairy,wheat',
+            diet: null,
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - all options - with user intolerances - multiple query intolerances passed as array", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryMultipleIntolerancesArr}`)
+            .set("authorization", `Bearer ${u1Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(8)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'egg,gluten,dairy,wheat',
+            diet: 'vegan',
             number: 10,
     
         })

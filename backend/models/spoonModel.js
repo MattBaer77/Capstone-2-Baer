@@ -105,6 +105,9 @@ class SpoonApi {
 
     static searchRecipes = async (query=null, intolerances=null, diet=null, number=10) => {
 
+        // DO NOT ALLOW "" TO BE PASSED AS opts.intolerances
+        if (intolerances === "") intolerances = null
+
         // LIMIT API USE
         if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
 

@@ -58,9 +58,40 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
     console.log(`intolerance(s)`, req.query.intolerances)
     console.log(`diet(s)`, req.query.diet )
 
+    console.log(res.locals.user.username)
+
+    const { intolerances } = await User.getIntolerances(res.locals.user.username)
+
+    console.log(intolerances)
+    console.log(req.query.intolerances)
+
+    let intoleranceString = '';
+
+    if(intolerances.length) {
+
+        intoleranceString = intolerances.reduce((a, i) => a +i.intoleranceName + ',', '')
+
+    }
+
+    if(req.query.intolerances && typeof req.query.intolerances === 'object'){
+
+        intoleranceString = intoleranceString + req.query.intolerances.join(',') + ','
+
+    }
+
+    if(req.query.intolerances && typeof req.query.intolerances === 'string') {
+
+        intoleranceString = intoleranceString + req.query.intolerances + ','
+
+    }
+
+    intoleranceString = intoleranceString.slice(0, -1);
+
+    console.log(intoleranceString)
+
     try {
 
-        const data = await SpoonApi.searchRecipes(req.query.query, req.query.intolerances, req.query.diet )
+        const data = await SpoonApi.searchRecipes(req.query.query, intoleranceString, req.query.diet )
         return res.json(data)
 
     } catch (e) {
