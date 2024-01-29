@@ -166,7 +166,7 @@ describe("test main methods", () => {
         test("works - opts: null", async () => {
 
             const results = await SpoonApi.searchRecipes(null, null, null, null);
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
                 query:null,
                 intolerances:null,
@@ -179,7 +179,7 @@ describe("test main methods", () => {
         test("works - opts: null, limit: 10", async () => {
 
             const results = await SpoonApi.searchRecipes(null, null, null, 10);
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
                 query:null,
                 intolerances:null,
@@ -192,7 +192,7 @@ describe("test main methods", () => {
         test("works - opts: null, limited to 10", async () => {
 
             const results = await SpoonApi.searchRecipes(null, null, null, 50);
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
                 query:null,
                 intolerances:null,
@@ -205,7 +205,7 @@ describe("test main methods", () => {
         test("works - opts: null, limited to > 0", async () => {
 
             const results = await SpoonApi.searchRecipes(null, null, null, 0);
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
                 query:null,
                 intolerances:null,
@@ -218,7 +218,7 @@ describe("test main methods", () => {
         test("works - opts: null, limited to > 0", async () => {
 
             const results = await SpoonApi.searchRecipes(null, null, null, -50);
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
                 query:null,
                 intolerances:null,
@@ -231,7 +231,7 @@ describe("test main methods", () => {
         test("works - all opts, limited to 10", async () => {
 
             const results = await SpoonApi.searchRecipes("Asparagus", "gluten", "vegetarian", 5);
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
                 query:"Asparagus",
                 intolerances:"gluten",
@@ -244,7 +244,7 @@ describe("test main methods", () => {
         test("works - bad data entered into 'number'", async () => {
 
             const results = await SpoonApi.searchRecipes("Asparagus", "gluten", "vegetarian", 'not a number');
-            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10.results);
+            expect(results).toEqual(mockResponseGetSearchRecipesOptsNullNum10);
             expect(SpoonApi.getSearchRecipes).not.toHaveBeenCalledWith({
                 query:"Asparagus",
                 intolerances:"gluten",

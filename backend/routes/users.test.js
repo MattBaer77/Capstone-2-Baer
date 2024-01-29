@@ -52,7 +52,7 @@ describe('GET /users/username', () => {
 
     // ANON
 
-    test("unauth for anon", async () => {
+    test("unauthorized for anon", async () => {
 
         const resp = await request(app).get(`/users/u1`);
         expect(resp.statusCode).toEqual(401)
@@ -112,7 +112,7 @@ describe('GET /users/username', () => {
 
     // NOT ADMIN NOT USER
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/u2`)
@@ -122,7 +122,7 @@ describe('GET /users/username', () => {
 
     });
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/nope`)
@@ -141,7 +141,7 @@ describe('GET /users/username/details', () => {
 
     // ANON
 
-    test("unauth for anon", async () => {
+    test("unauthorized for anon", async () => {
 
         const resp = await request(app).get(`/users/u1/details`);
         expect(resp.statusCode).toEqual(401)
@@ -273,7 +273,7 @@ describe('GET /users/username/details', () => {
 
     // NOT ADMIN NOT USER
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/u2/details`)
@@ -283,7 +283,7 @@ describe('GET /users/username/details', () => {
 
     });
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/nope/details`)
@@ -301,7 +301,7 @@ describe("PATCH /users/:username", () => {
 
     // ANON
 
-    test("unauth for anon", async () => {
+    test("unauthorized for anon", async () => {
 
         const resp = await request(app)
         .patch(`/users/u1`)
@@ -656,7 +656,7 @@ describe('GET /users/username/cache', () => {
 
     // ANON
 
-    test("unauth for anon", async () => {
+    test("unauthorized for anon", async () => {
 
         const resp = await request(app).get(`/users/u1/cache`);
         expect(resp.statusCode).toEqual(401)
@@ -762,7 +762,7 @@ describe('GET /users/username/cache', () => {
 
     // NOT ADMIN NOT USER
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/u2/cache`)
@@ -772,7 +772,7 @@ describe('GET /users/username/cache', () => {
 
     });
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/nope/cache`)
@@ -790,7 +790,7 @@ describe('GET /users/username/cache-only', () => {
 
     // ANON
 
-    test("unauth for anon", async () => {
+    test("unauthorized for anon", async () => {
 
         const resp = await request(app).get(`/users/u1/cache-only`);
         expect(resp.statusCode).toEqual(401)
@@ -868,7 +868,7 @@ describe('GET /users/username/cache-only', () => {
 
     // NOT ADMIN NOT USER
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/u2/cache-only`)
@@ -878,7 +878,7 @@ describe('GET /users/username/cache-only', () => {
 
     });
 
-    test("unauth for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
         const resp = await request(app)
             .get(`/users/nope/cache-only`)

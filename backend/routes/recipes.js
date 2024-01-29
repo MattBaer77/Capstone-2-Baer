@@ -6,7 +6,9 @@ const express = require("express");
 
 const router = express.Router({ mergeParams: true })
 
+const User = require("../models/user")
 const SpoonApi = require("../models/spoonModel")
+const { ensureUserLoggedIn } = require("../middleware/auth");
 
 
 // RECIPES ROUTES -
@@ -49,29 +51,16 @@ router.get('/cache', async (req, res, next) => {
  * 
 */
 
-router.get('/search', async (req, res, next) => {
-
-    // REFACTOR TO USE SpoonApi.searchRecipes
-
-    const q = req.query;
+router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
     console.log("/recipes/search hit with:")
-    console.log(`query(s):`, q.query)
-    console.log(`intolerance(s)`, q.intolerances)
-    console.log(`diet(s)`, q.diet)
-
-    // NOTE - SOURCE OF "INTOLERANCES" AND "DIET" MAY NEED TO CHANGE FROM QUERY STRING TO USER INFO CONTAINED IN TOKEN
-    const opts = {
-
-        'query':q.query,
-        'intolerances':q.intolerances,
-        'diet':q.diet,
-
-    };
+    console.log(`query(s):`, req.query.query)
+    console.log(`intolerance(s)`, req.query.intolerances)
+    console.log(`diet(s)`, req.query.diet )
 
     try {
 
-        const data = await SpoonApi.getRecipeBySearch(opts)
+        const data = await SpoonApi.searchRecipes(req.query.query, req.query.intolerances, req.query.diet )
         return res.json(data)
 
     } catch (e) {

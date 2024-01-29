@@ -108,7 +108,6 @@ class SpoonApi {
         // LIMIT API USE
         if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
 
-
         const opts = {
 
             query: query,
@@ -120,7 +119,7 @@ class SpoonApi {
 
         try {
 
-            const { results } = await SpoonApi.getSearchRecipes(opts);
+            const results = await SpoonApi.getSearchRecipes(opts);
             return results;
 
         } catch (e) {

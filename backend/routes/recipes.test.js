@@ -60,6 +60,66 @@ describe('GET /recipes/cache', () => {
 
 // SEARCH
 
+describe('GET /recipes/search', () => {
+
+    const fauxQueryAll = '?query=chicken%20noodle&intolerances=dairy&diet=vegetarian'
+
+    const fauxQueryOnly = '?query=chicken%20noodle'
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+        const resp = await request(app).get(`/recipes/search${fauxQueryOnly}`)
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+    })
+
+    // USER
+
+    test("authorized for user - no user intolerances", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryOnly}`)
+            .set("authorization", `Bearer ${u3Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(1)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: null,
+            diet: null,
+            number: 10,
+    
+        })
+
+
+    })
+
+    test("authorized for user - all options - no user intolerances", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/search${fauxQueryAll}`)
+            .set("authorization", `Bearer ${u3Token}`)
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual(mockResponseGetSearchRecipesOptsNullNum10)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledTimes(2)
+        expect(SpoonApi.getSearchRecipes).toHaveBeenCalledWith({
+
+            query: 'chicken noodle',
+            intolerances: 'dairy',
+            diet: 'vegetarian',
+            number: 10,
+    
+        })
+
+
+    })
+
+})
+
 // GET RECIPE BY ID
 
 // GET RECIPE BY ID - INCLUDE NUTRITION
