@@ -4,6 +4,8 @@ const { promisify } = require('util')
 
 const { spoonacularKey } = require('../config.js')
 
+const intolerancesToQueryString = require('../helpers/intolerancesToQueryString.js')
+
 var spoonacularApi = require('../../spoonacularSDK/dist/com.spoonacular.client/index.js');
 const ExpressError = require('../expressError.js');
 var defaultClient = spoonacularApi.ApiClient.instance;
@@ -145,11 +147,13 @@ class SpoonApi {
     };
 
     // SDK NOT USED DUE TO LIMITATIONS - NO "exclude-tags" FUNCTIONALITY AT SDK getRandomRecipes
-    static randomRecipesExcludeIntolerances = async (number, intolerances=[]) => {
+    static randomRecipesExcludeIntolerances = async (number=10, intolerances=[]) => {
 
-        intolerances = 'diary,egg,gluten,grain,peanut,seafood,sesame,shell%20fish,soy,sulfite,tree%20nut,wheat'
+        intolerances = intolerancesToQueryString(intolerances)
 
         const url = `https://api.spoonacular.com/recipes/random?apiKey=${spoonacularKey}&number=${number}&exclude-tags=${intolerances}`
+
+        console.log(url)
 
         try {
 
