@@ -144,6 +144,34 @@ class SpoonApi {
 
     };
 
+    // IN PROGRESS
+    static randomRecipesTagsIntolerances = async (number=10, intolerances=[]) => {
+
+        // LIMIT API USE
+        if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
+
+        // intolerances = 'dairy free, gluten free'
+        intolerances = '';
+
+        try {
+
+            const opts = {
+                limitLicense: true,
+                tags: intolerances,
+                number: number
+            };
+    
+            const data = await this.getRandomRecipes(opts);
+            this.recipesCache = data;
+            this.cacheTimestamp = Date.now();
+            return data;
+
+        } catch (e) {
+            throw e;
+        }
+
+    };
+
 }
 
 module.exports = SpoonApi
