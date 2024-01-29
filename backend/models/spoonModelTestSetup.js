@@ -94,6 +94,7 @@ jest.mock('./spoonModel', () => {
     originalSpoonModel.getRandomRecipes = jest.fn().mockResolvedValue(mockResponseGetRandomRecipes);
     originalSpoonModel.getSearchRecipes = jest.fn().mockResolvedValue(mockResponseGetSearchRecipesOptsNullNum10);
     originalSpoonModel.getRecipeInformation = jest.fn().mockResolvedValue(mockResponseGetRecipeInformation);
+    originalSpoonModel.randomRecipesExcludeIntolerances = jest.fn().mockResolvedValue(mockResponseGetRandomRecipes)
     originalSpoonModel.startCacheTimer = jest.fn();
 
     return originalSpoonModel;

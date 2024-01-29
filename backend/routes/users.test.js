@@ -639,10 +639,8 @@ describe('GET /users/username/cache', () => {
             user: {
 
                 cache:{
-                    data: {
-                        faux: "json",
-                        some: "more",
-                    },
+                    faux: "json",
+                    some: "more",
                 },
                 email: "u1@email.com",
                 firstName: "U1F",
@@ -694,10 +692,8 @@ describe('GET /users/username/cache', () => {
             user: {
 
                 cache:{
-                    data: {
-                        faux: "json",
-                        some: "more",
-                    },
+                    faux: "json",
+                    some: "more",
                 },
                 email: "u1@email.com",
                 firstName: "U1F",
@@ -776,10 +772,8 @@ describe('GET /users/username/cache-only', () => {
         expect(resp.body).toEqual({
 
             cache:{
-                data: {
-                    faux: "json",
-                    some: "more",
-                },
+                faux: "json",
+                some: "more",
             }
 
         });
@@ -817,10 +811,8 @@ describe('GET /users/username/cache-only', () => {
         expect(resp.body).toEqual({
 
             cache:{
-                data: {
-                    faux: "json",
-                    some: "more",
-                },
+                faux: "json",
+                some: "more",
             }
 
         });
