@@ -18,7 +18,7 @@ const User = require("../models/user");
  *  - MUST FIRST ADD USER-SPECIFIC CACHE FUNCTIONALITY TO SPOON MODEL
  *  - MUST THEN ADD TEST CASES FOR:
  * 
- *  - GET ROUTES - /:username, /:username/details, /:username/cache, /:username, 
+ *  - GET ROUTES - /:username/details, /:username/cache, /:username/cache-only, 
 */
 
 const {
@@ -161,10 +161,8 @@ describe('GET /users/username/details', () => {
 
                 cache:{
 
-                    data: {
-                        faux: "json",
-                        some: "more",
-                    },
+                    faux: "json",
+                    some: "more",
 
                 },
                 email: "u1@email.com",
@@ -182,6 +180,26 @@ describe('GET /users/username/details', () => {
                 isAdmin: false,
                 lastName: "U1L",
                 username: "u1",
+
+            },
+        });
+    });
+
+    test("works for users - ADMIN - user has no cache", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u3/details`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache:mockResponseGetRandomRecipes.recipes,
+                email: "u3@email.com",
+                firstName: "U3F",
+                intolerances:[],
+                isAdmin: false,
+                lastName: "U3L",
+                username: "u3",
 
             },
         });
@@ -209,10 +227,8 @@ describe('GET /users/username/details', () => {
 
                 cache:{
 
-                    data: {
-                        faux: "json",
-                        some: "more",
-                    },
+                    faux: "json",
+                    some: "more",
 
                 },
                 email: "u1@email.com",
@@ -230,6 +246,26 @@ describe('GET /users/username/details', () => {
                 isAdmin: false,
                 lastName: "U1L",
                 username: "u1",
+
+            },
+        });
+    });
+
+    test("works for users - NOT ADMIN IS USER - user has no cache", async () => {
+
+        const resp = await request(app)
+            .get(`/users/u3/details`)
+            .set("authorization", `Bearer ${u3Token}`);
+        expect(resp.body).toEqual({
+            user: {
+
+                cache:mockResponseGetRandomRecipes.recipes,
+                email: "u3@email.com",
+                firstName: "U3F",
+                intolerances:[],
+                isAdmin: false,
+                lastName: "U3L",
+                username: "u3",
 
             },
         });

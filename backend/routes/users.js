@@ -60,6 +60,18 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
 
     try {
         const user = await User.getWithCacheAndIntolerances(req.params.username);
+
+        if(user.cache) user.cache = user.cache.data;
+
+        if(!user.cache){
+
+            const { intolerances } = await User.getIntolerances(req.params.username)
+            console.log(intolerances)
+            const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+            user.cache = recipes
+
+        }
+
         return res.json({user});
     } catch (e) {
         return next(e);
@@ -132,9 +144,7 @@ router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next)
     try {
         const user = await User.getWithCache(req.params.username);
 
-        if(user.cache){
-            user.cache = user.cache.data
-        }
+        if(user.cache) user.cache = user.cache.data;
 
         if(!user.cache){
 
