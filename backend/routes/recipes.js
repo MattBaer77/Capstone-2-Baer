@@ -7,11 +7,11 @@ const express = require("express");
 const router = express.Router({ mergeParams: true })
 
 const SpoonApi = require("../models/spoonModel")
-const User = require("../models/user")
 
 
 // RECIPES ROUTES -
 // (MIXED AUTH - SPECIFIED PER ROUTE)
+
 
 // (PUBLIC - FOR HOMEPAGE - LIMITED BY CACHE TIMER - 59 MIN - MAX 25 CALLS / DAY)
 // GET Recipes from Cache - or - fill cache (generic cache on server memory)
@@ -25,32 +25,14 @@ const User = require("../models/user")
 
 router.get('/cache', async (req, res, next) => {
 
-    console.log("/recipes/cache hit")
-
     try {
-        const data = await SpoonApi.serveRecipesCache()
-        return res.json(data)
+        const {recipes} = await SpoonApi.serveRecipesCache()
+        return res.json(recipes)
     } catch (e) {
         return next(e)
     }
 
 });
-
-// *
-// (MUST BE SAME USER - OR ADMIN)
-// GET Recipes from user's Cache - or - fill user's cache
-/** GET RECIPE - /recipes/cache/[username]
- * 
- * Accepts ?username
- * 
- * Cache ID = User's ID
- * Check user recipe cache on database
- * If no data, load and save to database cache
- * If data, load data
- * 
-*/
-
-// 
 
 // (MUST BE LOGGED IN USER - ANY)
 // GET Search For A Recipe
@@ -68,6 +50,8 @@ router.get('/cache', async (req, res, next) => {
 */
 
 router.get('/search', async (req, res, next) => {
+
+    // REFACTOR TO USE SpoonApi.searchRecipes
 
     const q = req.query;
 
@@ -108,12 +92,49 @@ router.get('/search', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
 
+    // REFACTOR TO USE SpoonApi.recipeInformation
+
     console.log("/recipes/ID hit with id of:")
     console.log(req.params.id)
 
     const id = req.params.id
     const opts = {
         'includeNutrition':false
+    };
+
+    try {
+
+        const data = await SpoonApi.getRecipeInformation(id, opts)
+        return res.json(data)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
+
+// (MUST BE LOGGED IN USER - ANY)
+// GET RECIPE - BY ID
+/** GET RECIPE - recipes/[id]
+ * 
+ * Accepts ?id
+ * 
+ * returns {recipe}
+ * 
+ * INCLUDES NUTRITION
+ * 
+*/
+
+router.get('/:id', async (req, res, next) => {
+
+    // REFACTOR TO USE SpoonApi.recipeInformation
+
+    console.log("/recipes/ID hit with id of:")
+    console.log(req.params.id)
+
+    const id = req.params.id
+    const opts = {
+        'includeNutrition':true
     };
 
     try {
