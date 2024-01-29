@@ -7,5 +7,10 @@
  * 
 */
 
-// ONLY IMPLEMENT IF NECCESSARY
+function intolerancesToQueryString(arr) {
 
+    return ((arr.reduce((str, intolerance) => str + ((intolerance.intoleranceName).replace(/ /g, '%20')) + ',', '')).slice(0, -1))
+
+};
+
+module.exports = intolerancesToQueryString;

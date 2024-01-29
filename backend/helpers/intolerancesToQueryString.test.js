@@ -1,17 +1,21 @@
-/** Function intolerancesToString
+/** Function intolerancesToQueryString
  * 
  * Accepts an array of intolerances like:
  * [{ intoleranceId: 2, intoleranceName: 'egg' }, { intoleranceId: 3, intoleranceName: 'gluten' }]
  * 
- * Returns a string like 'egg free, gluten free'
+ * Returns a string like 'egg,gluten'
+ * 
+ * If a space in intoleranceName like 'sea food' replace ' ' with %20 like 'sea%20food'
  * 
  * If no input like: [] return ''
  * 
 */
 
-const { intolerancesToString } = require("./intolerancesToString")
+const intolerancesToQueryString = require("./intolerancesToQueryString")
 
 const example2Input = [{ intoleranceId: 2, intoleranceName: 'egg' }, { intoleranceId: 3, intoleranceName: 'gluten' }]
+
+const example2InputA = [{ intoleranceId: 2, intoleranceName: 'egg' }, { intoleranceId: 8, intoleranceName: 'tree nut' }]
 
 const exampleNoInput = []
 
@@ -32,19 +36,27 @@ const exampleAllInput = [
 
 ]
 
-describe("intolerancesToString", () => {
+describe("intolerancesToQueryString", () => {
 
     test("works with example inputs - array of 2 intolerances", () => {
 
-        const result = intolerancesToString(example2Input)
+        const result = intolerancesToQueryString(example2Input)
 
         expect(result).toEqual('egg,gluten')
 
     });
 
-    test("works with example inputs - array of 2 intolerances", () => {
+    test("works with example inputs - array of 2 intolerances - with space replace", () => {
 
-        const result = intolerancesToString(exampleNoInput)
+        const result = intolerancesToQueryString(example2InputA)
+
+        expect(result).toEqual('egg,tree%20nut')
+
+    });
+
+    test("works with example inputs - array of 0 intolerances", () => {
+
+        const result = intolerancesToQueryString(exampleNoInput)
 
         expect(result).toEqual('')
 
@@ -52,9 +64,9 @@ describe("intolerancesToString", () => {
 
     test("works with example inputs - array of all intolerances", () => {
 
-        const result = intolerancesToString(exampleAllInput)
+        const result = intolerancesToQueryString(exampleAllInput)
 
-        expect(result).toEqual('diary,egg,gluten,grain,peanut,seafood,sesame,shell%20fish,soy,sulfite,tree%20nut,wheat')
+        expect(result).toEqual('dairy,egg,gluten,grain,peanut,seafood,sesame,shell%20fish,soy,sulfite,tree%20nut,wheat')
 
     });
 
