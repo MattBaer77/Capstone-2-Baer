@@ -144,7 +144,34 @@ class SpoonApi {
 
     };
 
-    // static randomRecipesExcludeIntolerances = async (number, intolerances=[])
+    // SDK NOT USED DUE TO LIMITATIONS - NO "exclude-tags" FUNCTIONALITY AT SDK getRandomRecipes
+    static randomRecipesExcludeIntolerances = async (number, intolerances=[]) => {
+
+        intolerances = 'diary,egg,gluten,grain,peanut,seafood,sesame,shell%20fish,soy,sulfite,tree%20nut,wheat'
+
+        const url = `https://api.spoonacular.com/recipes/random?apiKey=${spoonacularKey}&number=${number}&exclude-tags=${intolerances}`
+
+        try {
+
+            const response = await fetch(url, {
+                method: 'GET'
+            })
+
+            if (!response.ok) {
+                throw new ExpressError("Error", response)
+            }
+
+            const data = response.json();
+
+            return data
+
+        } catch (e) {
+
+            throw(e)
+
+        }
+
+    }
 
     // IN PROGRESS
     // static randomRecipesTagsIntolerances = async (number=10, intolerances=[]) => {

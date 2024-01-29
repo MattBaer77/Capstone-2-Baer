@@ -38,7 +38,7 @@ describe("intolerancesToString", () => {
 
         const result = intolerancesToString(example2Input)
 
-        expect(result).toEqual('egg free, gluten free')
+        expect(result).toEqual('egg,gluten')
 
     });
 
@@ -54,7 +54,7 @@ describe("intolerancesToString", () => {
 
         const result = intolerancesToString(exampleAllInput)
 
-        expect(result).toEqual('diary free, egg free, gluten free, grain free, peanut free, seafood free, sesame free, shell fish free, soy free, sulfite free, tree nut free, wheat free')
+        expect(result).toEqual('diary,egg,gluten,grain,peanut,seafood,sesame,shell%20fish,soy,sulfite,tree%20nut,wheat')
 
     });
 
