@@ -144,33 +144,38 @@ class SpoonApi {
 
     };
 
+    // static randomRecipesExcludeIntolerances = async (number, intolerances=[])
+
     // IN PROGRESS
-    static randomRecipesTagsIntolerances = async (number=10, intolerances=[]) => {
+    // static randomRecipesTagsIntolerances = async (number=10, intolerances=[]) => {
 
-        // LIMIT API USE
-        if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
+    //     // LIMIT API USE
+    //     if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
 
-        // intolerances = 'dairy free, gluten free'
-        intolerances = '';
+    //     // intolerances = 'dairy free, gluten free'
+    //     intolerances = 'dairy free, egg free, gluten free, grain free, seafood free'
+    //     // intolerances = '';
 
-        try {
+    //     try {
 
-            const opts = {
-                limitLicense: true,
-                tags: intolerances,
-                number: number
-            };
+    //         const opts = {
+    //             limitLicense: true,
+    //             tags: intolerances,
+    //             number: number
+    //         };
+
+    //         console.log(opts)
     
-            const data = await this.getRandomRecipes(opts);
-            this.recipesCache = data;
-            this.cacheTimestamp = Date.now();
-            return data;
+    //         const data = await this.getRandomRecipes(opts);
+    //         this.recipesCache = data;
+    //         this.cacheTimestamp = Date.now();
+    //         return data;
 
-        } catch (e) {
-            throw e;
-        }
+    //     } catch (e) {
+    //         throw e;
+    //     }
 
-    };
+    // };
 
 }
 

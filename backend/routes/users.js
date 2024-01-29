@@ -134,7 +134,8 @@ router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next)
 
         if(!user.cache){
 
-            const intolerances = await User.getIntolerances(req.params.username)
+            const { intolerances } = await User.getIntolerances(req.params.username)
+            console.log(intolerances)
             const fillUserCache = await SpoonApi.searchRecipes(null, intolerances, null, null)
             user.cache = fillUserCache
 
