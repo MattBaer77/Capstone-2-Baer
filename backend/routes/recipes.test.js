@@ -474,3 +474,69 @@ describe('GET /recipes/:id', () => {
 })
 
 // GET RECIPE BY ID - INCLUDE NUTRITION
+
+describe('GET /recipes/:id/nutrition', () => {
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+        const resp = await request(app).get(`/recipes/12/nutrition`)
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+    })
+
+    // USER
+
+    test("authorized for user", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/12/nutrition`)
+            .set("authorization", `Bearer ${u1Token}`)
+
+        expect(resp.statusCode).toEqual(200);
+        expect(resp.body).toEqual(mockResponseGetRecipeInformation)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledTimes(3)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(12, {includeNutrition:true})
+
+    })
+
+    test("authorized for user - fail ID not valid", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/nope/nutrition`)
+            .set("authorization", `Bearer ${u1Token}`)
+
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+    })
+
+    // ADMIN
+
+    test("authorized for ADMIN", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/12/nutrition`)
+            .set("authorization", `Bearer ${adminToken}`)
+
+        expect(resp.statusCode).toEqual(200);
+        expect(resp.body).toEqual(mockResponseGetRecipeInformation)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledTimes(4)
+        expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(12, {includeNutrition:true})
+
+    })
+
+    test("authorized for ADMIN - fail ID not valid", async () => {
+
+        const resp = await request(app)
+            .get(`/recipes/nope/nutrition`)
+            .set("authorization", `Bearer ${adminToken}`)
+
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+    })
+
+})
