@@ -58,12 +58,7 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
     console.log(`intolerance(s)`, req.query.intolerances)
     console.log(`diet(s)`, req.query.diet )
 
-    console.log(res.locals.user.username)
-
     const { intolerances } = await User.getIntolerances(res.locals.user.username)
-
-    console.log(intolerances)
-    console.log(req.query.intolerances)
 
     let intoleranceString = '';
 
