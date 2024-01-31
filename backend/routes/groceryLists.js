@@ -6,12 +6,13 @@ const express = require("express");
 const ExpressError = require("../expressError");
 const GroceryList = require("../models/groceryList")
 const SpoonApi = require("../models/spoonModel")
+const { ensureAdminOrEffectedUser } = require("../middleware/auth");
+
 
 // add Schemas Here
 
 const router = express.Router();
 
-// * => PRIORITY TO IMPLEMENT
 
 // GROCERYLIST ROUTES -
 // (MUST BE OWNER OF LIST)
