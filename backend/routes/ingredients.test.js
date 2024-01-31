@@ -363,3 +363,275 @@ describe('GET /ingredients/search', () => {
 })
 
 // GET - INGREDIENT BY ID
+
+describe('GET /ingredients/:id', () => {
+
+    const fauxIdQueryAll = '?amount=5&unit=cup'
+    const fauxIdQueryAmount = '?amount=5'
+    const fauxIdQueryUnit = '?unit=cup'
+
+    describe('NO QUERY', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: null})
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: null})
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('All QUERY', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryAll}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAll}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: 'cup'})
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAll}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: 'cup'})
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('UNIT QUERY', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryUnit}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryUnit}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: 'cup'})
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryUnit}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: 'cup'})
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('AMOUNT QUERY', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryAmount}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAmount}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: null})
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAmount}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: null})
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+})

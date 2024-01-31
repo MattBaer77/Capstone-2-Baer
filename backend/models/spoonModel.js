@@ -180,7 +180,7 @@ class SpoonApi {
 
     };
 
-    static ingredientInformation = async (id, amount, unit) => {
+    static ingredientInformation = async (id, amount=null, unit=null) => {
 
         if(typeof id !== "number" || isNaN(id)) throw new ExpressError(`Bad Request - id must be a number`, 400)
 

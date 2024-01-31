@@ -403,20 +403,20 @@ describe("test main methods", () => {
 
     describe("test ingredientInformation", () => {
 
-        test("works - id: valid, amount: undefined, unit: undefined", async () => {
+        test("works - id: valid, amount: null, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformation(3)
             expect(results).toEqual(mockResponseGetIngredientInformation);
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: undefined, unit: undefined})
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
         })
 
-        test("works - id: valid, amount: 1, unit: undefined", async () => {
+        test("works - id: valid, amount: 1, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformation(3, 1)
             expect(results).toEqual(mockResponseGetIngredientInformation);
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: undefined})
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: null})
 
 
         })
@@ -430,16 +430,16 @@ describe("test main methods", () => {
 
         })
 
-        test("works - id: valid, amount: undefined, unit: cup", async () => {
+        test("works - id: valid, amount: null, unit: cup", async () => {
 
-            const results = await SpoonApi.ingredientInformation(3, undefined, 'cup')
+            const results = await SpoonApi.ingredientInformation(3, null, 'cup')
             expect(results).toEqual(mockResponseGetIngredientInformation);
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: undefined, unit: 'cup'})
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: 'cup'})
 
 
         })
 
-        test("error - id: invalid, amount: undefined, unit: undefined", async () => {
+        test("error - id: invalid, amount: null, unit: null", async () => {
 
             try {
                 await SpoonApi.ingredientInformation("not a number")
@@ -447,7 +447,7 @@ describe("test main methods", () => {
             } catch (e) {
                 expect (e instanceof ExpressError).toBeTruthy();
             }
-            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: undefined, unit: undefined})
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: null, unit: null})
 
         })
 
@@ -459,7 +459,7 @@ describe("test main methods", () => {
             } catch (e) {
                 expect (e instanceof ExpressError).toBeTruthy();
             }
-            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: 1, unit: undefined})
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: 1, unit: null})
 
         })
 
@@ -475,15 +475,15 @@ describe("test main methods", () => {
 
         })
 
-        test("error - id: invalid, amount: undefined, unit: cup", async () => {
+        test("error - id: invalid, amount: null, unit: cup", async () => {
 
             try {
-                await SpoonApi.ingredientInformation("not a number", undefined, 'cup')
+                await SpoonApi.ingredientInformation("not a number", null, 'cup')
                 fail();
             } catch (e) {
                 expect (e instanceof ExpressError).toBeTruthy();
             }
-            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: undefined, unit: "cup"})
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: null, unit: "cup"})
 
         })
 
