@@ -79,10 +79,76 @@ const mockResponseGetSearchRecipesOptsNullNum10 = {
 
 };
 
+const mockResponseGetSearchIngredientsOptsNullNum10 = {
+
+    results: [
+    
+        {
+            id : 1,
+            name : "Faux Ingredient 1"
+        },
+        
+        {
+            id : 2,
+            name : "Faux Ingredient 2"
+        },
+
+        {
+            id : 3,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 4,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 5,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 6,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 7,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 8,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 9,
+            name : "Faux Ingredient 3"
+        },
+
+        {
+            id : 10,
+            name : "Faux Ingredient 3"
+        },
+
+    ]
+
+};
+
 const mockResponseGetRecipeInformation = {
 
     id:3,
     title: "Faux Recipe 3",
+    details: "Additional Details"
+
+};
+
+const mockResponseGetIngredientInformation = {
+
+    id:3,
+    name: "Faux Ingredient 3",
     details: "Additional Details"
 
 };
@@ -93,7 +159,9 @@ jest.mock('./spoonModel', () => {
 
     originalSpoonModel.getRandomRecipes = jest.fn().mockResolvedValue(mockResponseGetRandomRecipes);
     originalSpoonModel.getSearchRecipes = jest.fn().mockResolvedValue(mockResponseGetSearchRecipesOptsNullNum10);
+    originalSpoonModel.getSearchIngredients = jest.fn().mockResolvedValue(mockResponseGetSearchIngredientsOptsNullNum10);
     originalSpoonModel.getRecipeInformation = jest.fn().mockResolvedValue(mockResponseGetRecipeInformation);
+    originalSpoonModel.getIngredientInformation = jest.fn().mockResolvedValue(mockResponseGetIngredientInformation);
     originalSpoonModel.randomRecipesExcludeIntolerances = jest.fn().mockResolvedValue(mockResponseGetRandomRecipes)
     originalSpoonModel.startCacheTimer = jest.fn();
 
@@ -105,6 +173,8 @@ module.exports = {
 
     mockResponseGetRandomRecipes,
     mockResponseGetSearchRecipesOptsNullNum10,
-    mockResponseGetRecipeInformation
+    mockResponseGetSearchIngredientsOptsNullNum10,
+    mockResponseGetRecipeInformation,
+    mockResponseGetIngredientInformation
 
 };

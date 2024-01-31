@@ -26,6 +26,7 @@ class SpoonApi {
 
     // API
     static recipesApi = new spoonacularApi.RecipesApi();
+    static ingredientsApi = new spoonacularApi.IngredientsApi();
     static miscApi = new spoonacularApi.MiscApi();
 
     // RECIPE(S) DIRECT ENDPOINTS METHODS - RANDOM
@@ -35,6 +36,10 @@ class SpoonApi {
     // RECIPE(S) DIRECT ENDPOINTS METHODS - SEARCH & DETAIL
     static getSearchRecipes = promisify(SpoonApi.recipesApi.searchRecipes.bind(this.recipesApi));
     static getRecipeInformation = promisify(SpoonApi.recipesApi.getRecipeInformation.bind(this.recipesApi));
+
+    // INGREDIENT(S) DIRECT ENDPOINTS METHODS - SEARCH & DETAIL
+    static getSearchIngredients = promisify(SpoonApi.ingredientsApi.ingredientSearch.bind(this.ingredientsApi));
+    static getIngredientInformation = promisify(SpoonApi.ingredientsApi.getIngredientInformation.bind(this.ingredientsApi));
 
     // METHODS FOR USE IN ROUTES -
 
@@ -131,6 +136,33 @@ class SpoonApi {
 
     }
 
+    static searchIngredients = async (query=null, intolerances=null, number=10) => {
+
+        // DO NOT ALLOW "" TO BE PASSED AS opts.intolerances
+        if (intolerances === "") intolerances = null
+
+        // LIMIT API USE
+        if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
+
+        const opts = {
+
+            query: query,
+            intolerances: intolerances,
+            number: number,
+    
+        };
+
+        try {
+
+            const results = await SpoonApi.getSearchIngredients(opts);
+            return results;
+
+        } catch (e) {
+            throw (e)
+        };
+
+    }
+
     static recipeInformation = async (id, includeNutrition=false) => {
 
         if(typeof id !== "number" || isNaN(id)) throw new ExpressError(`Bad Request - id must be a number`, 400)
@@ -140,7 +172,27 @@ class SpoonApi {
         try {
 
             const results = await SpoonApi.getRecipeInformation(id, opts);
-            return results
+            return results;
+
+        } catch (e) {
+            throw (e)
+        };
+
+    };
+
+    static ingredientInformation = async (id, amount, unit) => {
+
+        if(typeof id !== "number" || isNaN(id)) throw new ExpressError(`Bad Request - id must be a number`, 400)
+
+        const opts = {
+            amount: amount,
+            unit: unit
+        };
+
+        try {
+
+            const results = await SpoonApi.getIngredientInformation(id, opts);
+            return results;
 
         } catch (e) {
             throw (e)

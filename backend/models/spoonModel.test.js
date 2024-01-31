@@ -5,7 +5,9 @@ const ExpressError = require("../expressError");
 const {
     mockResponseGetRandomRecipes,
     mockResponseGetSearchRecipesOptsNullNum10,
-    mockResponseGetRecipeInformation
+    mockResponseGetSearchIngredientsOptsNullNum10,
+    mockResponseGetRecipeInformation,
+    mockResponseGetIngredientInformation
 } = require("./spoonModelTestSetup")
 
 const SpoonApi = require('./spoonModel');
@@ -310,5 +312,7 @@ describe("test main methods", () => {
         })
 
     })
+
+    
 
 });
