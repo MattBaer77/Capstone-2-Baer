@@ -7,8 +7,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 const ExpressError = require("../expressError");
 const SpoonApi = require("../models/spoonModel")
-
-// add Schemas Here
+const { ensureUserLoggedIn } = require("../middleware/auth");
 
 const router = express.Router();
 
