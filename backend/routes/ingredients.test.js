@@ -368,7 +368,11 @@ describe('GET /ingredients/:id', () => {
 
     const fauxIdQueryAll = '?amount=5&unit=cup'
     const fauxIdQueryAmount = '?amount=5'
+    const fauxIdQueryAmountMulti = '?amount=5,6'
+    const fauxIdQueryAmountMultiArr = '?amount=5&amount=6'
     const fauxIdQueryUnit = '?unit=cup'
+    const fauxIdQueryUnitMulti = '?unit=cup,bowl'
+    const fauxIdQueryUnitMultiArr = '?unit=cup&unit=bowl'
 
     describe('NO QUERY', () => {
 
@@ -458,7 +462,7 @@ describe('GET /ingredients/:id', () => {
 
             expect(resp.statusCode).toEqual(200);
             expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(3)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: 'cup'})
 
         })
@@ -484,7 +488,7 @@ describe('GET /ingredients/:id', () => {
 
             expect(resp.statusCode).toEqual(200);
             expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(4)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: 'cup'})
 
         })
@@ -524,7 +528,7 @@ describe('GET /ingredients/:id', () => {
 
             expect(resp.statusCode).toEqual(200);
             expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(5)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: 'cup'})
 
         })
@@ -550,7 +554,7 @@ describe('GET /ingredients/:id', () => {
 
             expect(resp.statusCode).toEqual(200);
             expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(6)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: 'cup'})
 
         })
@@ -590,7 +594,7 @@ describe('GET /ingredients/:id', () => {
 
             expect(resp.statusCode).toEqual(200);
             expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(7)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: null})
 
         })
@@ -616,8 +620,256 @@ describe('GET /ingredients/:id', () => {
 
             expect(resp.statusCode).toEqual(200);
             expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(8)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: null})
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('AMOUNT QUERY - MULTI - LIST', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryAmountMulti}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAmountMulti}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be single integer like: "5", "75", "100"')
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAmountMulti}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be single integer like: "5", "75", "100"')
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('AMOUNT QUERY - MULTI - ARR', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryAmountMultiArr}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAmountMultiArr}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be single integer like: "5", "75", "100"')
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryAmountMultiArr}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be single integer like: "5", "75", "100"')
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('UNIT QUERY - MULTI - LIST', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryUnitMulti}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryUnitMulti}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be string like "cup"')
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryUnitMulti}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be string like "cup"')
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+    describe('UNIT QUERY - MULTI - ARR', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12${fauxIdQueryUnitMultiArr}`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryUnitMultiArr}`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be string like "cup"')
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN - fail - too many amount queries", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12${fauxIdQueryUnitMultiArr}`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400)
+            expect(resp.body.error.message).toEqual('Bad Request - Amount must be string like "cup"')
 
         })
 

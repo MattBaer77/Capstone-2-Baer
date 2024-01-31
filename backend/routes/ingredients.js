@@ -80,4 +80,26 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
  * 
 */
 
+router.get('/:id', ensureUserLoggedIn, async (req, res, next) => {
+
+    try {
+
+        const id = parseInt(req.params.id)
+        if(req.query.amount !== undefined && req.query.amount.includes(',')) throw new ExpressError('Bad Request - Amount must be single integer like: "5", "75", "100"',400);
+        if(typeof req.query.amount === 'object') throw new ExpressError('Bad Request - Amount must be single integer like: "5", "75", "100"',400);
+        if(req.query.unit !== undefined && req.query.unit.includes(',')) throw new ExpressError('Bad Request - Amount must be string like "cup"',400);
+        if(req.query.unit !== undefined && typeof req.query.unit !== 'string') throw new ExpressError('Bad Request - Amount must be string like "cup"',400);
+    
+        const amount = req.query.amount ? parseInt(req.query.amount) : null
+        const unit = req.query.unit ? req.query.unit : null
+
+        const data = await SpoonApi.ingredientInformation(id, amount, unit)
+        return res.json(data)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
+
 module.exports = router;
