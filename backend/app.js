@@ -11,12 +11,14 @@ app.use(morgan("tiny"));
 app.use(authenticateJWT)
 
 const authRoutes = require("./routes/auth");
-const recipeRoutes = require("./routes/recipes");
+const recipesRoutes = require("./routes/recipes");
+const ingredientsRoutes = require("./routes/ingredients")
 const jokesRoutes = require("./routes/jokes");
 const usersRoutes = require("./routes/users");
 
 app.use("/auth", authRoutes);
-app.use("/recipes", recipeRoutes);
+app.use("/recipes", recipesRoutes);
+app.use("/ingredients", ingredientsRoutes);
 app.use("/jokes", jokesRoutes);
 app.use("/users", usersRoutes);
 

@@ -8,7 +8,9 @@ const app = require("../app")
 const {
     mockResponseGetRandomRecipes,
     mockResponseGetSearchRecipesOptsNullNum10,
-    mockResponseGetRecipeInformation
+    mockResponseGetSearchIngredientsOptsNullNum10,
+    mockResponseGetRecipeInformation,
+    mockResponseGetIngredientInformation
 } = require("../models/spoonModelTestSetup.js")
 
 const SpoonApi = require('../models/spoonModel.js');
@@ -32,7 +34,7 @@ afterAll(commonAfterAll);
 
 // GET - SEARCH FOR INGREDIENT - USER MUST BE LOGGED IN - ANY
 
-describe('GET /ingredients/search', async () => {
+describe('GET /ingredients/search', () => {
 
     const fauxQueryAll = '?query=chicken%20broth&intolerances=dairy&diet=vegetarian'
 
@@ -81,7 +83,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(2)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy',
             number: 10,
     
@@ -100,7 +102,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(3)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy',
             number: 10,
     
@@ -119,7 +121,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(4)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy,wheat',
             number: 10,
     
@@ -138,7 +140,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(5)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy,wheat',
             number: 10,
     
@@ -157,7 +159,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(6)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'egg,gluten,dairy',
             number: 10,
     
@@ -176,7 +178,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(7)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'egg,gluten,dairy,wheat',
             number: 10,
     
@@ -195,7 +197,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(8)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'egg,gluten,dairy,wheat',
             number: 10,
     
@@ -216,7 +218,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(9)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: null,
             number: 10,
     
@@ -235,7 +237,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(10)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy',
             number: 10,
     
@@ -254,7 +256,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(11)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy',
             number: 10,
     
@@ -273,7 +275,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(12)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy,wheat',
             number: 10,
     
@@ -292,7 +294,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(13)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'dairy,wheat',
             number: 10,
     
@@ -311,7 +313,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(14)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'egg,gluten,dairy',
             number: 10,
     
@@ -330,7 +332,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(15)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'egg,gluten,dairy,wheat',
             number: 10,
     
@@ -349,7 +351,7 @@ describe('GET /ingredients/search', async () => {
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledTimes(16)
         expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
 
-            query: 'chicken noodle',
+            query: 'chicken broth',
             intolerances: 'egg,gluten,dairy,wheat',
             number: 10,
     
@@ -357,11 +359,6 @@ describe('GET /ingredients/search', async () => {
 
 
     })
-
-
-
-
-
 
 })
 
