@@ -72,13 +72,13 @@ describe('GET /recipes/search', () => {
 
     test("unauthorized for anon", async () => {
 
-        const resp = await request(app).get(`/recipes/search${fauxQueryOnly}`)
-        expect(resp.statusCode).toEqual(401)
-        expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+        const resp = await request(app).get(`/recipes/search${fauxQueryOnly}`);
+        expect(resp.statusCode).toEqual(401);
+        expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in");
 
     })
 
-    // USER
+    // ANY USER
 
     test("authorized for user - no user intolerances", async () => {
 
@@ -96,7 +96,6 @@ describe('GET /recipes/search', () => {
             number: 10,
     
         })
-
 
     })
 
@@ -418,7 +417,7 @@ describe('GET /recipes/:id', () => {
 
     })
 
-    // USER
+    // ANY USER
 
     test("authorized for user", async () => {
 
@@ -486,7 +485,7 @@ describe('GET /recipes/:id/nutrition', () => {
 
     })
 
-    // USER
+    // ANY USER
 
     test("authorized for user", async () => {
 
