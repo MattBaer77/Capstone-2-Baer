@@ -271,7 +271,7 @@ describe("test main methods", () => {
 
         test("works - id: valid, includeNutrition: false", async () => {
 
-            const results = await SpoonApi.recipeInformation(3)
+            const results = await SpoonApi.recipeInformation(3, false)
             expect(results).toEqual(mockResponseGetRecipeInformation);
             expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: false})
 
@@ -308,6 +308,182 @@ describe("test main methods", () => {
                 expect (e instanceof ExpressError).toBeTruthy();
             }
             expect(SpoonApi.getRecipeInformation).not.toHaveBeenCalledWith("not a number", {includeNutrition: true})
+
+        })
+
+    })
+
+    describe("test searchIngredients", () => {
+
+        test("works - opts: null", async () => {
+
+            const results = await SpoonApi.searchIngredients(null, null, null);
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).not.toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                number:null,
+            })
+
+        });
+
+        test("works - opts: null, limit: 10", async () => {
+
+            const results = await SpoonApi.searchIngredients(null, null, 10);
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                number:10
+            })
+
+        });
+
+        test("works - opts: null, limited to 10", async () => {
+
+            const results = await SpoonApi.searchIngredients(null, null, null, 50);
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).not.toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                number:50,
+            })
+
+        });
+
+        test("works - opts: null, limited to > 0", async () => {
+
+            const results = await SpoonApi.searchIngredients(null, null, null, 0);
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).not.toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                number: 0,
+            })
+
+        });
+
+        test("works - opts: null, limited to > 0", async () => {
+
+            const results = await SpoonApi.searchIngredients(null, null, null, -50);
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).not.toHaveBeenCalledWith({
+                query:null,
+                intolerances:null,
+                number: -50,
+            })
+
+        });
+
+        test("works - all opts, limited to 10", async () => {
+
+            const results = await SpoonApi.searchIngredients("Asparagus", "gluten", 5);
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).toHaveBeenCalledWith({
+                query:"Asparagus",
+                intolerances:"gluten",
+                number:5,
+            })
+
+        });
+
+        test("works - bad data entered into 'number'", async () => {
+
+            const results = await SpoonApi.searchIngredients("Asparagus", "gluten", "vegetarian", 'not a number');
+            expect(results).toEqual(mockResponseGetSearchIngredientsOptsNullNum10);
+            expect(SpoonApi.getSearchIngredients).not.toHaveBeenCalledWith({
+                query:"Asparagus",
+                intolerances:"gluten",
+                number:'not a number',
+            })
+
+        });
+
+    });
+
+    describe("test ingredientInformation", () => {
+
+        test("works - id: valid, amount: undefined, unit: undefined", async () => {
+
+            const results = await SpoonApi.ingredientInformation(3)
+            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: undefined, unit: undefined})
+
+
+        })
+
+        test("works - id: valid, amount: 1, unit: undefined", async () => {
+
+            const results = await SpoonApi.ingredientInformation(3, 1)
+            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: undefined})
+
+
+        })
+
+        test("works - id: valid, amount: 1, unit: cup", async () => {
+
+            const results = await SpoonApi.ingredientInformation(3, 1, 'cup')
+            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: 'cup'})
+
+
+        })
+
+        test("works - id: valid, amount: undefined, unit: cup", async () => {
+
+            const results = await SpoonApi.ingredientInformation(3, undefined, 'cup')
+            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: undefined, unit: 'cup'})
+
+
+        })
+
+        test("error - id: invalid, amount: undefined, unit: undefined", async () => {
+
+            try {
+                await SpoonApi.ingredientInformation("not a number")
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: undefined, unit: undefined})
+
+        })
+
+        test("error - id: invalid, amount: 1", async () => {
+
+            try {
+                await SpoonApi.ingredientInformation("not a number", 1)
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: 1, unit: undefined})
+
+        })
+
+        test("error - id: invalid, amount: 1, unit: cup", async () => {
+
+            try {
+                await SpoonApi.ingredientInformation("not a number", 1, 'cup')
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: 1, unit: "cup"})
+
+        })
+
+        test("error - id: invalid, amount: undefined, unit: cup", async () => {
+
+            try {
+                await SpoonApi.ingredientInformation("not a number", undefined, 'cup')
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: undefined, unit: "cup"})
 
         })
 
