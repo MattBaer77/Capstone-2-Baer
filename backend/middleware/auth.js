@@ -117,8 +117,8 @@ async function ensureAdminOrListOwner(req, res, next){
     try{
 
         if(!res.locals.user) throw new ExpressError("Unauthorized - User must be logged in", 401);
-        if(!req.params.id) throw new ExpressError('Bad Request - Must include id like "1" or "100"', 400)
-        if(/\D/.test(req.params.id)) throw new ExpressError('Bad Request - Must include id like "1" or "100"', 400)
+        if(!req.params.id) throw new ExpressError('Bad Request - Must include id like "1" or "100"', 400);
+        if(/\D/.test(req.params.id)) throw new ExpressError('Bad Request - Must include id like "1" or "100"', 400);
 
         const ownerCheck = await db.query(
 
@@ -130,7 +130,9 @@ async function ensureAdminOrListOwner(req, res, next){
 
         );
 
-        if(!ownerCheck.rows[0] || ownerCheck.rows[0].owner !== res.locals.user.username && !res.locals.user.isAdmin) throw new ExpressError("Unauthorized - Must be Admin or List Owner", 401)
+        if(!ownerCheck.rows[0] && res.locals.user.isAdmin) throw new ExpressError(`Not Found - No grocery list: ${req.params.id}`, 404);
+        if(!ownerCheck.rows[0]) throw new ExpressError("Unauthorized - Must be Admin or List Owner", 401);
+        if(ownerCheck.rows[0].owner !== res.locals.user.username && !res.locals.user.isAdmin) throw new ExpressError("Unauthorized - Must be Admin or List Owner", 401);
 
         return next();
 
