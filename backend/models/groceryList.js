@@ -21,6 +21,25 @@ class GroceryList {
     **/
     static async findAll(username) {
 
+        const existingUserCheck = await db.query(
+
+            `SELECT username,
+                    first_name AS "firstName",
+                    last_name AS "lastName",
+                    email,
+                    is_admin AS "isAdmin"
+              FROM users
+              WHERE username = $1`,
+            [username],
+      
+        );
+      
+        if (!existingUserCheck.rows[0]) {
+      
+            throw new ExpressError(`No User: ${username}`, 404)
+      
+        }
+
         const groceryListsRes = await db.query(
             `SELECT gl.id,
                     gl.list_name,
@@ -32,8 +51,6 @@ class GroceryList {
         );
 
         const groceryLists = groceryListsRes.rows
-
-        if (!groceryLists.length) throw new ExpressError(`No user: ${username}`, 404);
 
         for (let list of groceryLists){
 
@@ -147,6 +164,25 @@ class GroceryList {
     **/
 
     static async create(list_name, username){
+
+        const existingUserCheck = await db.query(
+
+            `SELECT username,
+                    first_name AS "firstName",
+                    last_name AS "lastName",
+                    email,
+                    is_admin AS "isAdmin"
+              FROM users
+              WHERE username = $1`,
+            [username],
+      
+        );
+      
+        if (!existingUserCheck.rows[0]) {
+      
+            throw new ExpressError(`No User: ${username}`, 404)
+      
+        }
 
         const result = await db.query(
             `INSERT INTO grocery_list

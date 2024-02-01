@@ -98,6 +98,14 @@ describe("findAll", () => {
         ])
     });
 
+    test("works if user has no grocery lists", async() => {
+
+        const groceryLists = await GroceryList.findAll('u3');
+
+        expect(groceryLists).toEqual([]);
+
+    });
+
     test("not found if no such user", async function () {
 
         try {
@@ -177,6 +185,7 @@ describe("get", () => {
 describe("create", () => {
 
     const newGroceryListName = "testlistU1-NEW"
+    const newGroceryListNameGeneric = "testlist-NEW"
 
     test("works", async() => {
 
@@ -189,6 +198,17 @@ describe("create", () => {
         expect(found.rows.length).toEqual(1);
         expect(found.rows[0].id).toEqual(9)
         expect(found.rows[0].owner).toEqual("u1")
+
+    });
+
+    test("not found if no such user", async function () {
+
+        try {
+            const res = await GroceryList.create(newGroceryListNameGeneric, "u4");
+            fail();
+        } catch (err) {
+            expect(err instanceof ExpressError).toBeTruthy();
+        }
 
     });
 
