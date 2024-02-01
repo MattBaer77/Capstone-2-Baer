@@ -276,6 +276,8 @@ describe('GET /grocery-lists/:id', () => {
 describe('POST /grocery-lists/:username', () => {
 
   const newList = {listName:'new list'};
+  const badListVal = {listName: 9000};
+  const badListKey = {notValid:'new list'};
 
   // ANON
 
@@ -288,6 +290,8 @@ describe('POST /grocery-lists/:username', () => {
     expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
 
   })
+
+  // ADD CASE - SENDS BAD DATA
 
   // ADMIN
 
@@ -322,6 +326,8 @@ describe('POST /grocery-lists/:username', () => {
 
   });
 
+  // ADD CASES - DUPLICATE BUT SEND BAD DATA
+
   // NOT ADMIN IS USER
 
   test("works for users - NOT ADMIN - IS USER", async () => {
@@ -333,6 +339,8 @@ describe('POST /grocery-lists/:username', () => {
       expect(Number.isInteger(resp.body)).toBe(true);
 
   });
+
+  // ADD CASE - DUPLICATE BUT SEND BAD DATA
 
   // NOT ADMIN NOT USER
 
@@ -357,5 +365,7 @@ describe('POST /grocery-lists/:username', () => {
     expect(resp.statusCode).toEqual(401);
 
   });
+
+  // ADD CASES - DUPLICATE BUT SEND BAD DATA
 
 })
