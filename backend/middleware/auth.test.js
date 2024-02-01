@@ -9,9 +9,22 @@ const {
     authenticateJWT,
     ensureUserLoggedIn,
     ensureAdminLoggedIn,
-    ensureAdminOrEffectedUser
+    ensureAdminOrEffectedUser,
+    ensureAdminOrListOwner
 
 } = require("./auth");
+
+const {
+    commonBeforeAll,
+    commonBeforeEach,
+    commonAfterEach,
+    commonAfterAll,
+} = require("../routes/_testCommon");
+  
+beforeAll(commonBeforeAll);
+beforeEach(commonBeforeEach);
+afterEach(commonAfterEach);
+afterAll(commonAfterAll);
 
 const {SECRET_KEY} = require("../config");
 const testJwt = jwt.sign({ username: "test", isAdmin: false }, SECRET_KEY);
@@ -97,7 +110,7 @@ describe("ensureUserLoggedIn", () => {
 
     });
 
-    test("works: - throws error if no user", () => {
+    test("Error: - throws error if no user", () => {
 
         expect.assertions(1)
 
@@ -145,7 +158,7 @@ describe("ensureAdminLoggedIn", () => {
 
     });
 
-    test("works: - throws error if not Admin", () => {
+    test("Error: - throws error if not Admin", () => {
 
         expect.assertions(3)
 
@@ -173,7 +186,7 @@ describe("ensureAdminLoggedIn", () => {
 
     });
 
-    test("works: - throws error if no user", () => {
+    test("Error: - throws error if no user", () => {
 
         expect.assertions(3)
 
@@ -298,7 +311,7 @@ describe("ensureAdminOrEffectedUser", () => {
 
     });
 
-    test("works: - throws error if not Admin and Not User", () => {
+    test("Error: - throws error if not Admin and Not User", () => {
 
         expect.assertions(3)
 
@@ -326,7 +339,7 @@ describe("ensureAdminOrEffectedUser", () => {
 
     });
 
-    test("works: - throws error if not Admin and No User Param", () => {
+    test("Error: - throws error if not Admin and No User Param", () => {
 
         expect.assertions(3)
 
@@ -354,7 +367,7 @@ describe("ensureAdminOrEffectedUser", () => {
 
     });
 
-    test("works: - throws error if no user", () => {
+    test("Error: - throws error if no user", () => {
 
         expect.assertions(3)
 
@@ -371,6 +384,220 @@ describe("ensureAdminOrEffectedUser", () => {
         }
 
         ensureAdminOrEffectedUser(req, res, next);
+
+
+    });
+
+});
+
+describe("ensureAdminOrListOwner", () => {
+
+    test("works: - no error if Admin and Owner", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {id:"7"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"uA",
+                isAdmin: true
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+    });
+
+    test("Error: - throws error if Admin and No Id Param", () => {
+
+        expect.assertions(3)
+
+        const req = {headers: {}, params:{}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"uA",
+                isAdmin: true
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual('Bad Request - Must include id like "1" or "100"')
+            expect(e.status).toEqual(400)
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+
+    });
+
+    test("works: - no error if Admin Not Owner", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {id:"1"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"uA",
+                isAdmin: true
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+    });
+
+    test("works: - no error if Owner", () => {
+
+        expect.assertions(1)
+
+        const req = {headers: {}, params: {id:"1"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"u1",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeFalsy();
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+    });
+
+    test("Error: - throws error if not Admin and Not User", () => {
+
+        // expect.assertions(3)
+
+        const req = {headers: {}, params: {id:"6"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"u1",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - Must be Admin or List Owner")
+            expect(e.status).toEqual(401)
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+
+    });
+
+    test("Error: - throws error if not Admin and Not User and no list with that id", () => {
+
+        // expect.assertions(3)
+
+        const req = {headers: {}, params: {id:"nope"}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"u1",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            console.log(e)
+
+            expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual('Bad Request - Must include id like "1" or "100"')
+            expect(e.status).toEqual(400)
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+
+    });
+
+    test("Error: - throws error if not Admin and No Id Param", () => {
+
+        expect.assertions(3)
+
+        const req = {headers: {}, params:{}};
+
+        const res = {locals:{
+            
+            user:{
+                username:"u1",
+                isAdmin: false
+            }
+
+        }};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual('Bad Request - Must include id like "1" or "100"')
+            expect(e.status).toEqual(400)
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
+
+
+    });
+
+    test("Error: - throws error if no user", () => {
+
+        expect.assertions(3)
+
+        const req = {headers: {}, params:{}};
+
+        const res = {locals:{}};
+
+        const next =  function(e) {
+
+            expect(e instanceof ExpressError).toBeTruthy();
+            expect(e.message).toEqual("Unauthorized - User must be logged in")
+            expect(e.status).toEqual(401)
+
+        }
+
+        ensureAdminOrListOwner(req, res, next);
 
 
     });

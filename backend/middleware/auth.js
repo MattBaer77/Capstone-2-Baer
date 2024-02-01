@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 const ExpressError = require("../expressError");
 
+// TO CHECK GROCERYLIST OWNER
+const db = require("../db");
+
 /**Authenticate user by token
  * 
  * If a token was provided, verify it.
@@ -102,10 +105,48 @@ function ensureAdminOrEffectedUser(req, res, next){
 
 };
 
+/**Confirm a user is logged in and the owner of the list, or is logged in and an Admin
+ * 
+ * If user logged in and user identified in route, or logged in and an admin, return next();
+ * 
+ * If user not logged in and user identified in route, or logged in and an admin, throw ExpressError("Unauthorized - User must be logged in.", 401)
+ * 
+*/
+async function ensureAdminOrListOwner(req, res, next){
+
+    try{
+
+        if(!res.locals.user) throw new ExpressError("Unauthorized - User must be logged in", 401);
+        if(!req.params.id) throw new ExpressError('Bad Request - Must include id like "1" or "100"', 400)
+        if(/\D/.test(req.params.id)) throw new ExpressError('Bad Request - Must include id like "1" or "100"', 400)
+
+        const ownerCheck = await db.query(
+
+            `SELECT gl.id,
+                    gl.owner
+            FROM grocery_list gl
+            WHERE gl.id = $1`,
+            [req.params.id],
+
+        );
+
+        if(!ownerCheck.rows[0] || ownerCheck.rows[0].owner !== res.locals.user.username && !res.locals.user.isAdmin) throw new ExpressError("Unauthorized - Must be Admin or List Owner", 401)
+
+        return next();
+
+    } catch (e) {
+
+        return next(e);
+
+    }
+
+};
+
 
 module.exports = {
     authenticateJWT,
     ensureUserLoggedIn,
     ensureAdminLoggedIn,
-    ensureAdminOrEffectedUser
+    ensureAdminOrEffectedUser,
+    ensureAdminOrListOwner
 }
