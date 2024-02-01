@@ -91,8 +91,8 @@ router.post("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
             throw new ExpressError(e, 400);
         }
 
-        const newGroceryList = await GroceryList.create(req.params.username, req.body);
-        console.log(newGroceryList)
+        const newGroceryList = await GroceryList.create(req.body, req.params.username);
+
         return res.json(newGroceryList)
 
     } catch (e) {
