@@ -15,12 +15,14 @@ const recipesRoutes = require("./routes/recipes");
 const ingredientsRoutes = require("./routes/ingredients")
 const jokesRoutes = require("./routes/jokes");
 const usersRoutes = require("./routes/users");
+const groceryListsRoutes = require("./routes/groceryLists")
 
 app.use("/auth", authRoutes);
 app.use("/recipes", recipesRoutes);
 app.use("/ingredients", ingredientsRoutes);
 app.use("/jokes", jokesRoutes);
 app.use("/users", usersRoutes);
+app.use("/grocery-lists", groceryListsRoutes);
 
 // 404 Error Handling
 app.use((req, res, next) => {
