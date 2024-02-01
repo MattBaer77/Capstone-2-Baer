@@ -291,7 +291,25 @@ describe('POST /grocery-lists/:username', () => {
 
   })
 
-  // ADD CASE - SENDS BAD DATA
+  test("unauthorized for anon - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(badListKey)
+    expect(resp.statusCode).toEqual(401)
+    expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+  })
+
+  test("unauthorized for anon - BAD DATA - bad list value", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(badListVal)
+    expect(resp.statusCode).toEqual(401)
+    expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+  })
 
   // ADMIN
 
@@ -326,7 +344,67 @@ describe('POST /grocery-lists/:username', () => {
 
   });
 
-  // ADD CASES - DUPLICATE BUT SEND BAD DATA
+  // "" BAD DATA
+
+  test("bad request for users - ADMIN - IS USER - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/uA`)
+        .send(badListKey)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
+
+  test("bad request for users - ADMIN - NOT USER - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(badListKey)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
+
+  test("bad request if user not found - ADMIN - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/nope`)
+        .send(badListKey)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
+
+  test("bad request for users - ADMIN - IS USER - BAD DATA - bad list val", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/uA`)
+        .send(badListVal)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
+
+  test("bad request for users - ADMIN - NOT USER - BAD DATA - bad list val", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(badListVal)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
+
+  test("bad request if user not found - ADMIN - BAD DATA - bad list val", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/nope`)
+        .send(badListVal)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
 
   // NOT ADMIN IS USER
 
@@ -340,7 +418,25 @@ describe('POST /grocery-lists/:username', () => {
 
   });
 
-  // ADD CASE - DUPLICATE BUT SEND BAD DATA
+  test("bad request for users - NOT ADMIN - IS USER - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(badListKey)
+        .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
+
+  test("bad request for users - NOT ADMIN - IS USER - BAD DATA - bad list val", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(badListVal)
+        .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.statusCode).toEqual(400);
+
+  });
 
   // NOT ADMIN NOT USER
 
@@ -360,6 +456,50 @@ describe('POST /grocery-lists/:username', () => {
     const resp = await request(app)
         .post(`/grocery-lists/nope`)
         .send(newList)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+  test("unauthorized for users - NOT ADMIN NOT USER - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u2`)
+        .send(badListKey)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+  test("unauthorized for users - NOT ADMIN NOT USER - User doesn't exist - BAD DATA - bad list key", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/nope`)
+        .send(badListKey)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+  test("unauthorized for users - NOT ADMIN NOT USER - BAD DATA - bad list val", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u2`)
+        .send(badListVal)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+  test("unauthorized for users - NOT ADMIN NOT USER - User doesn't exist - BAD DATA - bad list val", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/nope`)
+        .send(badListVal)
         .set("authorization", `Bearer ${u1Token}`);
     
     expect(resp.statusCode).toEqual(401);
