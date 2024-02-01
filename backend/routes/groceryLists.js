@@ -27,6 +27,20 @@ const router = express.Router();
  * 
 */
 
+router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try{
+
+        const groceryLists = await GroceryList.findAll(req.params.username);
+
+        return res.json(groceryLists)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
+
 // GET GROCERY LIST - BY ID
 /** GET GROCERYLIST - /grocery-lists/[id]
  * 
@@ -40,6 +54,8 @@ const router = express.Router();
  * Where recipes - [{id, recipeId}]
  * 
 */
+
+// router.get("/:id")
 
 // POST NEW GROCERYLIST - LIST NAME + USERNAME
 /** POST GROCERYLIST - /grocery-lists
