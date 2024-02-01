@@ -32,7 +32,7 @@ afterAll(commonAfterAll);
 
 // GET GROCERY LISTS BY USERNAME
 
-describe('GET /grocerylists/:username', () => {
+describe('GET /grocery-lists/:username', () => {
 
   const u1Response = [
     {
@@ -158,7 +158,7 @@ describe('GET /grocerylists/:username', () => {
 
 })
 
-describe('GET /grocerylists/:id', () => {
+describe('GET /grocery-lists/:id', () => {
 
   const u1Response1 = {
 
@@ -208,7 +208,7 @@ describe('GET /grocerylists/:id', () => {
 
   });
 
-  test("not found if list not found - ADMIN", async () => {
+  test("not found if grocery list not found - ADMIN", async () => {
 
     const resp = await request(app)
         .get(`/grocery-lists/9000/details`)
@@ -218,7 +218,7 @@ describe('GET /grocerylists/:id', () => {
 
   });
 
-  test("bad request found if list id not integer - ADMIN", async () => {
+  test("bad request if grocery list id not integer - ADMIN", async () => {
 
     const resp = await request(app)
         .get(`/grocery-lists/nope/details`)
@@ -239,17 +239,7 @@ describe('GET /grocerylists/:id', () => {
 
   });
 
-  test("not found if list not found - NOT ADMIN IS USER", async () => {
-
-    const resp = await request(app)
-        .get(`/grocery-lists/9000/details`)
-        .set("authorization", `Bearer ${u1Token}`);
-    expect(resp.statusCode).toEqual(401);
-    expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or List Owner")
-
-  });
-
-  test("bad request found if list id not integer - ADMIN", async () => {
+  test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
 
     const resp = await request(app)
         .get(`/grocery-lists/nope/details`)
@@ -271,9 +261,19 @@ describe('GET /grocerylists/:id', () => {
 
   });
 
+  test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
+
+    const resp = await request(app)
+        .get(`/grocery-lists/6/details`)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
 })
 
-describe('POST /grocerylists/:username', () => {
+describe('POST /grocery-lists/:username', () => {
 
   const newList = {listName:'new list'};
 
@@ -297,7 +297,6 @@ describe('POST /grocerylists/:username', () => {
         .post(`/grocery-lists/uA`)
         .send(newList)
         .set("authorization", `Bearer ${adminToken}`);
-    console.log(resp.body)
     expect(Number.isInteger(resp.body)).toBe(true);
 
   });
@@ -308,7 +307,6 @@ describe('POST /grocerylists/:username', () => {
         .post(`/grocery-lists/u1`)
         .send(newList)
         .set("authorization", `Bearer ${adminToken}`);
-    console.log(resp.body)
     expect(Number.isInteger(resp.body)).toBe(true);
 
   });
