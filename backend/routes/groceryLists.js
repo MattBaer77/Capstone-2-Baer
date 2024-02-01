@@ -6,7 +6,7 @@ const express = require("express");
 const ExpressError = require("../expressError");
 const GroceryList = require("../models/groceryList")
 const SpoonApi = require("../models/spoonModel")
-const { ensureAdminOrEffectedUser } = require("../middleware/auth");
+const { ensureAdminOrListOwner, ensureAdminOrEffectedUser } = require("../middleware/auth");
 
 
 // add Schemas Here
@@ -55,19 +55,19 @@ router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
  * 
 */
 
-// router.get("/:username/:id", ensureAdminOrEffectedUser, async (req, res, next) => {
+router.get("/:id/details", ensureAdminOrListOwner, async (req, res, next) => {
 
-//     try {
+    try {
 
-//         const groceryList = await GroceryList.get(req.params.id);
+        const groceryList = await GroceryList.get(req.params.id);
 
-//         return res.json(groceryList)
+        return res.json(groceryList)
         
-//     } catch (e) {
-//         return next(e)
-//     }
+    } catch (e) {
+        return next(e)
+    }
 
-// });
+});
 
 // POST NEW GROCERYLIST - LIST NAME + USERNAME
 /** POST GROCERYLIST - /grocery-lists
