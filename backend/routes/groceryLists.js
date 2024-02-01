@@ -55,7 +55,19 @@ router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
  * 
 */
 
-// router.get("/:id")
+router.get("/:username/:id", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+
+        const groceryList = await GroceryList.get(req.params.id);
+
+        return res.json(groceryList)
+        
+    } catch (e) {
+        return next(e)
+    }
+
+});
 
 // POST NEW GROCERYLIST - LIST NAME + USERNAME
 /** POST GROCERYLIST - /grocery-lists

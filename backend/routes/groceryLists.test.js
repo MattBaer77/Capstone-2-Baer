@@ -157,3 +157,144 @@ describe('GET /grocerylists/:username', () => {
     });
 
 })
+
+// REVISIT AFTER MODEL FIX
+
+// describe('GET /grocerylists/:id', () => {
+
+//     const u1Response1 = {
+//         id: 1,
+//         list_name: 'testlistU1-1',
+//         owner: 'u1',
+//         ingredients: [
+//         {
+//             ingredient_id: 100,
+//             amount: 2,
+//             unit: 'Some Unit',
+//             minimum_amount: 0
+//             },
+//             {
+//             ingredient_id: 101,
+//             amount: 2,
+//             unit: 'Some Unit',
+//             minimum_amount: 0
+//             }
+//         ],
+//         recipes: [
+//         { id: 1, recipe_id: 11 },
+//         { id: 2, recipe_id: 12 },
+//         { id: 3, recipe_id: 32 }
+//         ]
+//     };
+
+//     const u1Response3 = {
+
+//         id: 3,
+//         list_name: 'testlistU1-3',
+//         owner: 'u1',
+//         ingredients: [],
+//         recipes: [
+//         { id: 5, recipe_id: 33 } 
+//         ]
+
+//     };
+
+//     const u1Response6 = {
+
+//         id: 6,
+//         list_name: 'testlistU2-3',
+//         owner: 'u2',
+//         ingredients: [],
+//         recipes: []
+
+//     };
+
+//     // ANON
+
+//     test("unauthorized for anon", async () => {
+
+//         const resp = await request(app).get(`/grocery-lists/u1/1`);
+//         expect(resp.statusCode).toEqual(401)
+//         expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+//     })
+
+//     // ADMIN
+
+//     test("works for users - ADMIN", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/1`)
+//             .set("authorization", `Bearer ${adminToken}`);
+
+//         console.log(resp.body)
+//         expect(resp.body).toEqual(u1Response1);
+//     });
+
+//     test("not found if list not found - ADMIN", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/9000`)
+//             .set("authorization", `Bearer ${adminToken}`);
+//         console.log(resp.body)
+//         expect(resp.statusCode).toEqual(404);
+//         expect(resp.body.error.message).toEqual("No grocery list: 9000")
+
+//     });
+
+//     test("bad request found if list id not integer - ADMIN", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/9000`)
+//             .set("authorization", `Bearer ${adminToken}`);
+//         console.log(resp.body)
+//         expect(resp.statusCode).toEqual(400);
+//         expect(resp.body.error.message).toEqual("Grocery list id must be integer")
+
+//     });
+
+//     // NOT ADMIN IS USER
+
+//     test("works for users - NOT ADMIN IS USER", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/1`)
+//             .set("authorization", `Bearer ${u1Token}`);
+//         expect(resp.body).toEqual(u1Response1);
+//     });
+
+//     test("not found if list not found - NOT ADMIN IS USER", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/9000`)
+//             .set("authorization", `Bearer ${u1Token}`);
+//         console.log(resp.body)
+//         expect(resp.statusCode).toEqual(404);
+//         expect(resp.body.error.message).toEqual("No grocery list: 9000")
+
+//     });
+
+//     test("bad request found if list id not integer - ADMIN", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/9000`)
+//             .set("authorization", `Bearer ${u1Token}`);
+//         console.log(resp.body)
+//         expect(resp.statusCode).toEqual(400);
+//         expect(resp.body.error.message).toEqual("Grocery list id must be integer")
+
+//     });
+
+//     // NOT ADMIN NOT USER
+
+//     test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+
+//         const resp = await request(app)
+//             .get(`/grocery-lists/u1/6`)
+//             .set("authorization", `Bearer ${u1Token}`);
+        
+//         expect(resp.statusCode).toEqual(401);
+
+//     });
+
+// })
