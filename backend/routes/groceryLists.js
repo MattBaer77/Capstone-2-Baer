@@ -2,14 +2,16 @@
 
 /** Routes for grocery lists */
 
+const jsonschema = require("jsonschema");
+
 const express = require("express");
 const ExpressError = require("../expressError");
 const GroceryList = require("../models/groceryList")
 const SpoonApi = require("../models/spoonModel")
 const { ensureAdminOrEffectedUser, ensureAdminOrListOwner } = require("../middleware/auth");
 
-
 // add Schemas Here
+const groceryListsCreateSchema = require("../schemas/groceryListsCreate.json")
 
 const router = express.Router();
 
@@ -70,13 +72,34 @@ router.get("/:id/details", ensureAdminOrListOwner, async (req, res, next) => {
 });
 
 // POST NEW GROCERYLIST - LIST NAME + USERNAME
-/** POST GROCERYLIST - /grocery-lists
+/** POST GROCERYLIST - /grocery-lists/[username]
  * 
- * Accepts {listName, username}
+ * Accepts {listName}
  * 
  * Returns id
  * 
 */
+
+router.post("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try{
+
+        const validator = jsonschema.validate(req.body, groceryListsCreateSchema);
+
+        if(!validator.valid) {
+            const e = validator.errors.map(e => e.stack);
+            throw new ExpressError(e, 400);
+        }
+
+        const newGroceryList = await GroceryList.create(req.params.username, req.body);
+        console.log(newGroceryList)
+        return res.json(newGroceryList)
+
+    } catch (e) {
+        return next(e)
+    }
+
+})
 
 // DELETE GROCERYLIST - BY ID
 /** DELETE GROCERYLIST - /grocery-lists/[id]
