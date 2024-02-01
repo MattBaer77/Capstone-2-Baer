@@ -158,8 +158,6 @@ describe('GET /grocerylists/:username', () => {
 
 })
 
-// REVISIT AFTER MODEL FIX
-
 describe('GET /grocerylists/:id', () => {
 
   const u1Response1 = {
@@ -267,6 +265,95 @@ describe('GET /grocerylists/:id', () => {
 
     const resp = await request(app)
         .get(`/grocery-lists/6/details`)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+})
+
+describe('POST /grocerylists/:username', () => {
+
+  const newList = {listName:'new list'};
+
+  // ANON
+
+  test("unauthorized for anon", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(newList)
+    expect(resp.statusCode).toEqual(401)
+    expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+
+  })
+
+  // ADMIN
+
+  test("works for users - ADMIN - IS USER", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/uA`)
+        .send(newList)
+        .set("authorization", `Bearer ${adminToken}`);
+    console.log(resp.body)
+    expect(Number.isInteger(resp.body)).toBe(true);
+
+  });
+
+  test("works for users - ADMIN - NOT USER", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(newList)
+        .set("authorization", `Bearer ${adminToken}`);
+    console.log(resp.body)
+    expect(Number.isInteger(resp.body)).toBe(true);
+
+  });
+
+  test("not found if user not found - ADMIN", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/nope`)
+        .send(newList)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(404);
+    expect(resp.body.error.message).toEqual("No User: nope")
+
+  });
+
+  // NOT ADMIN IS USER
+
+  test("works for users - NOT ADMIN - IS USER", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u1`)
+        .send(newList)
+        .set("authorization", `Bearer ${u1Token}`);
+      expect(Number.isInteger(resp.body)).toBe(true);
+
+  });
+
+  // NOT ADMIN NOT USER
+
+  test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/u2`)
+        .send(newList)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+  test("unauthorized for users - NOT ADMIN NOT USER - User doesn't exist", async () => {
+
+    const resp = await request(app)
+        .post(`/grocery-lists/nope`)
+        .send(newList)
         .set("authorization", `Bearer ${u1Token}`);
     
     expect(resp.statusCode).toEqual(401);

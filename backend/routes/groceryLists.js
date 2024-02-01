@@ -6,7 +6,7 @@ const express = require("express");
 const ExpressError = require("../expressError");
 const GroceryList = require("../models/groceryList")
 const SpoonApi = require("../models/spoonModel")
-const { ensureAdminOrListOwner, ensureAdminOrEffectedUser } = require("../middleware/auth");
+const { ensureAdminOrEffectedUser, ensureAdminOrListOwner } = require("../middleware/auth");
 
 
 // add Schemas Here
