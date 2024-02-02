@@ -509,3 +509,91 @@ describe('POST /grocery-lists/:username', () => {
   // ADD CASES - DUPLICATE BUT SEND BAD DATA
 
 })
+
+describe('DELETE /grocery-lists/:id', () => {
+
+  // ANON
+
+  test("unauthorized for anon", async () => {
+
+    const resp = await request(app).delete(`/grocery-lists/1`);
+    expect(resp.statusCode).toEqual(401)
+    expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+  })
+
+  // ADMIN
+
+  test("works for users - ADMIN", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/1`)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.body).toEqual(true);
+
+  });
+
+  test("not found if grocery list not found - ADMIN", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/9000`)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(404);
+    expect(resp.body.error.message).toEqual("Not Found - No grocery list: 9000")
+
+  });
+
+  test("bad request if grocery list id not integer - ADMIN", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/nope`)
+        .set("authorization", `Bearer ${adminToken}`);
+    expect(resp.statusCode).toEqual(400);
+    expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+
+  });
+
+  // NOT ADMIN IS USER
+
+  test("works for users - NOT ADMIN IS USER", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/1`)
+        .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.body).toEqual(true);
+
+  });
+
+  test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/nope`)
+        .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.statusCode).toEqual(400);
+    expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+
+  });
+
+  // NOT ADMIN NOT USER
+
+  test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/6`)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+  test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
+
+    const resp = await request(app)
+        .delete(`/grocery-lists/6`)
+        .set("authorization", `Bearer ${u1Token}`);
+    
+    expect(resp.statusCode).toEqual(401);
+
+  });
+
+})

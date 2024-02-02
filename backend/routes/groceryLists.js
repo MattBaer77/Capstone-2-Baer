@@ -110,6 +110,20 @@ router.post("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
  * 
 */
 
+router.delete("/:id", ensureAdminOrListOwner, async (req, res, next) => {
+
+    try {
+
+        const groceryListToDelete = await GroceryList.remove(req.params.id)
+
+        return res.json(groceryListToDelete)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
+
 // **********
 
 // GROCERYLIST INGREDIENTS ROUTES -
