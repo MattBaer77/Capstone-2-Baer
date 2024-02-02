@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "ingredientId",
+        "amount",
+        "unit"
+    ],
+    "properties": {
+        "ingredientId": {
+            "type": "integer",
+            "default": 0,
+            "title": "The ingredientId Schema",
+            "examples": [
+                111
+            ]
+        },
+        "amount": {
+            "type": "integer",
+            "default": 0,
+            "title": "The amount Schema",
+            "examples": [
+                5
+            ]
+        },
+        "unit": {
+            "type": "string",
+            "default": "",
+            "title": "The unit Schema",
+            "examples": [
+                "boxes"
+            ]
+        },
+        "minimumAmount": {
+            "type": "integer",
+            "default": 0,
+            "title": "The minimumAmount Schema",
+            "examples": [
+                3
+            ]
+        }
+    },
+    "examples": [{
+        "ingredientId": 111,
+        "amount": 5,
+        "unit": "boxes",
+        "minimumAmount": 3
+    }]
+}

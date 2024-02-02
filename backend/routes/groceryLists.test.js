@@ -606,7 +606,7 @@ describe('POST /grocery-lists/:id/ingredients', () => {
   const newIngredientNoMinimum = {ingredientId: 111, amount: 5, unit:"boxes"};
   const newIngredientBadRequestData = {id:111, amount:"boxes", unit:5}
 
-  describe('newIngredient - VALID DATA', () =>{
+  describe('newIngredient - VALID DATA', () => {
 
     // ANON
 
@@ -703,103 +703,201 @@ describe('POST /grocery-lists/:id/ingredients', () => {
 
   });
 
-  // describe('newIngredientNoMinimum - VALID DATA', () =>{
+  describe('newIngredientNoMinimum - VALID DATA - no minimumAmount', () => {
 
-  //   // ANON
+    // ANON
 
-  //   test("unauthorized for anon", async () => {
+    test("unauthorized for anon", async () => {
 
-  //     const resp = await request(app)
-  //     .post(`/grocery-lists/1/ingredients`)
-  //     .send(newIngredientNoMinimum);
-  //     expect(resp.statusCode).toEqual(401)
-  //     expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+      const resp = await request(app)
+      .post(`/grocery-lists/1/ingredients`)
+      .send(newIngredientNoMinimum);
+      expect(resp.statusCode).toEqual(401)
+      expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
 
-  //   })
+    })
 
-  //   // ADMIN
+    // ADMIN
 
-  //   test("works for users - ADMIN", async () => {
+    test("works for users - ADMIN", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/1/ingredients`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${adminToken}`);
-  //     expect(resp.body).toEqual(true);
+      const resp = await request(app)
+          .post(`/grocery-lists/1/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.body).toEqual(true);
 
-  //   });
+    });
 
-  //   test("not found if grocery list not found - ADMIN", async () => {
+    test("not found if grocery list not found - ADMIN", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/9000`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${adminToken}`);
-  //     expect(resp.statusCode).toEqual(404);
-  //     expect(resp.body.error.message).toEqual("Not Found - No grocery list: 9000")
+      const resp = await request(app)
+          .post(`/grocery-lists/9000/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(404);
+      expect(resp.body.error.message).toEqual("Not Found - No grocery list: 9000")
 
-  //   });
+    });
 
-  //   test("bad request if grocery list id not integer - ADMIN", async () => {
+    test("bad request if grocery list id not integer - ADMIN", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/nope`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${adminToken}`);
-  //     expect(resp.statusCode).toEqual(400);
-  //     expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+      const resp = await request(app)
+          .post(`/grocery-lists/nope/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(400);
+      expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
 
-  //   });
+    });
 
-  //   // NOT ADMIN IS USER
+    // NOT ADMIN IS USER
 
-  //   test("works for users - NOT ADMIN IS USER", async () => {
+    test("works for users - NOT ADMIN IS USER", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/1`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${u1Token}`);
-  //     expect(resp.body).toEqual(true);
+      const resp = await request(app)
+          .post(`/grocery-lists/1/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.body).toEqual(true);
 
-  //   });
+    });
 
-  //   test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
+    test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/nope`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${u1Token}`);
-  //     expect(resp.statusCode).toEqual(400);
-  //     expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+      const resp = await request(app)
+          .post(`/grocery-lists/nope/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(400);
+      expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
 
-  //   });
+    });
 
-  //   // NOT ADMIN NOT USER
+    // NOT ADMIN NOT USER
 
-  //   test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/6`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${u1Token}`);
+      const resp = await request(app)
+          .post(`/grocery-lists/6/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${u1Token}`);
       
-  //     expect(resp.statusCode).toEqual(401);
+      expect(resp.statusCode).toEqual(401);
 
-  //   });
+    });
 
-  //   test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
+    test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
 
-  //     const resp = await request(app)
-  //         .post(`/grocery-lists/6`)
-  //         .send(newIngredientNoMinimum)
-  //         .set("authorization", `Bearer ${u1Token}`);
+      const resp = await request(app)
+          .post(`/grocery-lists/6/ingredients`)
+          .send(newIngredientNoMinimum)
+          .set("authorization", `Bearer ${u1Token}`);
       
-  //     expect(resp.statusCode).toEqual(401);
+      expect(resp.statusCode).toEqual(401);
 
-  //   });
+    });
 
-  // });
+  });
 
-})
+  describe('newIngredientBadRequestData - VALID DATA - bad request data', () => {
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+      const resp = await request(app)
+      .post(`/grocery-lists/1/ingredients`)
+      .send(newIngredientBadRequestData);
+      expect(resp.statusCode).toEqual(401)
+      expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+    })
+
+    // ADMIN
+
+    test("bad request for users - ADMIN", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/1/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(400)
+
+    });
+
+    test("not found if grocery list not found - ADMIN", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/9000/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(404);
+      expect(resp.body.error.message).toEqual("Not Found - No grocery list: 9000")
+
+    });
+
+    test("bad request if grocery list id not integer - ADMIN", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/nope/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(400);
+      expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+
+    });
+
+    // NOT ADMIN IS USER
+
+    test("bad request for users - NOT ADMIN IS USER", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/1/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(400)
+
+
+    });
+
+    test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/nope/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(400);
+      expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+
+    });
+
+    // NOT ADMIN NOT USER
+
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/6/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${u1Token}`);
+      
+      expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
+
+      const resp = await request(app)
+          .post(`/grocery-lists/6/ingredients`)
+          .send(newIngredientBadRequestData)
+          .set("authorization", `Bearer ${u1Token}`);
+      
+      expect(resp.statusCode).toEqual(401);
+
+    });
+
+  });
+
+});
 
 // add expectations to post routes that use GroceryList to confirm correct data

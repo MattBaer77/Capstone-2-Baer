@@ -12,6 +12,7 @@ const { ensureAdminOrEffectedUser, ensureAdminOrListOwner } = require("../middle
 
 // add Schemas Here
 const groceryListsCreateSchema = require("../schemas/groceryListsCreate.json")
+const groceryListsAddIngredientSchema = require("../schemas/groceryListsAddIngredient.json")
 
 const router = express.Router();
 
@@ -141,12 +142,16 @@ router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) =
 
     try {
 
+        const validator = jsonschema.validate(req.body, groceryListsAddIngredientSchema)
+
+        if(!validator.valid) {
+            const e = validator.errors.map(e => e.stack);
+            throw new ExpressError(e, 400)
+        }
+
         const ingredientAdded = await GroceryList.addIngredient(req.params.id, req.body.ingredientId, req.body.amount, req.body.unit, req.body.minimumAmount)
 
-        console.log(ingredientAdded)
-
-        return res.json(true)
-
+        return res.json(ingredientAdded)
 
     } catch (e) {
         return next(e)
