@@ -91,7 +91,7 @@ router.post("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
             throw new ExpressError(e, 400);
         }
 
-        const newGroceryList = await GroceryList.create(req.body, req.params.username);
+        const newGroceryList = await GroceryList.create(req.body.listName, req.params.username);
 
         return res.json(newGroceryList)
 
@@ -136,6 +136,23 @@ router.delete("/:id", ensureAdminOrListOwner, async (req, res, next) => {
  * Returns true
  * 
 */
+
+router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) => {
+
+    try {
+
+        const ingredientAdded = await GroceryList.addIngredient(req.params.id, req.body.ingredientId, req.body.amount, req.body.unit, req.body.minimumAmount)
+
+        console.log(ingredientAdded)
+
+        return res.json(true)
+
+
+    } catch (e) {
+        return next(e)
+    }
+
+})
 
 // SET INGREDIENT AMOUNT - BY ID + INGREDIENT ID + AMOUNT
 /** POST GROCERYLIST-INGREDIENT-AMOUNT - /grocery-lists/[id]/amount
