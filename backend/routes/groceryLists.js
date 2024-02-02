@@ -176,6 +176,21 @@ router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) =
  * 
 */
 
+router.delete("/:id/ingredients/:ingredientId", ensureAdminOrListOwner, async (req, res, next) => {
+
+    try {
+
+        const groceryListIngredientToDelete = await GroceryList.deleteIngredient(req.params.id, req.params.ingredientId);
+
+        return res.json(groceryListIngredientToDelete);
+
+    } catch (e) {
+        return next(e)
+    }
+
+
+});
+
 // **********
 
 // GROCERYLIST RECIPES ROUTES -
