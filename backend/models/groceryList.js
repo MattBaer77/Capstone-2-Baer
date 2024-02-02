@@ -163,7 +163,7 @@ class GroceryList {
      * 
     **/
 
-    static async create(list_name, username){
+    static async create(listName, username){
 
         const existingUserCheck = await db.query(
 
@@ -190,12 +190,10 @@ class GroceryList {
             owner)
             VALUES ($1, $2)
             RETURNING id`,
-            [list_name, username],
+            [listName, username],
         );
 
-        const groceryList = result.rows[0]
-
-        return groceryList.id
+        return true
 
     };
 

@@ -191,7 +191,7 @@ describe("create", () => {
 
         let list = await GroceryList.create(newGroceryListName, "u1")
 
-        expect(list).toEqual(9)
+        expect(list).toEqual(true)
 
         const found = await db.query("SELECT * FROM grocery_list WHERE list_name = 'testlistU1-NEW'")
 
