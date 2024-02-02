@@ -13,6 +13,7 @@ const { ensureAdminOrEffectedUser, ensureAdminOrListOwner } = require("../middle
 // add Schemas Here
 const groceryListsCreateSchema = require("../schemas/groceryListsCreate.json")
 const groceryListsAddIngredientSchema = require("../schemas/groceryListsAddIngredient.json")
+const groceryListsSetAmountSchema = require("../schemas/groceryListsSetAmount.json")
 
 const router = express.Router();
 
@@ -168,6 +169,27 @@ router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) =
  * 
  * 
 */
+
+router.patch("/:id/ingredients/:ingredientId", ensureAdminOrListOwner, async (req, res, next) => {
+
+    try {
+
+        const validator = jsonschema.validate(req.body, groceryListsSetAmountSchema);
+
+        if(!validator.valid) {
+            const e = validator.errors.map(e => e.stack);
+            throw new ExpressError(e, 400);
+        }
+
+        const groceryListIngredientAmountToSet = await GroceryList.setAmount(req.params.id, req.params.ingredientId, req.body.amount)
+
+        return res.json(groceryListIngredientAmountToSet)
+
+    } catch (e) {
+        return next(e)
+    }
+
+})
 
 // DELETE INGREDIENT - BY ID + INGREDIENT ID
 /** DELETE GROCERYLIST-INGREDIENT - /grocery-lists/[id]/ingredients/[ingredientId]
