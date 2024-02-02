@@ -319,7 +319,7 @@ describe('POST /grocery-lists/:username', () => {
         .post(`/grocery-lists/uA`)
         .send(newList)
         .set("authorization", `Bearer ${adminToken}`);
-    expect(Number.isInteger(resp.body)).toBe(true);
+    expect(resp.body).toBe(true);
 
   });
 
@@ -329,7 +329,7 @@ describe('POST /grocery-lists/:username', () => {
         .post(`/grocery-lists/u1`)
         .send(newList)
         .set("authorization", `Bearer ${adminToken}`);
-    expect(Number.isInteger(resp.body)).toBe(true);
+    expect(resp.body).toBe(true);
 
   });
 
@@ -414,7 +414,7 @@ describe('POST /grocery-lists/:username', () => {
         .post(`/grocery-lists/u1`)
         .send(newList)
         .set("authorization", `Bearer ${u1Token}`);
-      expect(Number.isInteger(resp.body)).toBe(true);
+      expect(resp.body).toBe(true);
 
   });
 
