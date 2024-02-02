@@ -170,9 +170,7 @@ router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) =
 */
 
 // DELETE INGREDIENT - BY ID + INGREDIENT ID
-/** DELETE GROCERYLIST-INGREDIENT - /grocery-lists/[id]/ingredients
- * 
- * Accepts {ingredientId}
+/** DELETE GROCERYLIST-INGREDIENT - /grocery-lists/[id]/ingredients/[ingredientId]
  * 
  * Returns true
  * 
