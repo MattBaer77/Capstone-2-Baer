@@ -160,9 +160,9 @@ router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) =
 })
 
 // SET INGREDIENT AMOUNT - BY ID + INGREDIENT ID + AMOUNT
-/** POST GROCERYLIST-INGREDIENT-AMOUNT - /grocery-lists/[id]/amount
+/** PATCH GROCERYLIST-INGREDIENT-AMOUNT - /grocery-lists/[id]/ingredients[ingredientId]
  * 
- * Accepts {id, ingredientId, amount}
+ * Accepts {amount}
  * 
  * Returns true
  * 
@@ -187,7 +187,6 @@ router.delete("/:id/ingredients/:ingredientId", ensureAdminOrListOwner, async (r
     } catch (e) {
         return next(e)
     }
-
 
 });
 
