@@ -201,7 +201,7 @@ class SpoonApi {
     };
 
     // SDK NOT USED DUE TO LIMITATIONS - NO "exclude-tags" FUNCTIONALITY AT SDK getRandomRecipes
-    static randomRecipesExcludeIntolerances = async (number=10, intolerances=[]) => {
+    static randomRecipesExcludeIntolerances = async (intolerances=[], number=10) => {
 
         intolerances = intolerancesToQueryString(intolerances)
 
