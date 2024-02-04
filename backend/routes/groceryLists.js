@@ -31,7 +31,7 @@ const router = express.Router();
  * 
 */
 
-router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
+router.get("/:username/all", ensureAdminOrEffectedUser, async (req, res, next) => {
 
     try{
 
@@ -59,7 +59,7 @@ router.get("/:username", ensureAdminOrEffectedUser, async (req, res, next) => {
  * 
 */
 
-router.get("/:id/details", ensureAdminOrListOwner, async (req, res, next) => {
+router.get("/:id", ensureAdminOrListOwner, async (req, res, next) => {
 
     try {
 

@@ -32,7 +32,7 @@ afterAll(commonAfterAll);
 
 // GROCERYLIST ROUTES -
 
-describe('GET /grocery-lists/:username', () => {
+describe('GET /grocery-lists/:username/all', () => {
 
   const u1Response = [
     {
@@ -96,7 +96,7 @@ describe('GET /grocery-lists/:username', () => {
 
   test("unauthorized for anon", async () => {
 
-    const resp = await request(app).get(`/grocery-lists/u1`);
+    const resp = await request(app).get(`/grocery-lists/u1/all`);
     expect(resp.statusCode).toEqual(401)
     expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
 
@@ -107,7 +107,7 @@ describe('GET /grocery-lists/:username', () => {
   test("works for users - ADMIN", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/u1`)
+        .get(`/grocery-lists/u1/all`)
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.body).toEqual(u1Response);
 
@@ -116,7 +116,7 @@ describe('GET /grocery-lists/:username', () => {
   test("not found if user not found - ADMIN", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/nope`)
+        .get(`/grocery-lists/nope/all`)
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(404);
     expect(resp.body.error.message).toEqual("No User: nope")
@@ -128,7 +128,7 @@ describe('GET /grocery-lists/:username', () => {
   test("works for users - NOT ADMIN IS USER", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/u1`)
+        .get(`/grocery-lists/u1/all`)
         .set("authorization", `Bearer ${u1Token}`);
     expect(resp.body).toEqual(u1Response);
 
@@ -139,7 +139,7 @@ describe('GET /grocery-lists/:username', () => {
   test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/u2`)
+        .get(`/grocery-lists/u2/all`)
         .set("authorization", `Bearer ${u1Token}`);
     
     expect(resp.statusCode).toEqual(401);
@@ -149,7 +149,7 @@ describe('GET /grocery-lists/:username', () => {
   test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/nope`)
+        .get(`/grocery-lists/nope/all`)
         .set("authorization", `Bearer ${u1Token}`);
     
     expect(resp.statusCode).toEqual(401);
@@ -191,7 +191,7 @@ describe('GET /grocery-lists/:id', () => {
 
   test("unauthorized for anon", async () => {
 
-    const resp = await request(app).get(`/grocery-lists/1/details`);
+    const resp = await request(app).get(`/grocery-lists/1`);
     expect(resp.statusCode).toEqual(401)
     expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
 
@@ -202,7 +202,7 @@ describe('GET /grocery-lists/:id', () => {
   test("works for users - ADMIN", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/1/details`)
+        .get(`/grocery-lists/1`)
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.body).toEqual(u1Response1);
 
@@ -211,7 +211,7 @@ describe('GET /grocery-lists/:id', () => {
   test("not found if grocery list not found - ADMIN", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/9000/details`)
+        .get(`/grocery-lists/9000`)
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(404);
     expect(resp.body.error.message).toEqual("Not Found - No grocery list: 9000")
@@ -221,7 +221,7 @@ describe('GET /grocery-lists/:id', () => {
   test("bad request if grocery list id not integer - ADMIN", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/nope/details`)
+        .get(`/grocery-lists/nope`)
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(400);
     expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
@@ -233,7 +233,7 @@ describe('GET /grocery-lists/:id', () => {
   test("works for users - NOT ADMIN IS USER", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/1/details`)
+        .get(`/grocery-lists/1`)
         .set("authorization", `Bearer ${u1Token}`);
     expect(resp.body).toEqual(u1Response1);
 
@@ -242,7 +242,7 @@ describe('GET /grocery-lists/:id', () => {
   test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/nope/details`)
+        .get(`/grocery-lists/nope`)
         .set("authorization", `Bearer ${u1Token}`);
     expect(resp.statusCode).toEqual(400);
     expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
@@ -254,7 +254,7 @@ describe('GET /grocery-lists/:id', () => {
   test("unauthorized for users - NOT ADMIN NOT USER", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/6/details`)
+        .get(`/grocery-lists/6`)
         .set("authorization", `Bearer ${u1Token}`);
     
     expect(resp.statusCode).toEqual(401);
@@ -264,7 +264,7 @@ describe('GET /grocery-lists/:id', () => {
   test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
 
     const resp = await request(app)
-        .get(`/grocery-lists/6/details`)
+        .get(`/grocery-lists/6`)
         .set("authorization", `Bearer ${u1Token}`);
     
     expect(resp.statusCode).toEqual(401);
