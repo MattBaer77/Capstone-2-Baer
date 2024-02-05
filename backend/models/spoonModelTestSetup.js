@@ -137,19 +137,109 @@ const mockResponseGetSearchIngredientsOptsNullNum10 = {
 
 };
 
+// const mockResponseGetRecipeInformation = {
+
+//     id:3,
+//     title: "Faux Recipe 3",
+//     details: "Additional Details"
+
+// };
+
+// const mockResponseGetIngredientInformation = {
+
+//     id:3,
+//     name: "Faux Ingredient 3",
+//     details: "Additional Details"
+
+// };
+
 const mockResponseGetRecipeInformation = {
 
-    id:3,
-    title: "Faux Recipe 3",
-    details: "Additional Details"
+        id: 101,
+        title: 'Anchovy Spaghetti - SAMPLE FAKE RECIPE',
+        image: '',
+        imageType: 'jpg',
+        servings: 4,
+        readyInMinutes: 60,
+        license: undefined,
+        sourceName: '',
+        sourceUrl: '',
+        spoonacularSourceUrl: undefined,
+        aggregateLikes: 0,
+        healthScore: 50,
+        spoonacularScore: 50,
+        pricePerServing: 50,
+        analyzedInstructions: [],
+        cheap: false,
+        creditsText: '',
+        cuisines: [],
+        dairyFree: true,
+        diets: [],
+        gaps: 'no',
+        glutenFree: false,
+        instructions: 'instructions text',
+        ketogenic: undefined,
+        lowFodmap: false,
+        occasions: [],
+        sustainable: false,
+        vegan: false,
+        vegetarian: false,
+        veryHealthy: true,
+        veryPopular: false,
+        whole30: undefined,
+        weightWatcherSmartPoints: 10,
+        dishTypes: [ 'side dish' ],
+        extendedIngredients: [
+
+           {
+            aisle: 'Seafood',
+            amount: 3,
+            consitency: undefined,
+            id: 51,
+            image: 'anchovies.jpg',
+            name: 'anchovy',
+            original: '3 anchovy fillets, drained, optional',
+            originalName: 'anchovy fillets, drained, optional',
+            unit: 'fillet',
+          },
+
+          {
+            aisle: 'Pasta and Rice',
+            amount: 1,
+            consitency: undefined,
+            id: 52,
+            image: 'spaghetti.jpg',
+            name: 'spaghetti',
+            original: '1 pound spaghetti',
+            originalName: 'spaghetti',
+            unit: 'pound',
+          }
+
+        ],
+        summary: `summary text`,
 
 };
 
 const mockResponseGetIngredientInformation = {
 
-    id:3,
-    name: "Faux Ingredient 3",
-    details: "Additional Details"
+    id: 100,
+    original: 'guacamole',
+    originalName: 'guacamole',
+    name: 'guacamole',
+    nameClean: undefined,
+    amount: undefined,
+    unit: undefined,
+    unitShort: undefined,
+    unitLong: undefined,
+    possibleUnits: [ 'cup', 'tablespoon' ],
+    estimatedCost: undefined,
+    consistency: 'solid',
+    shoppingListUnits: undefined,
+    aisle: 'Refrigerated',
+    image: 'guac.jpg',
+    meta: [],
+    nutrition: undefined,
+    categoryPath: [ 'dip' ]
 
 };
 
