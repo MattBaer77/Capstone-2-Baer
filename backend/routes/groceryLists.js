@@ -231,27 +231,15 @@ router.post("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, n
         const recipeId = parseInt(req.params.recipeId)
 
         const groceryList = await GroceryList.get(groceryListId)
-        console.log(groceryList)
-
         const recipe = await SpoonApi.recipeInformation(recipeId)
-        console.log(recipe)
 
         recipe.extendedIngredients.forEach(async (ingredient) => {
 
             if (groceryList.ingredients.some(i => i.ingredient_id === ingredient.id)){
 
-                console.log("ALREADY EXISTS")
-
                 const groceryListIngredient = groceryList.ingredients.find(i => i.ingredient_id === ingredient.id);
-                console.log(groceryListIngredient)
-                const amountSum = (groceryListIngredient.amount + ingredient.amount);
-                console.log(amountSum)
-                await GroceryList.setAmount(groceryList.id, ingredient.id, amountSum);
-                console.log(groceryListIngredient.minimum_amount)
-                console.log(ingredient.amount)
-                const minimumAmountSum = (groceryListIngredient.minimum_amount + ingredient.amount);
-                console.log(minimumAmountSum)
-                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, minimumAmountSum);
+                await GroceryList.setAmount(groceryList.id, ingredient.id, (groceryListIngredient.amount + ingredient.amount));
+                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, (groceryListIngredient.minimum_amount + ingredient.amount));
 
             } else {
                 await GroceryList.addIngredient(groceryList.id, ingredient.id, ingredient.amount, ingredient.unit, ingredient.amount)
