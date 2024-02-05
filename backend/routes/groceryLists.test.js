@@ -1647,6 +1647,34 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
     ]
   };
 
+  const groceryListAfterTwoAddOneDelete = {
+    id: 1,
+    list_name: 'testlistU1-1',
+    owner: 'u1',
+    ingredients: [
+      { ingredient_id: 51, amount: 3, unit: 'fillet', minimum_amount: 3 },
+      { ingredient_id: 52, amount: 1, unit: 'pound', minimum_amount: 1 },
+      {
+        ingredient_id: 100,
+        amount: 2,
+        unit: 'Some Unit',
+        minimum_amount: 0
+      },
+      {
+        ingredient_id: 101,
+        amount: 2,
+        unit: 'Some Unit',
+        minimum_amount: 0
+      }
+    ],
+    recipes: [
+      { id: 1, recipe_id: 11 },
+      { id: 2, recipe_id: 12 },
+      { id: 3, recipe_id: 32 },
+      { id: 13, recipe_id: 100 }
+    ]
+  }
+
   describe('recipeId exists', () => {
 
     // ANON
@@ -1674,6 +1702,7 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       expect(resp.body).toEqual(true)
 
       const dataCheck = await GroceryList.get(1)
+      console.log(dataCheck)
       expect(dataCheck).toEqual(groceryListInitial)
 
     });
@@ -1727,6 +1756,9 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       .post(`/grocery-lists/1/recipes/100`)
       .set("authorization", `Bearer ${u1Token}`);
 
+      const beforeCheck = await GroceryList.get(1)
+      console.log(beforeCheck)
+
       const resp = await request(app)
           .delete(`/grocery-lists/1/recipes/100`)
           .set("authorization", `Bearer ${u1Token}`);
@@ -1734,8 +1766,8 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       expect(resp.body).toEqual(true)
 
       const dataCheck = await GroceryList.get(1)
+      expect(dataCheck).toEqual(groceryListAfterTwoAddOneDelete)
 
-      console.log(dataCheck)
 
     });
 

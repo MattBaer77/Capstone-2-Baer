@@ -233,7 +233,7 @@ router.post("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, n
         const groceryList = await GroceryList.get(groceryListId)
         const recipe = await SpoonApi.recipeInformation(recipeId)
 
-        recipe.extendedIngredients.forEach(async (ingredient) => {
+        for(let ingredient of recipe.extendedIngredients){
 
             if (groceryList.ingredients.some(i => i.ingredient_id === ingredient.id)){
 
@@ -245,7 +245,7 @@ router.post("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, n
                 await GroceryList.addIngredient(groceryList.id, ingredient.id, ingredient.amount, ingredient.unit, ingredient.amount)
             }
 
-        })
+        }
 
         await GroceryList.addRecipe(groceryListId, recipeId)
 
@@ -263,5 +263,59 @@ router.post("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, n
  * Returns true
  * 
 */
+
+router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, next) => {
+
+    try {
+
+        const groceryListId = parseInt(req.params.id)
+        const recipeId = parseInt(req.params.recipeId)
+        const groceryList = await GroceryList.get(groceryListId)
+        console.log(groceryList)
+        const recipe = await SpoonApi.recipeInformation(recipeId)
+        console.log(recipe)
+
+        for(let ingredient of recipe.extendedIngredients) {
+
+            const groceryListIngredient = groceryList.ingredients.find(i => i.ingredient_id === ingredient.id);
+
+            if(ingredient.amount === groceryListIngredient.minimum_amount){
+
+                await GroceryList.deleteIngredient(groceryList.id, ingredient.id)
+
+            } else {
+
+                console.log(groceryListIngredient)
+                console.log(groceryListIngredient.amount - ingredient.amount)
+                console.log(groceryListIngredient.minimum_amount - ingredient.amount)
+
+                const newAmount = (groceryListIngredient.amount - ingredient.amount)
+                const newMinimumAmount = (groceryListIngredient.minimum_amount - ingredient.amount)
+
+                console.log(newAmount)
+                console.log(newMinimumAmount)
+
+                console.log(groceryList.id)
+                console.log(ingredient.id)
+
+                const a = await GroceryList.setAmount(groceryList.id, ingredient.id, newAmount);
+                const m = await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, newMinimumAmount);
+                console.log(a)
+                console.log(m)
+            }
+
+        }
+
+        const deleteId = groceryList.recipes.find(r => r.recipe_id === recipeId)
+
+        await GroceryList.deleteRecipe(deleteId.id)
+
+        return res.json(true)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
 
 module.exports = router;
