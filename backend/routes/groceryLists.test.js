@@ -1620,4 +1620,159 @@ describe('POST /grocery-lists/:id/recipes', () => {
 
 })
 
+describe('DELETE /grocery-lists/:id/recipes', () => {
+
+  const groceryListInitial = {
+    id: 1,
+    list_name: 'testlistU1-1',
+    owner: 'u1',
+    ingredients: [
+      {
+        ingredient_id: 100,
+        amount: 2,
+        unit: 'Some Unit',
+        minimum_amount: 0
+      },
+      {
+        ingredient_id: 101,
+        amount: 2,
+        unit: 'Some Unit',
+        minimum_amount: 0
+      }
+    ],
+    recipes: [
+      { id: 1, recipe_id: 11 },
+      { id: 2, recipe_id: 12 },
+      { id: 3, recipe_id: 32 }
+    ]
+  };
+
+  describe('recipeId exists', () => {
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+      const resp = await request(app).delete(`/grocery-lists/1/recipes/100`);
+      expect(resp.statusCode).toEqual(401)
+      expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+    })
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+      await request(app)
+          .post(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${adminToken}`);
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(200)
+      expect(resp.body).toEqual(true)
+
+      const dataCheck = await GroceryList.get(1)
+      expect(dataCheck).toEqual(groceryListInitial)
+
+    });
+
+    test("not found if grocery list not found - ADMIN", async () => {
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/9000/recipes/100`)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(404);
+      expect(resp.body.error.message).toEqual("Not Found - No grocery list: 9000")
+
+    });
+
+    test("bad request if grocery list id not integer - ADMIN", async () => {
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/nope/recipes/100`)
+          .set("authorization", `Bearer ${adminToken}`);
+      expect(resp.statusCode).toEqual(400);
+      expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+
+    });
+
+    // NOT ADMIN IS USER
+
+    test("works for users - NOT ADMIN IS USER", async () => {
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(200)
+      expect(resp.body).toEqual(true)
+
+      const dataCheck = await GroceryList.get(1)
+      expect(dataCheck).toEqual(groceryListInitial)
+
+    });
+
+    test("works for users - NOT ADMIN IS USER - DELETED IF SAME RECIPE PREVIOUSLY ADDED TWICE", async () => {
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(200)
+      expect(resp.body).toEqual(true)
+
+      const dataCheck = await GroceryList.get(1)
+
+      console.log(dataCheck)
+
+    });
+
+    test("bad request found if grocery list id not integer - NOT ADMIN", async () => {
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/nope/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(400);
+      expect(resp.body.error.message).toEqual('Bad Request - Must include id like "1" or "100"')
+
+    });
+
+    // NOT ADMIN NOT USER
+
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/6/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      
+      expect(resp.statusCode).toEqual(401);
+
+    });
+
+    test("unauthorized for users - NOT ADMIN NOT USER - grocery list does not exist", async () => {
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${u3Token}`);
+      
+      expect(resp.statusCode).toEqual(401);
+
+    });
+
+  });
+
+})
+
 // add expectations to post routes that use GroceryList to confirm correct data
