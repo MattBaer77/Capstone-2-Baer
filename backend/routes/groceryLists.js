@@ -271,9 +271,7 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
         const groceryListId = parseInt(req.params.id)
         const recipeId = parseInt(req.params.recipeId)
         const groceryList = await GroceryList.get(groceryListId)
-        console.log(groceryList)
         const recipe = await SpoonApi.recipeInformation(recipeId)
-        console.log(recipe)
 
         for(let ingredient of recipe.extendedIngredients) {
 
@@ -285,23 +283,12 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
 
             } else {
 
-                console.log(groceryListIngredient)
-                console.log(groceryListIngredient.amount - ingredient.amount)
-                console.log(groceryListIngredient.minimum_amount - ingredient.amount)
-
                 const newAmount = (groceryListIngredient.amount - ingredient.amount)
                 const newMinimumAmount = (groceryListIngredient.minimum_amount - ingredient.amount)
 
-                console.log(newAmount)
-                console.log(newMinimumAmount)
+                await GroceryList.setAmount(groceryList.id, ingredient.id, newAmount);
+                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, newMinimumAmount);
 
-                console.log(groceryList.id)
-                console.log(ingredient.id)
-
-                const a = await GroceryList.setAmount(groceryList.id, ingredient.id, newAmount);
-                const m = await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, newMinimumAmount);
-                console.log(a)
-                console.log(m)
             }
 
         }

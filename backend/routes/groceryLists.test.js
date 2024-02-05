@@ -1702,7 +1702,6 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       expect(resp.body).toEqual(true)
 
       const dataCheck = await GroceryList.get(1)
-      console.log(dataCheck)
       expect(dataCheck).toEqual(groceryListInitial)
 
     });
@@ -1755,9 +1754,6 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       await request(app)
       .post(`/grocery-lists/1/recipes/100`)
       .set("authorization", `Bearer ${u1Token}`);
-
-      const beforeCheck = await GroceryList.get(1)
-      console.log(beforeCheck)
 
       const resp = await request(app)
           .delete(`/grocery-lists/1/recipes/100`)
