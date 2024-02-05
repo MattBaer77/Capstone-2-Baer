@@ -155,7 +155,7 @@ const mockResponseGetSearchIngredientsOptsNullNum10 = {
 
 const mockResponseGetRecipeInformation = {
 
-        id: 101,
+        id: 100,
         title: 'Anchovy Spaghetti - SAMPLE FAKE RECIPE',
         image: '',
         imageType: 'jpg',

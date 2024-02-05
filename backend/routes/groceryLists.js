@@ -161,7 +161,7 @@ router.post("/:id/ingredients", ensureAdminOrListOwner, async (req, res, next) =
 })
 
 // SET INGREDIENT AMOUNT - BY ID + INGREDIENT ID + AMOUNT
-/** PATCH GROCERYLIST-INGREDIENT-AMOUNT - /grocery-lists/[id]/ingredients[ingredientId]
+/** PATCH GROCERYLIST-INGREDIENT-AMOUNT - /grocery-lists/[id]/ingredients/[ingredientId]
  * 
  * Accepts {amount}
  * 
@@ -217,19 +217,61 @@ router.delete("/:id/ingredients/:ingredientId", ensureAdminOrListOwner, async (r
 // GROCERYLIST RECIPES ROUTES -
 
 // POST RECIPE - BY ID + RECIPE ID
-/** POST GROCERYLIST-RECIPE - /grocery-list/[id]/recipes
- * 
- * Accepts {recipeId}
+/** POST GROCERYLIST-RECIPE - /grocery-list/[id]/recipes/[recipeId]
  * 
  * Returns true
  * 
 */
 
+router.post("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, next) => {
+
+    try {
+
+        const groceryListId = parseInt(req.params.id)
+        const recipeId = parseInt(req.params.recipeId)
+
+        const groceryList = await GroceryList.get(groceryListId)
+        console.log(groceryList)
+
+        const recipe = await SpoonApi.recipeInformation(recipeId)
+        console.log(recipe)
+
+        recipe.extendedIngredients.forEach(async (ingredient) => {
+
+            if (groceryList.ingredients.some(i => i.ingredient_id === ingredient.id)){
+
+                console.log("ALREADY EXISTS")
+
+                const groceryListIngredient = groceryList.ingredients.find(i => i.ingredient_id === ingredient.id);
+                console.log(groceryListIngredient)
+                const amountSum = (groceryListIngredient.amount + ingredient.amount);
+                console.log(amountSum)
+                await GroceryList.setAmount(groceryList.id, ingredient.id, amountSum);
+                console.log(groceryListIngredient.minimum_amount)
+                console.log(ingredient.amount)
+                const minimumAmountSum = (groceryListIngredient.minimum_amount + ingredient.amount);
+                console.log(minimumAmountSum)
+                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, minimumAmountSum);
+
+            } else {
+                await GroceryList.addIngredient(groceryList.id, ingredient.id, ingredient.amount, ingredient.unit, ingredient.amount)
+            }
+
+        })
+
+        await GroceryList.addRecipe(groceryListId, recipeId)
+
+        return res.json(true)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
+
 // DELETE RECIPE - BY ID + RECIPE ID
-/** DELETE GROCERYLIST-RECIPE - /grocery-list/[id]/recipes
- * 
- * Accepts {recipeId}
- * 
+/** DELETE GROCERYLIST-RECIPE - /grocery-list/[id]/recipes/[id]
+ *
  * Returns true
  * 
 */
