@@ -17,12 +17,17 @@ apiKeyScheme.apiKey = spoonacularKey
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //apiKeyScheme.apiKeyPrefix['x-api-key'] = "Token"
 
+// const maxRecipes = 10
+// const maxIngredients = 10
+// consolidate to above variables or export from config
+const cacheExpiration = 59 * 60 * 1000
+
 class SpoonApi {
 
     // PUBLIC CACHE MANAGEMENT
     static recipesCache = null;
     static cacheTimestamp = null;
-    static CACHE_EXPIRATION_THRESHOLD = 10 * 1000;
+    static CACHE_EXPIRATION_THRESHOLD = cacheExpiration;
 
     // API
     static recipesApi = new spoonacularApi.RecipesApi();
