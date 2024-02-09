@@ -14,7 +14,6 @@ class EasySpoonAPI {
         console.debug("API Call:", endpoint, data, method);
 
         const url = `${VITE_BASE_URL}/${endpoint}`;
-        console.log(url);
         const headers = { Authorization: `Bearer ${this.token}` };
         const body = (method === "GET") ? undefined : JSON.stringify(data);
 
@@ -58,11 +57,7 @@ class EasySpoonAPI {
 
     static async getUserInfo(username) {
 
-        console.log(this.token)
-
         let res = await this.request(`users/${username}`)
-
-        console.log(res)
 
         return res
 
@@ -70,11 +65,7 @@ class EasySpoonAPI {
 
     static async getUserDetails(username) {
 
-        console.log(this.token)
-
         let res = await this.request(`users/${username}/details`)
-
-        console.log(res)
 
         return res
 
@@ -84,11 +75,7 @@ class EasySpoonAPI {
 
     static async getRecipesCache() {
 
-        console.log(this.token)
-
         let res = await this.request(`recipes/cache`)
-
-        console.log(res)
 
         return res
         

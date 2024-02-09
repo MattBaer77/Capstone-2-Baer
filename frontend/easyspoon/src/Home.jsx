@@ -22,10 +22,7 @@ const Home = () => {
                 let recipes;
                 if(Object.keys(currentUser).length !== 0) {
                     console.log("THERE IS A USER")
-                    console.log(currentUser)
-                    console.log(currentUser.userApi)
                     recipes = await currentUser.userApi.getRecipesCache();
-                    console.log(recipes)
                 } else {
                     console.log("NO USER")
                     recipes = await EasySpoonAPI.getRecipesCache();
@@ -34,7 +31,6 @@ const Home = () => {
                 setIsLoading(false)
 
             } catch (e) {
-                console.log(e)
                 setError(e)
             } finally {
                 setIsLoading(false);

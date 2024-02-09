@@ -19,8 +19,6 @@ const UserProvider = ({children}) => {
         const userApi = EasySpoonAPI
         userApi.token = token
         const {user} = await userApi.getUserInfo(username);
-        console.log(user)
-
 
         setCurrentUser(() => {
 
@@ -44,7 +42,6 @@ const UserProvider = ({children}) => {
 
         // Initial Testing - Always Logged In
         localStorage.setItem('token', import.meta.env.VITE_EXAMPLE_TOKEN)
-        console.log(localStorage.getItem('token'))
 
         if (localStorage.getItem('token'))loadUser((localStorage.getItem('token')))
 
