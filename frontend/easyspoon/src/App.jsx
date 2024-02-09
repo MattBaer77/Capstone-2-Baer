@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import UserProvider from './UserProvider';
 import UserCard from './UserCard'
+import Home from './Home'
 
 // NavBar
 // Router
@@ -24,6 +25,7 @@ function App() {
 
         <p>USER:</p>
         <UserCard />
+        <Home />
         
         {/* </BrowserRouter> */}
 

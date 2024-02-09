@@ -82,6 +82,18 @@ class EasySpoonAPI {
 
     // RECIPES
 
+    static async getRecipesCache() {
+
+        console.log(this.token)
+
+        let res = await this.request(`recipes/cache`)
+
+        console.log(res)
+
+        return res
+        
+    }
+
     // INGREDIENTS
 
     // GROCERYLISTS
