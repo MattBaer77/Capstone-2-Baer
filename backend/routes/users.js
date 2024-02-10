@@ -191,7 +191,7 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
 
         }
 
-        return res.json({cache:data});
+        return res.json(data);
     } catch (e) {
         return next(e);
     }

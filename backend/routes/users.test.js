@@ -805,12 +805,11 @@ describe('GET /users/username/cache-only', () => {
         const resp = await request(app)
             .get(`/users/u1/cache-only`)
             .set("authorization", `Bearer ${adminToken}`);
+            console.log(resp.body)
         expect(resp.body).toEqual({
 
-            cache:{
-                faux: "json",
-                some: "more",
-            }
+            faux: "json",
+            some: "more",
 
         });
     });
@@ -820,11 +819,11 @@ describe('GET /users/username/cache-only', () => {
         const resp = await request(app)
             .get(`/users/u3/cache-only`)
             .set("authorization", `Bearer ${adminToken}`);
-        expect(resp.body).toEqual({
+        expect(resp.body).toEqual(
 
-            cache:mockResponseGetRandomRecipes.recipes
+            mockResponseGetRandomRecipes.recipes
 
-        });
+        );
     });
 
     test("not found if user not found - ADMIN", async () => {
@@ -846,10 +845,8 @@ describe('GET /users/username/cache-only', () => {
             .set("authorization", `Bearer ${u1Token}`);
         expect(resp.body).toEqual({
 
-            cache:{
                 faux: "json",
                 some: "more",
-            }
 
         });
     });
@@ -859,11 +856,11 @@ describe('GET /users/username/cache-only', () => {
         const resp = await request(app)
             .get(`/users/u3/cache-only`)
             .set("authorization", `Bearer ${u3Token}`);
-        expect(resp.body).toEqual({
+        expect(resp.body).toEqual(
 
-            cache:mockResponseGetRandomRecipes.recipes
+            mockResponseGetRandomRecipes.recipes
 
-        });
+        );
     });
 
     // NOT ADMIN NOT USER
