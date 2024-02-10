@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 // import "./NavBar.css"
 
-function NavBar() {
+const NavBar = () => {
 
     const currentUser = useUserContext()
 
@@ -29,7 +29,7 @@ function NavBar() {
         <div className="NavBar">
 
             <h2 className="wordmark"><NavLink exect="true" to={'/'}>easyspoon</NavLink></h2>
-            
+
         </div>
 
     )

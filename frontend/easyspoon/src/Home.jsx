@@ -4,6 +4,8 @@ import EasySpoonAPI from "./Api";
 
 import { useUserContext } from "./hooks.jsx";
 
+import PreviewCard from "./PreviewCard.jsx";
+
 const Home = () => {
 
     const currentUser = useUserContext()
@@ -68,8 +70,9 @@ const Home = () => {
             <div className="List">
     
                 <h1>{currentUser.username}</h1>
+
+                {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
     
-                <p>{JSON.stringify(recipesCache)}</p>
     
             </div>
         )
@@ -79,7 +82,7 @@ const Home = () => {
     
                 <h1>No User!</h1>
 
-                <p>{JSON.stringify(recipesCache)}</p>
+                {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
 
             </div>
         )
