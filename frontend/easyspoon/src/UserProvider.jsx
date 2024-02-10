@@ -8,7 +8,7 @@ const UserProvider = ({children}) => {
 
     const localStorage = window.localStorage
 
-    const INITIAL_STATE = {}
+    const INITIAL_STATE = null;
 
     const [currentUser, setCurrentUser] = useState(INITIAL_STATE)
 
@@ -41,7 +41,7 @@ const UserProvider = ({children}) => {
     useEffect(() => {
 
         // Initial Testing - Always Logged In
-        localStorage.setItem('token', import.meta.env.VITE_EXAMPLE_TOKEN)
+        // localStorage.setItem('token', import.meta.env.VITE_EXAMPLE_TOKEN)
 
         if (localStorage.getItem('token'))loadUser((localStorage.getItem('token')))
 
