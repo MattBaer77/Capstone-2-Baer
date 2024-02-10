@@ -1,13 +1,11 @@
 import React from "react";
 
-import {useUserContext} from "./UserProvider.jsx"
+import {useUserContext} from "./hooks.jsx"
 
 const UserCard = () => {
 
     const currentUser = useUserContext();
-
     
-
     return(
         <div className="Card">
 

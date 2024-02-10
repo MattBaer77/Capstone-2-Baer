@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 
 import EasySpoonAPI from "./Api";
 
-import { useUserContext } from "./UserProvider";
+import { useUserContext } from "./hooks.jsx";
 
 const Home = () => {
 

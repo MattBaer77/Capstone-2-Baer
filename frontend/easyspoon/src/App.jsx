@@ -2,11 +2,9 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 
 import UserProvider from './UserProvider';
-import UserCard from './UserCard'
-import Home from './Home'
 
-// NavBar
-// Router
+import NavBar from './NavBar'
+import Router from './Router'
 
 import './App.css'
 
@@ -17,17 +15,15 @@ function App() {
 
     <div className='App'>
 
-      <h1>Hello!</h1>
-
       <UserProvider>
 
-        {/* <BrowserRouter> */}
+        <BrowserRouter>
 
-        <p>USER:</p>
-        <UserCard />
-        <Home />
-        
-        {/* </BrowserRouter> */}
+        <NavBar />
+
+        <Router />
+
+        </BrowserRouter>
 
       </UserProvider>
 
