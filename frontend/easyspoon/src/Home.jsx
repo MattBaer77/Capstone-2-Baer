@@ -59,7 +59,7 @@ const Home = () => {
 
             <div>
                 <h3>Error Loading Homepage</h3>
-                <p>{error.message}</p>
+                <p>{JSON.stringify(error)}</p>
             </div>
 
         )
