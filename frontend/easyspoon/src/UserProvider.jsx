@@ -8,7 +8,7 @@ const UserProvider = ({children}) => {
 
     const localStorage = window.localStorage
 
-    const INITIAL_STATE = null;
+    const INITIAL_STATE = {};
 
     const [currentUser, setCurrentUser] = useState(INITIAL_STATE)
 
@@ -45,7 +45,7 @@ const UserProvider = ({children}) => {
     }
 
     // TEMPORARY FOR DEVLEOPMENT
-    localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
+    // localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
     // TEMPORARY FOR DEVELOPMENT
 
     useEffect(() => {
@@ -55,6 +55,7 @@ const UserProvider = ({children}) => {
         if (storedToken) {
             
             loadUser(storedToken)
+
         }
 
     }, [])

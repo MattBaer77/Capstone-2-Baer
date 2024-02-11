@@ -17,6 +17,7 @@ const NavBar = () => {
 
                 <h2 className="wordmark"><NavLink exect="true" to={'/'}>easyspoon</NavLink></h2>
                 <NavLink exact="true" to={'/user'}>{currentUser.username}</NavLink>
+                <NavLink exact="true" to={'/recipes/1001'}>Go To Recipe 1001</NavLink>
 
             </div>
         )

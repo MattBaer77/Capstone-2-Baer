@@ -39,7 +39,7 @@
 }
 
 .image-circle img {
-    width: 110%; /* Fill the circle */
-    height: 110%; /* Fill the circle */
+    width: 120%; /* Fill the circle */
+    height: 120%; /* Fill the circle */
     object-fit: cover; /* Crop image to fit */
 }

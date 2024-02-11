@@ -20,11 +20,11 @@ const RecipeDetail = () => {
     const [error, setError] = useState(null);
     const [recipe, setRecipe] = useState(null);
 
-    // if (!currentUser.token) {
+    if(!currentUser.token) {
 
-    //     return <Navigate to='/'/>
+        return <Navigate to='/'/>
 
-    // }
+    }
 
     useEffect(() => {
 
@@ -38,12 +38,14 @@ const RecipeDetail = () => {
 
             } catch (e) {
                 setError(e);
+            } finally {
+                setIsLoading(false)
             }
         }
 
         getRecipe();
 
-    }, [currentUser]);
+    }, []);
 
 
     if (isLoading) {
