@@ -8,9 +8,10 @@ const UserProvider = ({children}) => {
 
     const localStorage = window.localStorage
 
-    const INITIAL_STATE = {};
+    const INITIAL_STATE = null;
 
-    const [currentUser, setCurrentUser] = useState(INITIAL_STATE)
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentUser, setCurrentUser] = useState(INITIAL_STATE);
 
     const loadUser = async (token) => {
 
@@ -37,11 +38,14 @@ const UserProvider = ({children}) => {
             })
     
             localStorage.setItem("token", token)
+            setIsLoading(false)
 
         } catch (e) {
-            console.error("Error loading user:", e)
-        }
 
+            // console.error("Error loading user:", e)
+            setIsLoading(false)
+
+        }
     }
 
     // TEMPORARY FOR DEVLEOPMENT
@@ -51,14 +55,16 @@ const UserProvider = ({children}) => {
     useEffect(() => {
 
         const storedToken = localStorage.getItem('token')
+        loadUser(storedToken)
 
-        if (storedToken) {
-            
-            loadUser(storedToken)
-
-        }
 
     }, [])
+
+    if (isLoading) {
+
+        return <p>Loading User...</p>
+
+    }
 
     return (
         <UserContext.Provider value = {currentUser}>

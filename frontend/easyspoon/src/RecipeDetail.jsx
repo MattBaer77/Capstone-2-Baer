@@ -18,7 +18,7 @@ const RecipeDetail = () => {
     const [error, setError] = useState(null);
     const [recipe, setRecipe] = useState(null);
 
-    if(!currentUser.token) {
+    if(!currentUser) {
 
         return <Navigate to='/'/>
 

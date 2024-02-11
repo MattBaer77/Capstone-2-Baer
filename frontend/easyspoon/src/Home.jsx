@@ -22,7 +22,7 @@ const Home = () => {
             try {
                 // let recipes = await EasySpoonAPI.getRecipesCache();
                 let recipes;
-                if(currentUser.token) {
+                if(currentUser) {
                     console.log("THERE IS A USER")
                     // recipes = await currentUser.userApi.getUserCacheOnly(currentUser.username);
                     recipes = await currentUser.userApi.getRecipesCache();
@@ -43,7 +43,7 @@ const Home = () => {
 
         getCache();
 
-    }, [currentUser]);
+    }, []);
 
     if (isLoading) {
         return (

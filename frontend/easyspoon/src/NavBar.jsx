@@ -10,7 +10,7 @@ const NavBar = () => {
 
     const currentUser = useUserContext()
 
-    if(currentUser.token) {
+    if(currentUser) {
 
         return(
             <div className="NavBar">
