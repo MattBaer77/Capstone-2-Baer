@@ -1,0 +1,14 @@
+.Detail {
+
+    max-width: 700px;
+    background-color: white;
+    
+}
+
+.Detail .title {
+    text-align: center;
+}
+
+.Detail .title img {
+    width: 100%;
+}

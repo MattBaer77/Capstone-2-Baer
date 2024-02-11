@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import "./Card.css"
+import "./RecipeCard.css"
 import { useUserContext } from "./hooks";
 
 const PreviewCard = ({item}) => {
@@ -13,7 +14,7 @@ const PreviewCard = ({item}) => {
 
         return(
 
-            <div className="Card">
+            <div className="Card RecipeCard">
 
                 <div className="center">
     
@@ -35,14 +36,14 @@ const PreviewCard = ({item}) => {
 
         return(
 
-            <div className="Card">
+            <div className="Card IngredientCard">
 
                 <div className="center">
 
                     {currentUser ? <NavLink exact="true" to={`/ingredients/${item.name}`}><h2>{item.name}</h2></NavLink> : <h2>{item.title}</h2>}
 
                     <div className="image-circle">
-                        <img src={item.image}/>
+                        <img src={`https://spoonacular.com/cdn/ingredients_250x250/${item.image}`}/>
                     </div>
 
                 </div>

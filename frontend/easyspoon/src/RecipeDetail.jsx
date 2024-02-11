@@ -5,8 +5,10 @@ import { useUserContext } from "./hooks";
 import { useParams, NavLink, Navigate } from "react-router-dom";
 
 import RecipeCard from "./RecipeCard.jsx";
+import PreviewCard from "./PreviewCard.jsx";
+import IngredientCard from "./IngredientCard.jsx";
 
-import "./List.css"
+import "./Detail.css"
 
 const RecipeDetail = () => {
 
@@ -67,10 +69,22 @@ const RecipeDetail = () => {
 
         <div className="List">
 
-            <img src={recipe.image}/>
-            <h2>{recipe.title}</h2>
-            {recipe.extendedIngredients.map(i => <p>{JSON.stringify(i)}</p>)}
+        <div className="Detail">
+
+            <div className="title">
+                <img src={recipe.image}/>
+                <h2>{recipe.title}</h2>
+            </div>
+
+            {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} item={i}/>)}
+
+            <div>
+                {recipe.extendedIngredients.map(i => JSON.stringify(i))}
+            </div>
+
             <p>{JSON.stringify(recipe.analyzedInstructions)}</p>
+
+        </div>
 
         </div>
 

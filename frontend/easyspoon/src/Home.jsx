@@ -5,6 +5,7 @@ import EasySpoonAPI from "./Api";
 import { useUserContext } from "./hooks.jsx";
 
 import PreviewCard from "./PreviewCard.jsx";
+import "./List.css"
 
 const Home = () => {
 

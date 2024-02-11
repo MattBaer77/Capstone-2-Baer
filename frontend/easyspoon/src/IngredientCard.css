@@ -1,0 +1,15 @@
+
+.IngredientCard {
+
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+
+
+}
+
+.ingredient-image img {
+    max-width: 100px; /* Fill the circle */
+    max-height: 100px; /* Fill the circle */
+    object-fit: cover; /* Crop image to fit */
+}
