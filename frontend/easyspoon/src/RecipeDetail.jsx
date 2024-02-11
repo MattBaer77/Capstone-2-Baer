@@ -74,7 +74,12 @@ const RecipeDetail = () => {
                 <h2>{recipe.title}</h2>
             </div>
 
-            {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} item={i}/>)}
+            <div className="ingredient-card-stage">
+
+                {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} item={i}/>)}
+
+            </div>
+
 
             <div>
                 {recipe.extendedIngredients.map(i => JSON.stringify(i))}

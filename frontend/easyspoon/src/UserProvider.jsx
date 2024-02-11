@@ -49,7 +49,7 @@ const UserProvider = ({children}) => {
     }
 
     // TEMPORARY FOR DEVLEOPMENT
-    localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
+    // localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
     // TEMPORARY FOR DEVELOPMENT
 
     useEffect(() => {

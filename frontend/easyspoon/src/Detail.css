@@ -12,3 +12,7 @@
 .Detail .title img {
     width: 100%;
 }
+
+.Detail .ingredient-card-stage {
+    text-align: center;
+}
