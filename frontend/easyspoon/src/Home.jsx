@@ -30,7 +30,6 @@ const Home = () => {
                     console.log("NO USER")
                     recipes = await EasySpoonAPI.getRecipesCache();
                 }
-                console.log(recipes)
                 setRecipesCache([...recipes])
                 setIsLoading(false)
 

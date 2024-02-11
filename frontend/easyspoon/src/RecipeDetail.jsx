@@ -13,8 +13,6 @@ const RecipeDetail = () => {
     const {id} = useParams();
 
     const currentUser = useUserContext();
-    console.log(currentUser)
-    console.log(id)
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -32,7 +30,6 @@ const RecipeDetail = () => {
 
             try{
                 let recipe = await currentUser.userApi.getRecipeById(id);
-                console.log(recipe)
                 setRecipe(recipe);
                 setIsLoading(false);
 
@@ -55,8 +52,6 @@ const RecipeDetail = () => {
     };
 
     if (error) {
-
-        console.log(error)
 
         return (
         <div>
