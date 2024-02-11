@@ -7,6 +7,7 @@ import NavBar from './NavBar'
 import Router from './Router'
 
 import './App.css'
+import './ContentStage.css'
 
 function App() {
 
@@ -20,7 +21,11 @@ function App() {
 
         <NavBar />
 
+        <div className='ContentStage'>
+
         <Router />
+
+        </div>
 
         </BrowserRouter>
 

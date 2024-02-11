@@ -67,8 +67,6 @@ const RecipeDetail = () => {
 
     return (
 
-        <div className="List">
-
         <div className="Detail">
 
             <div className="title">
@@ -83,8 +81,6 @@ const RecipeDetail = () => {
             </div>
 
             <p>{JSON.stringify(recipe.analyzedInstructions)}</p>
-
-        </div>
 
         </div>
 

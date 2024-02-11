@@ -5,7 +5,7 @@ import EasySpoonAPI from "./Api";
 import { useUserContext } from "./hooks.jsx";
 
 import PreviewCard from "./PreviewCard.jsx";
-import "./List.css"
+// import "./List.css"
 
 const Home = () => {
 
@@ -68,7 +68,7 @@ const Home = () => {
 
     if (currentUser) {
         return (
-            <div className="List">
+            <div>
     
                 <h1>{currentUser.username}</h1>
 
@@ -79,7 +79,7 @@ const Home = () => {
         )
     } else {
         return (
-            <div className="List">
+            <div>
     
                 <h1>No User!</h1>
 
