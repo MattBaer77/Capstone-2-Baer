@@ -12,6 +12,10 @@ const RecipesList = () => {
 
     // useEffect(() => {})
 
+    return(
+        <h1>Recipes List...</h1>
+    )
+
 
 };
 

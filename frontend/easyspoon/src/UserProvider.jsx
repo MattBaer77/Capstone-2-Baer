@@ -14,36 +14,48 @@ const UserProvider = ({children}) => {
 
     const loadUser = async (token) => {
 
-        const { username } = jwtDecode(token)
+        try {
 
-        const userApi = EasySpoonAPI
-        userApi.token = token
-        const {user} = await userApi.getUserInfo(username);
+            const { username } = jwtDecode(token)
 
-        setCurrentUser(() => {
+            const userApi = EasySpoonAPI;
+            userApi.token = token;
+            const {user} = await userApi.getUserInfo(username);
+    
+            setCurrentUser(() => {
+    
+                return {
+                    username:user.username,
+                    token : token,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    applications: user.applications,
+                    userApi : userApi
+                }
+    
+            })
+    
+            localStorage.setItem("token", token)
 
-            return {
-                username:user.username,
-                token : token,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                applications: user.applications,
-                userApi : userApi
-            }
-
-        })
-
-        localStorage.setItem("token", token)
+        } catch (e) {
+            console.error("Error loading user:", e)
+        }
 
     }
 
+    // TEMPORARY FOR DEVLEOPMENT
+    localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
+    // TEMPORARY FOR DEVELOPMENT
+
     useEffect(() => {
 
-        // Initial Testing - Always Logged In
-        // localStorage.setItem('token', import.meta.env.VITE_EXAMPLE_TOKEN)
+        const storedToken = localStorage.getItem('token')
 
-        if (localStorage.getItem('token'))loadUser((localStorage.getItem('token')))
+        if (storedToken) {
+            
+            loadUser(storedToken)
+        }
 
     }, [])
 
@@ -56,4 +68,3 @@ const UserProvider = ({children}) => {
 }
 
 export default UserProvider;
-// export const useUserContext = () => useContext(UserContext);
