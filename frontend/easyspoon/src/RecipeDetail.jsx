@@ -5,7 +5,7 @@ import { useUserContext } from "./hooks";
 import { useParams, NavLink, Navigate } from "react-router-dom";
 
 import RecipeCard from "./RecipeCard.jsx";
-import PreviewCard from "./PreviewCard.jsx";
+// import PreviewCard from "./PreviewCard.jsx";
 import IngredientCard from "./IngredientCard.jsx";
 
 import "./Content.css"
@@ -76,17 +76,23 @@ const RecipeDetail = () => {
             </div>
 
             <div className="ingredient-card-stage">
+                {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
+            </div>
 
-                {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} item={i}/>)}
+            <div className="recipe-card-stage">
+                {/* <h3>
+                    Steps:
+                </h3>
+                {recipe.analyzedInstructions[0].steps.map(s => <p>{JSON.stringify(s)}</p>)} */}
+                <RecipeCard recipe={recipe}/>
 
             </div>
 
-
-            <div>
+            {/* <div>
                 {recipe.extendedIngredients.map(i => JSON.stringify(i))}
-            </div>
+            </div> */}
 
-            <p>{JSON.stringify(recipe.analyzedInstructions)}</p>
+            {/* <p>{JSON.stringify(recipe.analyzedInstructions)}</p> */}
 
         </div>
 

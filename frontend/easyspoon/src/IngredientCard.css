@@ -10,7 +10,7 @@
     box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
     display: inline-block;
     width: 175px;
-    height: 175px;
+    /* height: 175px; */
 
 }
 
@@ -18,7 +18,7 @@
 
     color: black;
     text-decoration: none;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 
 }
 
@@ -26,15 +26,25 @@
     text-decoration: underline;
 }
 
-.center {
+/* .center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.ingredient-text {
+    max-height: 10%;
+} */
+
+.ingredient-image {
+
+    max-width: 70%;
+
+}
+
 .ingredient-image img {
-    max-width: 175px;
-    max-height: 100px;
+    max-height: 100%;
+    max-width: 100%;
     object-fit: cover;
 }

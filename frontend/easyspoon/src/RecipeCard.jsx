@@ -2,16 +2,25 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-// import "./Card.css"
+import "./RecipeCard.css"
 
 const RecipeCard = ({recipe}) => {
 
     return(
 
-        <div className="Card">
+        <div className="RecipeCard">
 
-            <NavLink exact="true" to={`/recipes/${recipe.id}`}><h2>{recipe.title}</h2></NavLink>
-            <img src={recipe.image}/>
+            <h3>
+
+                Steps:
+
+            </h3>
+
+            <ol>
+
+                {recipe.analyzedInstructions[0].steps.map(s => <li key={s.number}>{s.step}</li>)}
+
+            </ol>
 
         </div>
 

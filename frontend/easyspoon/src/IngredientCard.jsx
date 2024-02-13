@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import "./IngredientCard.css"
 
-const IngredientCard = ({item}) => {
+const IngredientCard = ({ingredient}) => {
 
     return(
 
@@ -12,19 +12,22 @@ const IngredientCard = ({item}) => {
 
             <div className="center">
 
-                <NavLink exact="true" to={`/ingredients/${item.name}`}><h4>{item.name}</h4></NavLink>
+                <div className="ingredient-text">
+                    <NavLink exact="true" to={`/ingredients/${ingredient.name}`}><h4>{((ingredient.name))}</h4></NavLink>
+                    <span>{parseFloat(ingredient.amount).toFixed(2)} {ingredient.unit}</span>
+                </div>
 
                 <div className="ingredient-image">
-                    <img src={`https://spoonacular.com/cdn/ingredients_250x250/${item.image}`}/>
+                    <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.image}`}/>
                 </div>
 
             </div>
 
+            {/* <button>Add</button> */}
+
         </div>
 
-
     )
-
 
 }
 
