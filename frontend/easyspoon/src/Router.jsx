@@ -5,7 +5,9 @@ import {Route, Routes, Navigate} from "react-router-dom";
 import Home from "./Home"
 import UserCard from "./UserCard"
 import RecipesList from "./RecipesList";
+import IngredientsList from "./IngredientsList";
 import RecipeDetail from "./RecipeDetail"
+import GroceryListsList from "./GroceryListsList";
 
 const Router = () => {
 
@@ -16,8 +18,14 @@ const Router = () => {
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/user" element={<UserCard/>}/>
 
+            <Route exact path="/grocery-lists" element={<GroceryListsList/>}/>
+
             <Route exact path="/recipes" element={<RecipesList/>}/>
             <Route exact path="/recipes/:id" element={<RecipeDetail/>}/>
+
+            <Route exact path="/ingredients" element={<IngredientsList/>}/>
+
+            <Route path="*" element={<Navigate to='/' />}/>
 
         </Routes>
 

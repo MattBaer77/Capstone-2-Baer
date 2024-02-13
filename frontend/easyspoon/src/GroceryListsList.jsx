@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useUserContext } from "./hooks";
 
-const IngredientsList = () => {
+const GroceryListsList = () => {
 
     // const currentUser = useUserContext();
 
@@ -12,10 +12,10 @@ const IngredientsList = () => {
     // useEffect(() => {})
 
     return(
-        <h1>Ingredients List...</h1>
+        <h1>GroceryLists List...</h1>
     )
 
 
 };
 
-export default IngredientsList
+export default GroceryListsList
