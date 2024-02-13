@@ -112,9 +112,9 @@ class EasySpoonAPI {
 
     static async getRecipesSearch(params) {
 
-        let res = await this.request(`recipes/cache`, {}, params, "GET");
+        let res = await this.request(`recipes/search`, {}, params, "GET");
 
-        return res
+        return res.results
         
     };
 
