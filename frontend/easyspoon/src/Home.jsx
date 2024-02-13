@@ -5,7 +5,8 @@ import EasySpoonAPI from "./Api";
 import { useUserContext } from "./hooks.jsx";
 
 import PreviewCard from "./PreviewCard.jsx";
-// import "./List.css"
+import "./Content.css"
+import "./Home.css"
 
 const Home = () => {
 
@@ -48,7 +49,7 @@ const Home = () => {
 
     if (isLoading) {
         return (
-            <div>
+            <div className="Content Home">
                 <h3>Loading...</h3>
             </div>
         )
@@ -58,7 +59,7 @@ const Home = () => {
 
         return (
 
-            <div>
+            <div className="Content Home">
                 <h3>Error Loading Homepage</h3>
                 <p>{JSON.stringify(error)}</p>
             </div>
@@ -68,7 +69,7 @@ const Home = () => {
 
     if (currentUser) {
         return (
-            <div>
+            <div className="Content Home">
     
                 <h1>{currentUser.username}</h1>
 
@@ -79,7 +80,7 @@ const Home = () => {
         )
     } else {
         return (
-            <div>
+            <div className="Content Home">
     
                 <h1>No User!</h1>
 

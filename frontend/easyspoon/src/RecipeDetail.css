@@ -1,18 +1,17 @@
-.Detail {
+.RecipeDetail {
 
-    max-width: 700px;
     background-color: white;
     
 }
 
-.Detail .title {
+.RecipeDetail .title {
     text-align: center;
 }
 
-.Detail .title img {
+.RecipeDetail .title img {
     width: 100%;
 }
 
-.Detail .ingredient-card-stage {
+.RecipeDetail .ingredient-card-stage {
     text-align: center;
 }

@@ -1,15 +1,40 @@
-
 .IngredientCard {
 
+    font-family: sans-serif;
+    margin: 15px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
     display: inline-block;
-    width: 150px;
-    height: 150px;
-
+    width: 175px;
+    height: 175px;
 
 }
 
+.IngredientCard a {
+
+    color: black;
+    text-decoration: none;
+    margin-bottom: 5px;
+
+}
+
+.IngredientCard a:hover {
+    text-decoration: underline;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .ingredient-image img {
-    max-width: 100px; /* Fill the circle */
-    max-height: 100px; /* Fill the circle */
-    object-fit: cover; /* Crop image to fit */
+    max-width: 175px;
+    max-height: 100px;
+    object-fit: cover;
 }

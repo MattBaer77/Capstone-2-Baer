@@ -7,7 +7,6 @@ import NavBar from './NavBar'
 import Router from './Router'
 
 import './App.css'
-import './ContentStage.css'
 
 function App() {
 

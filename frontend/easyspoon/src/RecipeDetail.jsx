@@ -8,7 +8,8 @@ import RecipeCard from "./RecipeCard.jsx";
 import PreviewCard from "./PreviewCard.jsx";
 import IngredientCard from "./IngredientCard.jsx";
 
-import "./Detail.css"
+import "./Content.css"
+import "./RecipeDetail.css"
 
 const RecipeDetail = () => {
 
@@ -67,7 +68,7 @@ const RecipeDetail = () => {
 
     return (
 
-        <div className="Detail">
+        <div className="Content RecipeDetail">
 
             <div className="title">
                 <img src={recipe.image}/>

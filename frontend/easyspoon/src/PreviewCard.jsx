@@ -2,19 +2,18 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import "./Card.css"
-import "./RecipeCard.css"
+import "./PreviewCard.css"
 import { useUserContext } from "./hooks";
 
 const PreviewCard = ({item}) => {
 
     const currentUser = useUserContext()
 
-    if(item.title) {
+    // if(item.title) {
 
         return(
 
-            <div className="Card RecipeCard">
+            <div className="PreviewCard">
 
                 <div className="center">
     
@@ -30,29 +29,29 @@ const PreviewCard = ({item}) => {
     
         )
 
-    }
+    // }
 
-    else if(item.name) {
+    // else if(item.name) {
 
-        return(
+    //     return(
 
-            <div className="Card IngredientCard">
+    //         <div className="IngredientCard">
 
-                <div className="center">
+    //             <div className="center">
 
-                    {currentUser ? <NavLink exact="true" to={`/ingredients/${item.name}`}><h2>{item.name}</h2></NavLink> : <h2>{item.title}</h2>}
+    //                 {currentUser ? <NavLink exact="true" to={`/ingredients/${item.name}`}><h2>{item.name}</h2></NavLink> : <h2>{item.title}</h2>}
 
-                    <div className="image-circle">
-                        <img src={`https://spoonacular.com/cdn/ingredients_250x250/${item.image}`}/>
-                    </div>
+    //                 <div className="image-circle">
+    //                     <img src={`https://spoonacular.com/cdn/ingredients_250x250/${item.image}`}/>
+    //                 </div>
 
-                </div>
+    //             </div>
     
-            </div>
+    //         </div>
     
-        )
+    //     )
 
-    }
+    // }
 
 }
 

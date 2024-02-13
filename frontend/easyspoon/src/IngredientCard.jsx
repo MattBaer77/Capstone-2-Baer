@@ -2,14 +2,13 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import "./Card.css"
 import "./IngredientCard.css"
 
 const IngredientCard = ({item}) => {
 
     return(
 
-        <div className="Card IngredientCard">
+        <div className="IngredientCard">
 
             <div className="center">
 
