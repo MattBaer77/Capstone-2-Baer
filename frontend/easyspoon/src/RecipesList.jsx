@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useUserContext } from "./hooks";
-import RecipeCard from "./RecipeCard";
+
 import PreviewCard from "./PreviewCard";
 import SearchForm from "./SearchForm"
 
@@ -24,11 +24,7 @@ const RecipesList = () => {
 
             try {
 
-                // ACTUAL
-                // let recipes = await currentUser.userApi.getUserCacheOnly(currentUser.username);
-
-                // TEMP
-                let recipes = await currentUser.userApi.getRecipesCache();
+                let recipes = await currentUser.cache;
 
                 setRecipes([...recipes])
                 setIsLoading(false)
@@ -50,14 +46,20 @@ const RecipesList = () => {
 
         if (!data.searchTerms) {
 
-            let recipes = await currentUser.userApi.getRecipesCache();
+            let recipes = await currentUser.cache
+            console.log(recipes)
+            setRecipes([...recipes])
 
         } else {
 
-            const search = {query: data.searchTerms}
+            const search = {
+                query: data.searchTerms,
+                intolerances:currentUser.intolerances
+            }
             let recipes = await currentUser.userApi.getRecipesSearch(search)
             console.log(recipes)
             setRecipes([...recipes])
+
         }
 
 
@@ -96,7 +98,6 @@ const RecipesList = () => {
 
     }
 
-
     return(
 
         <div className="Content RecipesList">
@@ -107,7 +108,6 @@ const RecipesList = () => {
 
     </div>
     )
-
 
 };
 

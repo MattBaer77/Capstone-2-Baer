@@ -21,7 +21,7 @@ const UserProvider = ({children}) => {
 
             const userApi = EasySpoonAPI;
             userApi.token = token;
-            const {user} = await userApi.getUserInfo(username);
+            const { user } = await userApi.getUserDetails(username);
     
             setCurrentUser(() => {
     
@@ -31,7 +31,8 @@ const UserProvider = ({children}) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
-                    applications: user.applications,
+                    intolerances: user.intolerances,
+                    cache: user.cache,
                     userApi : userApi
                 }
     
