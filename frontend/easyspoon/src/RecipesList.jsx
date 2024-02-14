@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useUserContext } from "./hooks";
 
 import PreviewCard from "./PreviewCard";
-import SearchForm from "./SearchForm"
+import SearchForm from "./SearchForm";
 
 const RecipesList = () => {
 
@@ -24,14 +24,14 @@ const RecipesList = () => {
 
             try {
 
-                let recipes = await currentUser.cache;
+                let recipes = currentUser.cache;
 
                 setRecipes([...recipes])
                 setIsLoading(false)
 
 
             } catch (e) {
-                setError(e)
+                setError(e);
             } finally {
                 setIsLoading(false);
             }
@@ -90,7 +90,7 @@ const RecipesList = () => {
         return (
 
             <div className="Content RecipesList">
-                <h3>Error Loading Homepage</h3>
+                <h3>Error Loading Recipes</h3>
                 <p>{JSON.stringify(error)}</p>
             </div>
 

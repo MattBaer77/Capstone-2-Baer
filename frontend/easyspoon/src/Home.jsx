@@ -26,7 +26,7 @@ const Home = () => {
                 let recipes;
                 if(currentUser) {
                     console.log("THERE IS A USER")
-                    recipes = await currentUser.cache
+                    recipes = currentUser.cache
                 } else {
                     console.log("NO USER")
                     recipes = await EasySpoonAPI.getRecipesCache();

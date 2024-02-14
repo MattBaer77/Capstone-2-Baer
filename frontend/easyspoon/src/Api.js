@@ -140,7 +140,7 @@ class EasySpoonAPI {
 
         let res = await this.request(`ingredients/search`, {}, params, "GET");
 
-        return res
+        return res.results
 
     };
 
