@@ -156,7 +156,7 @@ class EasySpoonAPI {
 
     static async getAllUsersGroceryLists(username) {
 
-        let res = await this.request(`/grocery-lists/${username}/all`);
+        let res = await this.request(`grocery-lists/${username}/all`);
 
         return res
 
@@ -164,7 +164,7 @@ class EasySpoonAPI {
 
     static async getGroceryListById(id) {
 
-        let res = await this.request(`/grocery-lists/${id}`);
+        let res = await this.request(`grocery-lists/${id}`);
 
         return res
 
@@ -172,7 +172,7 @@ class EasySpoonAPI {
 
     static async postIngredientToGroceryList(id, ingredientData) {
 
-        let res = await this.request(`/grocery-lists/${id}/ingredients`, ingredientData, {}, "POST");
+        let res = await this.request(`grocery-lists/${id}/ingredients`, ingredientData, {}, "POST");
 
         return res
 
@@ -180,7 +180,7 @@ class EasySpoonAPI {
 
     static async editIngredientOnGroceryList(id, ingredientId, ingredientData) {
 
-        let res = await this.request(`/grocery-lists/${id}/ingredients/${ingredientId}`, ingredientData, {}, "PATCH");
+        let res = await this.request(`grocery-lists/${id}/ingredients/${ingredientId}`, ingredientData, {}, "PATCH");
 
         return res
 
@@ -188,7 +188,7 @@ class EasySpoonAPI {
 
     static async deleteIngredientOnGroceryList(id, ingredientId) {
 
-        let res = await this.request(`/grocery-lists/${id}/ingredients/${ingredientId}`, {}, {}, "DELETE");
+        let res = await this.request(`grocery-lists/${id}/ingredients/${ingredientId}`, {}, {}, "DELETE");
 
         return res
 
@@ -196,7 +196,7 @@ class EasySpoonAPI {
 
     static async postRecipeToGroceryList(id, recipeId) {
 
-        let res = await this.request(`/grocery-lists/${id}/recipes/${recipeId}`, {}, {}, "POST");
+        let res = await this.request(`grocery-lists/${id}/recipes/${recipeId}`, {}, {}, "POST");
 
         return res
 
@@ -204,7 +204,7 @@ class EasySpoonAPI {
 
     static async deleteRecipeOnGroceryList(id, recipeId) {
 
-        let res = await this.request(`/grocery-lists/${id}/recipes/${recipeId}`, {}, {}, "DELETE");
+        let res = await this.request(`grocery-lists/${id}/recipes/${recipeId}`, {}, {}, "DELETE");
 
         return res
 
