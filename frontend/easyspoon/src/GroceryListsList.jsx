@@ -23,22 +23,9 @@ const GroceryListsList = () => {
 
             try {
 
-                let groceryLists = await currentUser.userApi.getAllUsersGroceryLists(currentUser.username);
+                let groceryLists = currentUser.groceryLists;
 
-                console.log(groceryLists)
-
-                for(let groceryList of groceryLists){
-
-                    let recipesDetails = await Promise.all(groceryList.recipes.map(async r => await currentUser.userApi.getRecipeById(r.recipeId)));
-                    let ingredientDetails = await Promise.all(groceryList.ingredients.map(async i => await currentUser.userApi.getIngredientById(i.ingredientId)))
-                    console.log(recipesDetails)
-                    console.log(ingredientDetails)
-
-                    groceryList.recipes = recipesDetails;
-                    groceryList.ingredients = ingredientDetails;
-
-                }
-
+                console.log(currentUser.getGroceryLists)
 
                 setGroceryLists([...groceryLists])
                 setIsLoading(false)

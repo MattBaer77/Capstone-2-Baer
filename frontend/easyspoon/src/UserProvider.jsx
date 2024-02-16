@@ -19,9 +19,39 @@ const UserProvider = ({children}) => {
 
             const { username } = jwtDecode(token)
 
+            console.log(username)
+
             const userApi = EasySpoonAPI;
             userApi.token = token;
+            console.log(username)
             const { user } = await userApi.getUserDetails(username);
+            console.log(user)
+
+            // GET GROCERYLISTS DETAIL FOR currentUser
+            // let groceryLists = "Hello"
+            let groceryLists = await userApi.getAllUsersGroceryLists(username);
+
+            console.log(groceryLists)
+
+            for (let groceryList of groceryLists){
+
+                for (let recipe of groceryList.recipes) {
+
+                    const recipeDetail = await userApi.getRecipeById(recipe.recipeId);
+                    recipe['detail'] = recipeDetail
+
+                };
+
+                for (let ingredient of groceryList.ingredients){
+
+                    const ingredientDetail = await userApi.getIngredientById(ingredient.ingredientId);
+                    ingredient['detail'] = ingredientDetail
+
+                }
+
+            }
+
+            console.log(groceryLists)
     
             setCurrentUser(() => {
     
@@ -33,7 +63,8 @@ const UserProvider = ({children}) => {
                     email: user.email,
                     intolerances: user.intolerances,
                     cache: user.cache,
-                    userApi : userApi
+                    userApi : userApi,
+                    groceryLists : groceryLists
                 }
     
             })

@@ -8,8 +8,8 @@ import PreviewCard from "./PreviewCard";
 
 const GroceryListCard = ({groceryList}) => {
 
-    console.log(groceryList.recipes)
-    console.log(groceryList.ingredients)
+    // console.log(groceryList.recipes)
+    // console.log(groceryList.ingredients)
 
     return(
 
@@ -25,9 +25,9 @@ const GroceryListCard = ({groceryList}) => {
                 {groceryList.owner}
             </p>
 
-            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r}/>)}
+            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail}/>)}
 
-            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
+            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i.detail}/>)}
 
         </div>
 
