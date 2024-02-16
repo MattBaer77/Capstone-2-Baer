@@ -235,11 +235,11 @@ router.post("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res, n
 
         for(let ingredient of recipe.extendedIngredients){
 
-            if (groceryList.ingredients.some(i => i.ingredient_id === ingredient.id)){
+            if (groceryList.ingredients.some(i => i.ingredientId === ingredient.id)){
 
-                const groceryListIngredient = groceryList.ingredients.find(i => i.ingredient_id === ingredient.id);
+                const groceryListIngredient = groceryList.ingredients.find(i => i.ingredientId === ingredient.id);
                 await GroceryList.setAmount(groceryList.id, ingredient.id, (groceryListIngredient.amount + ingredient.amount));
-                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, (groceryListIngredient.minimum_amount + ingredient.amount));
+                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, (groceryListIngredient.minimumAmount + ingredient.amount));
 
             } else {
                 await GroceryList.addIngredient(groceryList.id, ingredient.id, ingredient.amount, ingredient.unit, ingredient.amount)

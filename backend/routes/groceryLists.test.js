@@ -1391,112 +1391,112 @@ describe('POST /grocery-lists/:id/recipes', () => {
 
   const groceryListInitial = {
     id: 1,
-    list_name: 'testlistU1-1',
+    listName: 'testlistU1-1',
     owner: 'u1',
     ingredients: [
       {
-        ingredient_id: 100,
+        ingredientId: 100,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       },
       {
-        ingredient_id: 101,
+        ingredientId: 101,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       }
     ],
     recipes: [
-      { id: 1, recipe_id: 11 },
-      { id: 2, recipe_id: 12 },
-      { id: 3, recipe_id: 32 }
+      { id: 1, recipeId: 11 },
+      { id: 2, recipeId: 12 },
+      { id: 3, recipeId: 32 }
     ]
   };
 
   const groceryListRecipeAddedOnceA = {
     id: 1,
-    list_name: 'testlistU1-1',
+    listName: 'testlistU1-1',
     owner: 'u1',
     ingredients: [
-      { ingredient_id: 51, amount: 3, unit: 'fillet', minimum_amount: 3 },
-      { ingredient_id: 52, amount: 1, unit: 'pound', minimum_amount: 1 },
+      { ingredientId: 51, amount: 3, unit: 'fillet', minimumAmount: 3 },
+      { ingredientId: 52, amount: 1, unit: 'pound', minimumAmount: 1 },
       {
-        ingredient_id: 100,
+        ingredientId: 100,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       },
       {
-        ingredient_id: 101,
+        ingredientId: 101,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       }
     ],
     recipes: [
-      { id: 1, recipe_id: 11 },
-      { id: 2, recipe_id: 12 },
-      { id: 3, recipe_id: 32 },
-      { id: 6, recipe_id: 100 }
+      { id: 1, recipeId: 11 },
+      { id: 2, recipeId: 12 },
+      { id: 3, recipeId: 32 },
+      { id: 6, recipeId: 100 }
     ]
   };
 
   const groceryListRecipeAddedOnceB = {
     id: 1,
-    list_name: 'testlistU1-1',
+    listName: 'testlistU1-1',
     owner: 'u1',
     ingredients: [
-      { ingredient_id: 51, amount: 3, unit: 'fillet', minimum_amount: 3 },
-      { ingredient_id: 52, amount: 1, unit: 'pound', minimum_amount: 1 },
+      { ingredientId: 51, amount: 3, unit: 'fillet', minimumAmount: 3 },
+      { ingredientId: 52, amount: 1, unit: 'pound', minimumAmount: 1 },
       {
-        ingredient_id: 100,
+        ingredientId: 100,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       },
       {
-        ingredient_id: 101,
+        ingredientId: 101,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       }
     ],
     recipes: [
-      { id: 1, recipe_id: 11 },
-      { id: 2, recipe_id: 12 },
-      { id: 3, recipe_id: 32 },
-      { id: 7, recipe_id: 100 }
+      { id: 1, recipeId: 11 },
+      { id: 2, recipeId: 12 },
+      { id: 3, recipeId: 32 },
+      { id: 7, recipeId: 100 }
     ]
   };
 
 
   const groceryListRecipeAddedTwice = {
     id: 1,
-    list_name: 'testlistU1-1',
+    listName: 'testlistU1-1',
     owner: 'u1',
     ingredients: [
-      { ingredient_id: 51, amount: 6, unit: 'fillet', minimum_amount: 6 },
-      { ingredient_id: 52, amount: 2, unit: 'pound', minimum_amount: 2 },
+      { ingredientId: 51, amount: 6, unit: 'fillet', minimumAmount: 6 },
+      { ingredientId: 52, amount: 2, unit: 'pound', minimumAmount: 2 },
       {
-        ingredient_id: 100,
+        ingredientId: 100,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       },
       {
-        ingredient_id: 101,
+        ingredientId: 101,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
       }
     ],
     recipes: [
-      { id: 1, recipe_id: 11 },
-      { id: 2, recipe_id: 12 },
-      { id: 3, recipe_id: 32 },
-      { id: 8, recipe_id: 100 },
-      { id: 9, recipe_id: 100 }
+      { id: 1, recipeId: 11 },
+      { id: 2, recipeId: 12 },
+      { id: 3, recipeId: 32 },
+      { id: 8, recipeId: 100 },
+      { id: 9, recipeId: 100 }
     ]
   };
 
