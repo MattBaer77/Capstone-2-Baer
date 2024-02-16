@@ -8,7 +8,7 @@ import "./NavBar.css"
 
 const NavBar = () => {
 
-    const currentUser = useUserContext()
+    const {currentUser} = useUserContext()
 
     if(currentUser) {
 

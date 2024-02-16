@@ -4,7 +4,7 @@ import {useUserContext} from "./hooks.jsx"
 
 const UserCard = () => {
 
-    const currentUser = useUserContext();
+    const {currentUser} = useUserContext();
     
     return(
         <div className="Card">

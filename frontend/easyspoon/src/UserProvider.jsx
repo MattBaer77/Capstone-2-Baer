@@ -99,7 +99,7 @@ const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value = {currentUser}>
+        <UserContext.Provider value = {{currentUser, loadUser}}>
             {children}
         </UserContext.Provider>
     )

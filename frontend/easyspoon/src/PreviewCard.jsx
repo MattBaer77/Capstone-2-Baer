@@ -7,7 +7,7 @@ import { useUserContext } from "./hooks";
 
 const PreviewCard = ({item}) => {
 
-    const currentUser = useUserContext()
+    const {currentUser} = useUserContext()
 
     // if(item.title) {
 

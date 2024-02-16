@@ -10,7 +10,7 @@ import "./Home.css"
 
 const Home = () => {
 
-    const currentUser = useUserContext()
+    const {currentUser, loadUser} = useUserContext()
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)

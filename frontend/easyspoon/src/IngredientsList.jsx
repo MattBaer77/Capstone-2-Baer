@@ -7,7 +7,7 @@ import SearchForm from "./SearchForm";
 
 const IngredientsList = () => {
 
-    const currentUser = useUserContext();
+    const {currentUser} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);

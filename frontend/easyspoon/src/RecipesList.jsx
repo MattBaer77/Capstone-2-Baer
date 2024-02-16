@@ -6,7 +6,7 @@ import SearchForm from "./SearchForm";
 
 const RecipesList = () => {
 
-    const currentUser = useUserContext();
+    const {currentUser} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
