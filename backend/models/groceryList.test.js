@@ -32,31 +32,31 @@ describe("findAll", () => {
                     ingredients: [
                         {
                             amount: 2,
-                            ingredient_id: 100,
-                            minimum_amount: 1,
+                            ingredientId: 100,
+                            minimumAmount: 1,
                             unit: "Some Unit"
                         },
                         {
                             amount: 2,
-                            ingredient_id: 101,
-                            minimum_amount: 1,
+                            ingredientId: 101,
+                            minimumAmount: 1,
                             unit: "Some Unit"
                         }
                     ],
-                list_name: "testlistU1-1",
+                listName: "testlistU1-1",
                 owner: "u1",
                 recipes: [
                     {
                         id: 1,
-                        recipe_id: 11
+                        recipeId: 11
                     },
                     {
                         id: 2,
-                        recipe_id: 12
+                        recipeId: 12
                     },
                     {
                         id: 3,
-                        recipe_id: 32
+                        recipeId: 32
                     }
                 ]
             }, {
@@ -64,34 +64,34 @@ describe("findAll", () => {
                     ingredients: [
                         {
                             amount: 4,
-                            ingredient_id: 100,
-                            minimum_amount: 1,
+                            ingredientId: 100,
+                            minimumAmount: 1,
                             unit: "Some Unit"
                         },
                         {
                             amount: 4,
-                            ingredient_id: 101,
-                            minimum_amount: 1,
+                            ingredientId: 101,
+                            minimumAmount: 1,
                             unit: "Some Unit"
                         }
                     ],
-                list_name: "testlistU1-2",
+                listName: "testlistU1-2",
                 owner: "u1",
                 recipes: [
                     {
                         id: 4,
-                        recipe_id: 22
+                        recipeId: 22
                     }
                 ]
             }, {
                 id: 3,
                 ingredients: [],
-                list_name: "testlistU1-3",
+                listName: "testlistU1-3",
                 owner: "u1",
                 recipes: [
                     {
                         id: 5,
-                        recipe_id: 33
+                        recipeId: 33
                     }
                 ]
             }
