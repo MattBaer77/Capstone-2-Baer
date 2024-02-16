@@ -275,16 +275,16 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
 
         for(let ingredient of recipe.extendedIngredients) {
 
-            const groceryListIngredient = groceryList.ingredients.find(i => i.ingredient_id === ingredient.id);
+            const groceryListIngredient = groceryList.ingredients.find(i => i.ingredientId === ingredient.id);
 
-            if(ingredient.amount === groceryListIngredient.minimum_amount){
+            if(ingredient.amount === groceryListIngredient.minimumAmount){
 
                 await GroceryList.deleteIngredient(groceryList.id, ingredient.id)
 
             } else {
 
                 const newAmount = (groceryListIngredient.amount - ingredient.amount)
-                const newMinimumAmount = (groceryListIngredient.minimum_amount - ingredient.amount)
+                const newMinimumAmount = (groceryListIngredient.minimumAmount - ingredient.amount)
 
                 await GroceryList.setAmount(groceryList.id, ingredient.id, newAmount);
                 await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, newMinimumAmount);
@@ -293,7 +293,7 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
 
         }
 
-        const deleteId = groceryList.recipes.find(r => r.recipe_id === recipeId)
+        const deleteId = groceryList.recipes.find(r => r.recipeId === recipeId)
 
         await GroceryList.deleteRecipe(deleteId.id)
 
