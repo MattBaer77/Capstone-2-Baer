@@ -107,7 +107,7 @@ class GroceryList {
         const groceryListRes = await db.query(
 
             `SELECT gl.id,
-                    gl.list_name,
+                    gl.list_name AS "listName",
                     gl.owner
             FROM grocery_list gl
             WHERE gl.id = $1`,
@@ -121,10 +121,10 @@ class GroceryList {
 
         let ingredients = await db.query(
 
-            `SELECT i.ingredient_id,
+            `SELECT i.ingredient_id as "ingredientId",
                     i.amount,
                     i.unit,
-                    i.minimum_amount
+                    i.minimum_amount as "minimumAmount"
                 FROM grocery_list gl
                 JOIN grocery_lists_ingredients i ON gl.id = i.grocery_list_id
                 WHERE gl.id = $1
@@ -138,7 +138,7 @@ class GroceryList {
         let recipes = await db.query(
 
             `SELECT r.id,
-                    r.recipe_id
+                    r.recipe_id as "recipeId"
                 FROM grocery_list gl
                 JOIN grocery_lists_recipes r ON gl.id = r.grocery_list_id
                 WHERE gl.id = $1
