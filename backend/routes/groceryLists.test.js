@@ -39,57 +39,57 @@ describe('GET /grocery-lists/:username/all', () => {
   const u1Response = [
     {
       id: 1,
-      list_name: 'testlistU1-1',
+      listName: 'testlistU1-1',
       owner: 'u1',
       ingredients: [
         {
-            ingredient_id: 100,
+            ingredientId: 100,
             amount: 2,
             unit: 'Some Unit',
-            minimum_amount: 0
+            minimumAmount: 0
           },
           {
-            ingredient_id: 101,
+            ingredientId: 101,
             amount: 2,
             unit: 'Some Unit',
-            minimum_amount: 0
+            minimumAmount: 0
           }
       ],
       recipes: [
-        { id: 1, recipe_id: 11 },
-        { id: 2, recipe_id: 12 },
-        { id: 3, recipe_id: 32 }
+        { id: 1, recipeId: 11 },
+        { id: 2, recipeId: 12 },
+        { id: 3, recipeId: 32 }
       ]
     },
     {
       id: 2,
-      list_name: 'testlistU1-2',
+      listName: 'testlistU1-2',
       owner: 'u1',
       ingredients: [
         {
-            ingredient_id: 100,
+            ingredientId: 100,
             amount: 4,
             unit: 'Some Unit',
-            minimum_amount: 1
+            minimumAmount: 1
           },
           {
-            ingredient_id: 101,
+            ingredientId: 101,
             amount: 4,
             unit: 'Some Unit',
-            minimum_amount: 1
+            minimumAmount: 1
           }
       ],
       recipes: [
-        { id: 4, recipe_id: 22 } 
+        { id: 4, recipeId: 22 } 
       ]
     },
     {
       id: 3,
-      list_name: 'testlistU1-3',
+      listName: 'testlistU1-3',
       owner: 'u1',
       ingredients: [],
       recipes: [
-        { id: 5, recipe_id: 33 } 
+        { id: 5, recipeId: 33 } 
       ]
     }
   ];
@@ -165,26 +165,26 @@ describe('GET /grocery-lists/:id', () => {
   const u1Response1 = {
 
     id: 1,
-    list_name: 'testlistU1-1',
+    listName: 'testlistU1-1',
     owner: 'u1',
     ingredients: [
     {
-        ingredient_id: 100,
+        ingredientId: 100,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
         },
         {
-        ingredient_id: 101,
+        ingredientId: 101,
         amount: 2,
         unit: 'Some Unit',
-        minimum_amount: 0
+        minimumAmount: 0
         }
     ],
     recipes: [
-    { id: 1, recipe_id: 11 },
-    { id: 2, recipe_id: 12 },
-    { id: 3, recipe_id: 32 }
+    { id: 1, recipeId: 11 },
+    { id: 2, recipeId: 12 },
+    { id: 3, recipeId: 32 }
     ]
 
   };
