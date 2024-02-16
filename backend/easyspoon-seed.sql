@@ -1,12 +1,12 @@
 INSERT INTO users (username, password, first_name, last_name, email, is_admin)
 VALUES ('testuser',
-        '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q',
+        '$2b$13$p.w4iSj8eJld5y29UCGkR.W6wITjpfurQPs/60U9MtmE20tMC8.LK',
         'Test',
         'User',
         'joel@joelburton.com',
         FALSE),
        ('testadmin',
-        '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q',
+        '$2b$13$p.w4iSj8eJld5y29UCGkR.W6wITjpfurQPs/60U9MtmE20tMC8.LK',
         'Test',
         'Admin!',
         'joel@joelburton.com',
@@ -43,12 +43,12 @@ VALUES ('testuser''s wonderful grocery list!', 'testuser'),
        ('bobert''s list', 'bob_roberts');
 
 INSERT INTO grocery_lists_recipes (grocery_list_id, recipe_id)
-VALUES (1, 641435),
-       (1, 641435),
-       (1, 642096),
-       (2, 641435),
-       (2, 640941);
+VALUES (1, 660395),
+       (1, 1039293),
+       (1, 647433),
+       (2, 660736),
+       (2, 660736);
 
 INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, minimum_amount, unit)
-VALUES (1, 20081, 2, 1, 'cup'),
-       (1, 20082, 1, 2, 'cup');
+VALUES (1, 1123, 4, 0, 'each'),
+       (1, 1052050, 1, 1, 'tsp');
