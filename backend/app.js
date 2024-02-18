@@ -16,6 +16,7 @@ app.use(morgan("tiny"));
 app.use(authenticateJWT)
 
 const authRoutes = require("./routes/auth");
+const intolerancesRoutes = require("./routes/intolerances")
 const recipesRoutes = require("./routes/recipes");
 const ingredientsRoutes = require("./routes/ingredients")
 const jokesRoutes = require("./routes/jokes");
@@ -23,6 +24,7 @@ const usersRoutes = require("./routes/users");
 const groceryListsRoutes = require("./routes/groceryLists")
 
 app.use("/auth", authRoutes);
+app.use("/intolerances", intolerancesRoutes);
 app.use("/recipes", recipesRoutes);
 app.use("/ingredients", ingredientsRoutes);
 app.use("/jokes", jokesRoutes);
