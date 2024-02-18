@@ -27,6 +27,14 @@ const IngredientsList = () => {
 
                 let ingredients = currentUser.cache.flatMap(r => r.extendedIngredients)
                 const ingredientsNoDuplicates = removeDuplicateById(ingredients)
+
+                console.log(ingredientsNoDuplicates)
+
+                for(let ingredient of ingredientsNoDuplicates) {
+                    ingredient.amount = null
+                    ingredient.unit = null
+                }
+
                 setIngredients([...ingredientsNoDuplicates])
 
             } catch (e) {

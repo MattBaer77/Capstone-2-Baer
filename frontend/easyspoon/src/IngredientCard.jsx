@@ -14,7 +14,7 @@ const IngredientCard = ({ingredient}) => {
 
                 <div className="ingredient-text">
                     <NavLink exact="true" to={`/ingredients/${ingredient.name}`}><h4>{((ingredient.name))}</h4></NavLink>
-                    <span>{parseFloat(ingredient.amount).toFixed(2)} {ingredient.unit}</span>
+                    {ingredient.amount && <span>{parseFloat(ingredient.amount).toFixed(2)} {ingredient.unit}</span>}
                 </div>
 
                 <div className="ingredient-image">
@@ -22,8 +22,6 @@ const IngredientCard = ({ingredient}) => {
                 </div>
 
             </div>
-
-            {/* <button>Add</button> */}
 
         </div>
 
