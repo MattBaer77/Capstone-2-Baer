@@ -28,6 +28,29 @@ describe('GET /intolerances', () => {
 
     test("works for anon", async () => {
 
+        const resp = await request(app).get(`/intolerances`);
+        expect(resp.statusCode).toEqual(200)
+        expect(resp.body).toEqual({intolerances:[
+
+            {id: 1, intoleranceName : "dairy"},
+            {id: 2, intoleranceName : "egg"},
+            {id: 3, intoleranceName : "gluten"},
+            {id: 4, intoleranceName : "grain"},
+            {id: 5, intoleranceName : "peanut"},
+            {id: 6, intoleranceName : "seafood"},
+            {id: 7, intoleranceName : "sesame"},
+            {id: 8, intoleranceName : "shellfish"},
+            {id: 9, intoleranceName : "soy"},
+            {id: 10, intoleranceName : "sulfite"},
+            {id: 11, intoleranceName : "tree nut"},
+            {id: 12, intoleranceName : "wheat"}
+
+        ]})
+
+    })
+
+    test("works for anon", async () => {
+
         const resp = await request(app).get(`/intolerances/`);
         expect(resp.statusCode).toEqual(200)
         expect(resp.body).toEqual({intolerances:[
