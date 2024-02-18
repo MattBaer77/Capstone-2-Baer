@@ -12,6 +12,7 @@ const UserProvider = ({children}) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState(INITIAL_STATE);
+    const [currentGroceryList, setCurrentGroceryList] = useState(INITIAL_STATE);
 
     const loadUser = async (token) => {
 
@@ -64,7 +65,7 @@ const UserProvider = ({children}) => {
                     intolerances: user.intolerances,
                     cache: user.cache,
                     userApi : userApi,
-                    groceryLists : groceryLists
+                    groceryLists : groceryLists,
                 }
     
             })
@@ -99,7 +100,7 @@ const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value = {{currentUser, loadUser}}>
+        <UserContext.Provider value = {{currentUser, loadUser, currentGroceryList, setCurrentGroceryList}}>
             {children}
         </UserContext.Provider>
     )
