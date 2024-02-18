@@ -40,14 +40,17 @@ VALUES ('testuser', 5),
 
 INSERT INTO grocery_list (list_name, owner)
 VALUES ('testuser''s wonderful grocery list!', 'testuser'),
+       ('testuser''s wonderful grocery list two!', 'testuser'),
        ('bobert''s list', 'bob_roberts');
 
 INSERT INTO grocery_lists_recipes (grocery_list_id, recipe_id)
 VALUES (1, 660395),
        (1, 1039293),
        (1, 647433),
-       (2, 660736),
-       (2, 660736);
+       (2, 1039293),
+       (2, 647433),
+       (3, 660736),
+       (3, 660736);
 
 INSERT INTO grocery_lists_ingredients (grocery_list_id, ingredient_id, amount, minimum_amount, unit)
 VALUES (1, 1123, 4, 0, 'each'),
