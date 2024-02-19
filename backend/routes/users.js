@@ -66,7 +66,7 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
         if(!user.cache){
 
             const { intolerances } = await User.getIntolerances(req.params.username)
-            console.log(intolerances)
+            // console.log(intolerances)
             const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
             user.cache = recipes
 
@@ -149,7 +149,7 @@ router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next)
         if(!user.cache){
 
             const { intolerances } = await User.getIntolerances(req.params.username)
-            console.log(intolerances)
+            // console.log(intolerances)
             const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
             user.cache = recipes
 
@@ -185,7 +185,7 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
         if(!data){
 
             const { intolerances } = await User.getIntolerances(req.params.username)
-            console.log(intolerances)
+            // console.log(intolerances)
             const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
             data = recipes
 
@@ -231,9 +231,7 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
 */
 
 // ADD INTOLERANCE *
-/** POST USER INTOLERANCE - /users/[username]/intolerances
- * 
- * Accepts {intoleranceId}
+/** POST USER INTOLERANCE - /users/[username]/intoleranceId
  * 
  * returns {username, intolerances} (or SAME AS GET USER WITH INTOLERANCES)
  * 
@@ -257,12 +255,27 @@ router.post("/:username/intolerances/:intoleranceId", ensureAdminOrEffectedUser,
 })
 
 // REMOVE INTOLERANCE *
-/** DELETE USER INTOLERANCE - /users/[username]/intolerances
- * 
- * Accepts {intoleranceId}
+/** DELETE USER INTOLERANCE - /users/[username]/intoleranceId
  * 
  * returns {username, intolerances} (or SAME AS GET USER WITH INTOLERANCES)
  * 
 */
+
+router.delete("/:username/intolerances/:intoleranceId", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+
+        const username = req.params.username
+        const intoleranceId = parseInt(req.params.intoleranceId)
+
+        await User.removeUserIntolerance(username, intoleranceId)
+
+        return res.json(true)
+
+    } catch (e) {
+        return next(e)
+    }
+
+})
 
 module.exports = router;
