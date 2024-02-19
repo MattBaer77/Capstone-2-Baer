@@ -48,7 +48,7 @@ afterAll(commonAfterAll);
 
 // GET USER
 
-describe('GET /users/username', () => {
+describe('GET /users/:username', () => {
 
     // ANON
 
@@ -137,7 +137,7 @@ describe('GET /users/username', () => {
 
 // GET USER WITH CACHE AND INTOLERANCES
 
-describe('GET /users/username/details', () => {
+describe('GET /users/:username/details', () => {
 
     // ANON
 
@@ -652,7 +652,7 @@ describe("DELETE /users/:username", () => {
 
 // GET USER WITH CACHE
 
-describe('GET /users/username/cache', () => {
+describe('GET /users/:username/cache', () => {
 
     // ANON
 
@@ -786,7 +786,7 @@ describe('GET /users/username/cache', () => {
 
 // GET CACHE
 
-describe('GET /users/username/cache-only', () => {
+describe('GET /users/:username/cache-only', () => {
 
     // ANON
 
@@ -892,5 +892,160 @@ describe('GET /users/username/cache-only', () => {
 // CLEAR CACHE
 
 // ADD INTOLERANCE
+
+describe('/POST /users/:username/intolerances/:intoleranceId', () => {
+
+    const userInitial = {
+
+        cache:{data: {
+
+            faux: "json",
+            some: "more",
+
+        }},
+        email: "u1@email.com",
+        firstName: "U1F",
+        intolerances:[
+            {
+                intoleranceId: 2,
+                intoleranceName: "egg",
+            },
+            {
+                intoleranceId: 3,
+                intoleranceName: "gluten",
+            },
+        ],
+        isAdmin: false,
+        lastName: "U1L",
+        username: "u1",
+
+    }
+
+    const userIntoleranceAdded = {
+
+        cache:{data:{
+
+            faux: "json",
+            some: "more",
+
+        }},
+        email: "u1@email.com",
+        firstName: "U1F",
+        intolerances:[
+            {
+                intoleranceId: 1,
+                intoleranceName: "dairy",
+            },
+            {
+                intoleranceId: 2,
+                intoleranceName: "egg",
+            },
+            {
+                intoleranceId: 3,
+                intoleranceName: "gluten",
+            },
+        ],
+        isAdmin: false,
+        lastName: "U1L",
+        username: "u1",
+
+    }
+
+    // ANON
+
+    test("unauthorized for anon", async () => {
+
+        const resp = await request(app).post(`/users/u1/intolerances/1`);
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+    
+    });
+
+    // ADMIN
+
+    test("works for users - ADMIN", async () => {
+
+        const beforeCheck = await User.getWithCacheAndIntolerances('u1')
+        console.log(beforeCheck)
+        expect(beforeCheck).toEqual(userInitial)
+
+        const resp = await request(app)
+            .post(`/users/u1/intolerances/1`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.body).toEqual(true)
+
+        const dataCheck = await User.getWithCacheAndIntolerances('u1')
+        expect(dataCheck).toEqual(userIntoleranceAdded)
+
+    });
+
+    test("not found if user not found - ADMIN", async () => {
+
+        const resp = await request(app)
+            .post(`/users/uX/intolerances/1`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No User: uX")
+
+    })
+
+    test("not found if intolerance not found - ADMIN", async () => {
+
+        const resp = await request(app)
+            .post(`/users/u1/intolerances/9000`)
+            .set("authorization", `Bearer ${adminToken}`);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No Intolerance with id of 9000")
+
+    })
+
+    // NOT ADMIN IS USER
+
+    test("works for users - NOT ADMIN IS USER", async () => {
+
+        const beforeCheck = await User.getWithCacheAndIntolerances('u1')
+        expect(beforeCheck).toEqual(userInitial)
+
+        const resp = await request(app)
+            .post(`/users/u1/intolerances/1`)
+            .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.body).toEqual(true)
+
+        const dataCheck = await User.getWithCacheAndIntolerances('u1')
+        expect(dataCheck).toEqual(userIntoleranceAdded)
+
+    });
+
+    test("not found if intolerance not found - NOT ADMIN IS USER", async () => {
+
+        const resp = await request(app)
+            .post(`/users/u1/intolerances/9000`)
+            .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No Intolerance with id of 9000")
+
+    })
+
+    // NOT ADMIN NOT USER
+
+    test("unauthorized for users - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app).post(`/users/u2/intolerances/1`);
+        expect(resp.statusCode).toEqual(401)
+        expect(resp.body.error.message).toEqual("Unauthorized - Must be Admin or Effected User")
+    
+    });
+
+    test("not found if intolerance not found - NOT ADMIN NOT USER", async () => {
+
+        const resp = await request(app)
+            .post(`/users/u1/intolerances/9000`)
+            .set("authorization", `Bearer ${u1Token}`);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toEqual("No Intolerance with id of 9000")
+
+    })
+
+})
 
 // REMOVE INTOLERANCE

@@ -1,4 +1,4 @@
-"user strict";
+"use strict";
 
 /** Routes for users. */
 
@@ -238,6 +238,23 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
  * returns {username, intolerances} (or SAME AS GET USER WITH INTOLERANCES)
  * 
 */
+
+router.post("/:username/intolerances/:intoleranceId", ensureAdminOrEffectedUser, async (req, res, next) => {
+
+    try {
+
+        const username = req.params.username
+        const intoleranceId = parseInt(req.params.intoleranceId)
+
+        await User.addUserIntolerance(username, intoleranceId)
+
+        return res.json(true)
+
+    } catch (e) {
+        return next(e)
+    }
+
+})
 
 // REMOVE INTOLERANCE *
 /** DELETE USER INTOLERANCE - /users/[username]/intolerances
