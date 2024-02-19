@@ -14,10 +14,16 @@ class EasySpoonAPI {
         console.debug("API Call:", endpoint, data, params, method);
 
         const queryString = new URLSearchParams(params).toString();
-        console.log(queryString)
 
         const url = `${VITE_BASE_URL}/${endpoint}${queryString ? `?${queryString}` : ''}`;
-        const headers = { Authorization: `Bearer ${this.token}` };
+
+        const headers = {
+
+            "Authorization": `Bearer ${this.token}`,
+            "Content-Type": "application/json"
+
+        };
+
         const body = (method === "GET") ? undefined : JSON.stringify(data);
 
         try {
@@ -30,6 +36,7 @@ class EasySpoonAPI {
             console.error("API Error", error);
             throw error;
         }
+
     }
 
     // /auth
@@ -95,6 +102,22 @@ class EasySpoonAPI {
     static async getUserCacheOnly(username) {
 
         let res = await this.request(`users/${username}/cache-only`);
+
+        return res
+
+    };
+
+    static async addUserIntolerance(username, intoleranceId) {
+
+        let res = await this.request(`users/${username}/intolerances/${intoleranceId}`, {}, {}, "POST")
+
+        return res
+
+    };
+
+    static async deleteUserIntolerance(username, intoleranceId) {
+
+        let res = await this.request(`users/${username}/intolerances/${intoleranceId}`, {}, {}, "DELETE")
 
         return res
 

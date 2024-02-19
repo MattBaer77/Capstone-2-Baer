@@ -8,6 +8,7 @@ import RecipesList from "./RecipesList";
 import IngredientsList from "./IngredientsList";
 import RecipeDetail from "./RecipeDetail"
 import GroceryListsList from "./GroceryListsList";
+import UserEditForm from "./UserEditForm";
 
 const Router = () => {
 
@@ -16,7 +17,7 @@ const Router = () => {
         <Routes>
 
             <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/user" element={<UserCard/>}/>
+            <Route exact path="/user" element={<UserEditForm/>}/>
 
             <Route exact path="/grocery-lists" element={<GroceryListsList/>}/>
 

@@ -9,7 +9,7 @@ const UserCard = () => {
     return(
         <div className="Card">
 
-            <p>{JSON.stringify(currentUser)}</p>
+            <p>{JSON.stringify(currentUser.intolerances)}</p>
 
         </div>
     )
