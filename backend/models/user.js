@@ -221,6 +221,7 @@ class User {
         {
           firstName: "first_name",
           lastName: "last_name",
+          isAdmin: "is_admin"
         }
         
     );

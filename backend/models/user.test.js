@@ -256,6 +256,13 @@ describe("update", function () {
       lastName: "NewF",
       email: "new@email.com",
     };
+
+    const updateDataAdmin = {
+      firstName: "NewF",
+      lastName: "NewF",
+      email: "new@email.com",
+      isAdmin: true
+    }
   
     test("works", async function () {
       let job = await User.update("u1", updateData);
@@ -265,6 +272,17 @@ describe("update", function () {
         lastName: "NewF",
         email: "new@email.com",
         isAdmin: false,
+      });
+    });
+  
+    test("works - can change admin", async function () {
+      let job = await User.update("u1", updateDataAdmin);
+      expect(job).toEqual({
+        username: "u1",
+        firstName: "NewF",
+        lastName: "NewF",
+        email: "new@email.com",
+        isAdmin: true,
       });
     });
   
