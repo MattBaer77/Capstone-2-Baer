@@ -57,6 +57,18 @@ class EasySpoonAPI {
 
     };
 
+    // /intolerances
+
+    static async getIntolerancesAll() {
+
+        console.log("Get All Intolerances")
+
+        let res = await this.request(`intolerances`);
+
+        return res
+
+    };
+
     // /users
 
     static async getUserInfo(username) {
