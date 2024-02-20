@@ -52,7 +52,7 @@ const UserEditForm = () => {
 
             const res = await currentUser.userApi.editUser(userInput, currentUser.username)
             console.log(res)
-            loadUser(currentUser.token)
+            await loadUser(currentUser.token)
             
             setError(null)
             toggleSuccess("User info updated.")
