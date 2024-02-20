@@ -21,7 +21,7 @@ const UserIntolerancesEditForm = () => {
     console.log(formData)
     console.log(currentUser)
 
-    if (!currentUser.token) {
+    if (!currentUser) {
 
         return <Navigate to='/login'/>
 

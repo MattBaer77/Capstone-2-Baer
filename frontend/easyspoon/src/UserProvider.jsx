@@ -85,6 +85,13 @@ const UserProvider = ({children}) => {
     // localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
     // TEMPORARY FOR DEVELOPMENT
 
+    const logout = async () => {
+
+        setCurrentUser(INITIAL_STATE)
+        localStorage.clear()
+
+    }
+
     useEffect(() => {
 
         const storedToken = localStorage.getItem('token')
@@ -100,7 +107,7 @@ const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value = {{currentUser, loadUser, currentGroceryList, setCurrentGroceryList}}>
+        <UserContext.Provider value = {{currentUser, loadUser, currentGroceryList, setCurrentGroceryList, logout}}>
             {children}
         </UserContext.Provider>
     )

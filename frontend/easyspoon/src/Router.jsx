@@ -10,6 +10,7 @@ import RecipeDetail from "./RecipeDetail"
 import GroceryListsList from "./GroceryListsList";
 import UserEditForm from "./UserEditForm";
 import UserIntolerancesEditForm from "./UserIntolerancesEditForm"
+import Logout from './Logout'
 
 const Router = () => {
 
@@ -26,6 +27,8 @@ const Router = () => {
             <Route exact path="/recipes/:id" element={<RecipeDetail/>}/>
 
             <Route exact path="/ingredients" element={<IngredientsList/>}/>
+
+            <Route exact path="/logout" element={<Logout/>}/>
 
             <Route path="*" element={<Navigate to='/' />}/>
 

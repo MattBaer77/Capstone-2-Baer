@@ -22,7 +22,7 @@ const UserEditForm = () => {
     const [success, toggleSuccess] = useState("")
     const [error, setError] = useState(null)
 
-    if (!currentUser.token) {
+    if (!currentUser) {
 
         return <Navigate to='/login'/>
 
