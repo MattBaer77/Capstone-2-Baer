@@ -41,6 +41,12 @@ const NavBar = () => {
 
             <h2 className="wordmark"><NavLink exect="true" to={'/'}>easyspoon</NavLink></h2>
 
+            <NavLink exact="true" to={'/login'}> Login </NavLink>
+
+            <p>|</p>
+
+            <NavLink exact="true" to={'/signup'}> Signup </NavLink>
+
         </div>
 
     )

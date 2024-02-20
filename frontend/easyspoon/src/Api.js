@@ -29,11 +29,13 @@ class EasySpoonAPI {
         try {
             const response = await fetch(url, { method, body, headers });
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                const errorResponse = await response.json()
+                console.log(errorResponse)
+                throw new Error(`${errorResponse.error.message}`);
             }
             return await response.json();
         } catch (error) {
-            console.error("API Error", error);
+            console.error("API Error - ", error);
             throw error;
         }
 
