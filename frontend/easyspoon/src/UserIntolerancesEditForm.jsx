@@ -95,6 +95,8 @@ const UserIntolerancesEditForm = () => {
             {/* <p>{JSON.stringify(intolerancesAll)}</p> */}
             {/* <p>{JSON.stringify(formData)}</p> */}
 
+            <h2>Select Any Dietary Intolerances:</h2>
+
             <form>
 
                 {intolerancesAll.map(intolerance => {

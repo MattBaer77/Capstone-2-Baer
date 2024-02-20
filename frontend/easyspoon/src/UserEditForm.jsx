@@ -68,6 +68,8 @@ const UserEditForm = () => {
 
         <div className="Form">
 
+            <h2>Edit User Profile:</h2>
+
         {error && <p className="Error">{error}</p>}
         {success && <p className="Success">{success}</p>}
 
