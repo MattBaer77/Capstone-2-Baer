@@ -45,7 +45,7 @@ const GroceryListsList = () => {
 
         <div>
 
-            {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list} currentGroceryList={currentGroceryList} setCurrentGroceryList={setCurrentGroceryList}/>)}
+            {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list} currentUser={currentUser} currentGroceryList={currentGroceryList} setCurrentGroceryList={setCurrentGroceryList}/>)}
 
         </div>
 

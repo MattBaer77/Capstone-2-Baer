@@ -15,7 +15,7 @@ const RecipeDetail = () => {
 
     const {id} = useParams();
 
-    const {currentUser} = useUserContext();
+    const {currentUser, currentGroceryList} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -47,6 +47,19 @@ const RecipeDetail = () => {
 
     }, []);
 
+    const handleAdd = async(recipe) => {
+
+        console.log(recipe)
+        console.log(currentGroceryList)
+        try {
+
+            await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, recipe.id)
+
+        } catch(e) {
+            console.error(e)
+        }
+
+    };
 
     if (isLoading) {
 
@@ -74,6 +87,8 @@ const RecipeDetail = () => {
                 <img src={recipe.image}/>
                 <h2>{recipe.title}</h2>
             </div>
+
+            {currentGroceryList && <button onClick={() => handleAdd(recipe)}>Add</button>}
 
             <div className="ingredient-card-stage">
                 {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}

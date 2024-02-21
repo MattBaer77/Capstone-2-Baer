@@ -6,7 +6,7 @@ import "./GroceryListCard.css"
 import IngredientCard from "./IngredientCard";
 import PreviewCard from "./PreviewCard";
 
-const GroceryListCard = ({groceryList, currentGroceryList, setCurrentGroceryList}) => {
+const GroceryListCard = ({groceryList, currentUser, currentGroceryList, setCurrentGroceryList}) => {
 
     // console.log(groceryList.recipes)
     // console.log(groceryList.ingredients)
@@ -23,7 +23,7 @@ const GroceryListCard = ({groceryList, currentGroceryList, setCurrentGroceryList
                 list owner: {groceryList.owner}
             </p>
 
-            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail}/>)}
+            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser}/>)}
 
             {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i.detail}/>)}
 

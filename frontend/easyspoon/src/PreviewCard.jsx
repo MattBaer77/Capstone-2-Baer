@@ -17,11 +17,12 @@ const PreviewCard = ({item, currentUser, currentGroceryList}) => {
 
             if(item.title){
 
-                const recipe = currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, item.id)
+                await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, item.id)
 
             } else if (item.name) {
 
-                const ingredient = currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, item.id)
+                // const ingredient = currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, item.id)
+                console.log(item.name)
             }
 
         } catch(e) {
