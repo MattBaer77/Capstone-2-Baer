@@ -202,6 +202,8 @@ router.delete("/:id/ingredients/:ingredientId", ensureAdminOrListOwner, async (r
 
     try {
 
+        // ADD LOGIC TO CHECK IF ON RECIPE AND SET TO 0 INSTEAD? - FOR NOW NOT OPINIONATED / PRESCRIPTIVE AND USERS CAN DELETE AN INGREDIENT EVEN IF NEEDED FOR RECIPE
+
         const groceryListIngredientToDelete = await GroceryList.deleteIngredient(req.params.id, req.params.ingredientId);
 
         return res.json(groceryListIngredientToDelete);
