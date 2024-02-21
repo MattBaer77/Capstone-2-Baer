@@ -44,7 +44,7 @@ const Home = () => {
 
         getCache();
 
-    }, [currentUser]);
+    }, []);
 
     if (isLoading) {
         return (

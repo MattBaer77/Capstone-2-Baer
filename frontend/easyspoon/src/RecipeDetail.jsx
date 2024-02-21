@@ -15,7 +15,7 @@ const RecipeDetail = () => {
 
     const {id} = useParams();
 
-    const {currentUser, currentGroceryList} = useUserContext();
+    const {currentUser, loadUser, currentGroceryList} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -54,6 +54,7 @@ const RecipeDetail = () => {
         try {
 
             await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, recipe.id)
+            await loadUser(currentUser.token)
 
         } catch(e) {
             console.error(e)
