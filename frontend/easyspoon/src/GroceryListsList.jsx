@@ -5,7 +5,7 @@ import GroceryListCard from "./GroceryListCard";
 
 const GroceryListsList = () => {
 
-    const {currentUser} = useUserContext();
+    const {currentUser, currentGroceryList, setCurrentGroceryList} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -45,8 +45,7 @@ const GroceryListsList = () => {
 
         <div>
 
-            <h1>GroceryLists List...</h1>
-            {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list}/>)}
+            {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list} currentGroceryList={currentGroceryList} setCurrentGroceryList={setCurrentGroceryList}/>)}
 
         </div>
 
