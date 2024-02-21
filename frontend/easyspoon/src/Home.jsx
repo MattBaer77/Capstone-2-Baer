@@ -70,7 +70,7 @@ const Home = () => {
         return (
             <div className="Content Home">
     
-                <h1>{currentUser.username}</h1>
+                <h1>Welcome {currentUser.username}!</h1>
 
                 {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
     
@@ -81,8 +81,6 @@ const Home = () => {
         return (
             <div className="Content Home">
     
-                <h1>No User!</h1>
-
                 {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
 
             </div>
