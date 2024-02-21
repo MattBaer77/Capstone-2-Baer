@@ -10,6 +10,7 @@ import GroceryListsList from "./GroceryListsList";
 import RecipesList from "./RecipesList";
 import RecipeDetail from "./RecipeDetail"
 import IngredientsList from "./IngredientsList";
+import IngredientDetail from "./IngredientDetail";
 
 import LoginForm from "./LoginForm"
 import SignupForm from "./SignupForm"
@@ -31,6 +32,8 @@ const Router = () => {
             <Route exact path="/recipes/:id" element={<RecipeDetail/>}/>
 
             <Route exact path="/ingredients" element={<IngredientsList/>}/>
+            <Route exact path="/ingredients/:id" element={<IngredientDetail/>}/>
+
 
             <Route exact path="/login" element={<LoginForm />}/>
             <Route exact path="/signup" element={<SignupForm />}/>
