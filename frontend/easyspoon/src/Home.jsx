@@ -10,7 +10,7 @@ import "./Home.css"
 
 const Home = () => {
 
-    const {currentUser, currentGroceryList, loadUser} = useUserContext()
+    const {currentUser, loadUser, currentGroceryList} = useUserContext()
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -44,7 +44,7 @@ const Home = () => {
 
         getCache();
 
-    }, []);
+    }, [currentUser]);
 
     if (isLoading) {
         return (
@@ -72,7 +72,7 @@ const Home = () => {
     
                 <h1>Welcome {currentUser.username}!</h1>
 
-                {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} currentGroceryList={currentGroceryList}/>)}
+                {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
     
             </div>
         )

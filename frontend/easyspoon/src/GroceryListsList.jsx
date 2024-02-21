@@ -39,7 +39,7 @@ const GroceryListsList = () => {
 
         getGroceryLists()
 
-    },[]);
+    },[currentUser]);
 
     return(
 

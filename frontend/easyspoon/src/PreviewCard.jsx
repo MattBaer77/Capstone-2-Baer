@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import "./PreviewCard.css"
 import { useUserContext } from "./hooks";
 
-const PreviewCard = ({item, currentUser, currentGroceryList}) => {
+const PreviewCard = ({item, currentUser, loadUser, currentGroceryList}) => {
 
     // console.log(currentGroceryList)
 
@@ -18,6 +18,7 @@ const PreviewCard = ({item, currentUser, currentGroceryList}) => {
             if(item.title){
 
                 await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, item.id)
+                await loadUser(currentUser.token)
 
             } else if (item.name) {
 

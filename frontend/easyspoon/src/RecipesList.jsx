@@ -6,7 +6,7 @@ import SearchForm from "./SearchForm";
 
 const RecipesList = () => {
 
-    const {currentUser, currentGroceryList} = useUserContext();
+    const {currentUser, loadUser, currentGroceryList} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -104,7 +104,7 @@ const RecipesList = () => {
 
         <SearchForm handleSearch={handleSearch}/>
 
-        {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} currentGroceryList={currentGroceryList}/>)}
+        {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
 
     </div>
     )
