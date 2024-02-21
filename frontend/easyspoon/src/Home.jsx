@@ -10,7 +10,7 @@ import "./Home.css"
 
 const Home = () => {
 
-    const {currentUser, loadUser} = useUserContext()
+    const {currentUser, currentGroceryList, loadUser} = useUserContext()
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -72,8 +72,7 @@ const Home = () => {
     
                 <h1>Welcome {currentUser.username}!</h1>
 
-                {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
-    
+                {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} currentGroceryList={currentGroceryList}/>)}
     
             </div>
         )
