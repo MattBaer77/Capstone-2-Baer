@@ -65,10 +65,10 @@ CREATE TABLE grocery_lists_ingredients (
   -- id SERIAL PRIMARY KEY,
   grocery_list_id SERIAL REFERENCES grocery_list(id) ON DELETE CASCADE,
   ingredient_id INTEGER NOT NULL,
-  amount INTEGER NOT NULL,
+  amount FLOAT NOT NULL,
   unit TEXT NOT NULL,
   -- on_recipe BOOLEAN NOT NULL DEFAULT FALSE
-  minimum_amount INTEGER NOT NULL,
+  minimum_amount FLOAT NOT NULL,
   PRIMARY KEY (grocery_list_id, ingredient_id)
 
 );
