@@ -215,7 +215,7 @@ class EasySpoonAPI {
 
     };
 
-    static async editIngredientOnGroceryList(id, ingredientId, ingredientData) {
+    static async patchAmountIngredientOnGroceryList(id, ingredientId, ingredientData) {
 
         let res = await this.request(`grocery-lists/${id}/ingredients/${ingredientId}`, ingredientData, {}, "PATCH");
 

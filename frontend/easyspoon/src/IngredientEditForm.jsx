@@ -2,14 +2,14 @@ import React, {useState} from "react";
 
 import { useNavigate, Navigate } from "react-router-dom";
 
-const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
+const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
 
     const INITIAL_STATE = {
 
-        ingredientId: ingredient.detail.id,
-        amount: 0,
-        unit: "",
-        minimumAmount: 0,
+        ingredientId: ingredient.ingredientId,
+        amount: ingredient.amount,
+        unit: ingredient.unit,
+        minimumAmount: ingredient.minimumAmount,
 
     }
 
@@ -38,11 +38,13 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
     const handleSubmit = async(e) => {
 
         e.preventDefault();
-        const ingredientData = {...formData}
+        const ingredientData = {amount:formData.amount}
 
         try {
 
-            await currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, ingredientData)
+            console.log(ingredientData)
+
+            await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
             await loadUser(currentUser.token)
             setError(null)
 
@@ -77,7 +79,7 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
                 name="unit"
                 id="unit"
                 value={formData.unit}
-                onChange={handleChange}
+                disabled
             >
                 {ingredient.detail.possibleUnits.map((option) => {
 
@@ -101,4 +103,4 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
 };
 
-export default IngredientAddForm;
+export default IngredientEditForm;

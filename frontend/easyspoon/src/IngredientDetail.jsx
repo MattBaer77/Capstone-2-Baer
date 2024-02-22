@@ -5,6 +5,7 @@ import { useUserContext } from "./hooks";
 import { useParams, NavLink, Navigate } from "react-router-dom";
 
 import IngredientAddForm from "./IngredientAddForm";
+import IngredientEditForm from "./IngredientEditForm";
 
 import "./IngredientDetail.css"
 
@@ -71,7 +72,7 @@ const IngredientDetail = () => {
 
         getIngredientAndDetail();
 
-    }, [currentUser])
+    }, [])
 
     if (isLoading) {
 
@@ -105,6 +106,7 @@ const IngredientDetail = () => {
                 <p>{ingredient.ingredientId}</p>
 
                 {currentGroceryList && !ingredient.ingredientId && <IngredientAddForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient}/>}
+                {currentGroceryList && ingredient.ingredientId && <IngredientEditForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient}/>}
 
             </div>
 

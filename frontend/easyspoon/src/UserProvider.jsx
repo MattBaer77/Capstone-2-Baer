@@ -69,6 +69,14 @@ const UserProvider = ({children}) => {
                 }
     
             })
+
+            console.log(currentUser)
+
+            if(currentGroceryList) {
+
+                setCurrentGroceryList((groceryLists.find(groceryList => groceryList.id === currentGroceryList.id))) 
+
+            }
     
             localStorage.setItem("token", token)
             setIsLoading(false)
