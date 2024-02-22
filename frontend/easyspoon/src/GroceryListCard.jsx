@@ -10,7 +10,7 @@ const GroceryListCard = ({groceryList, currentUser, currentGroceryList, setCurre
 
     // console.log(groceryList.recipes)
     // console.log(groceryList.ingredients)
-    console.log(currentGroceryList)
+    // console.log(currentGroceryList)
 
     return(
 
@@ -25,7 +25,7 @@ const GroceryListCard = ({groceryList, currentUser, currentGroceryList, setCurre
 
             {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser}/>)}
 
-            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i.detail}/>)}
+            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
 
             {(!currentGroceryList || currentGroceryList.id !== groceryList.id) && <button onClick={()=>setCurrentGroceryList(groceryList)}>Edit This List</button>}
 
