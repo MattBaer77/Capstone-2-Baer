@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import { useNavigate, Navigate } from "react-router-dom";
 
-const IngredientAddForm = ({currentUser, ingredient}) => {
+const IngredientAddForm = ({currentUser, ingredient, onList}) => {
 
     const INITIAL_STATE = {
 
@@ -18,6 +18,9 @@ const IngredientAddForm = ({currentUser, ingredient}) => {
 
         const {name, value} = e.target;
 
+        console.log(name)
+        console.log(value)
+
         setFormData((data) => {
 
             return {
@@ -28,6 +31,12 @@ const IngredientAddForm = ({currentUser, ingredient}) => {
         })
 
     };
+
+    const handleSelect = (e) => {
+
+        console.log(e)
+
+    }
 
     const handleSubmit = async(e) => {
 
@@ -56,11 +65,11 @@ const IngredientAddForm = ({currentUser, ingredient}) => {
 
         {error && <p>{error.message}</p>}
 
-        <h2>Add? Edit? Ingredient</h2>
+        <h2> {onList ? "Edit" : "Add"} Ingredient</h2>
 
         <form onSubmit={handleSubmit}>
 
-            <label htmlFor="amount">Username: </label>
+            <label htmlFor="amount">Amount: </label>
             <input
                 type="number"
                 placeholder="amount"
@@ -72,17 +81,28 @@ const IngredientAddForm = ({currentUser, ingredient}) => {
 
             {/* UPDATE BELOW BASED ON possibleUnits - make select */}
 
-            <label htmlFor="unit">Password: </label>
-            <input
-                type="number"
-                placeholder="unit"
+            <label htmlFor="unit">Unit: </label>
+            <select
                 name="unit"
                 id="unit"
                 value={formData.unit}
                 onChange={handleChange}
-            />
+            >
+                {ingredient.possibleUnits.map((option) => {
 
-            <button>Add? Edit?</button>
+                    console.log(option)
+
+                    return (
+                        <option key ={option} value={option}>
+                        {option}
+                        </option>
+                    )
+
+                })}
+
+            </select>
+
+            <button>{onList ? "Edit" : "Add"}</button>
 
         </form>
 

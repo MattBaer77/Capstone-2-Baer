@@ -4,6 +4,8 @@ import { useUserContext } from "./hooks";
 
 import { useParams, NavLink, Navigate } from "react-router-dom";
 
+import IngredientAddForm from "./IngredientAddForm";
+
 import "./IngredientDetail.css"
 
 const IngredientDetail = () => {
@@ -14,6 +16,7 @@ const IngredientDetail = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [onList, setOnList] = useState(false)
     const [ingredient, setIngredient] = useState(null);
 
     if(!currentUser) {
@@ -28,13 +31,35 @@ const IngredientDetail = () => {
 
             try {
 
-                // IF CURRENTGROCERYLIST
-                // NEED TO FIRST CHECK FOR INGREDIENT WITH INGREDIENTID on CURRENTGROCERYLIST
-                // ASSIGN BOOLEAN STATE? - PASS TO FORM (TO DETERMINE postIngredientToGroceryList vs editIngredientOnGroceryList) - NO RENDER TWO DIFFERENT FORMS CONDITIONALLY BELOW
-                // IF ONGROCERYLIST - LOAD FROM THERE
-                // ELSE DO BELOW -
+                let ingredient;
 
-                let ingredient = await currentUser.userApi.getIngredientById(id);
+                if(currentGroceryList
+
+                    // && currentGroceryList.ingredients.some(i => i.id === id)
+
+                    ){
+
+                    console.log(currentGroceryList)
+
+                    ingredient = currentGroceryList.ingredients.find(i => i.id === id);
+                    console.log(ingredient)
+                    if(ingredient) setOnList(true)
+                    
+                } else if(!ingredient) {
+
+                    console.log("Not in grocery list!")
+
+                    // IF CURRENTGROCERYLIST
+                    // NEED TO FIRST CHECK FOR INGREDIENT WITH INGREDIENTID on CURRENTGROCERYLIST
+                    // ASSIGN BOOLEAN STATE? - PASS TO FORM (TO DETERMINE postIngredientToGroceryList vs editIngredientOnGroceryList) - NO RENDER TWO DIFFERENT FORMS CONDITIONALLY BELOW
+                    // IF ONGROCERYLIST - LOAD FROM THERE
+                    // ELSE DO BELOW -
+
+                    ingredient = await currentUser.userApi.getIngredientById(id);
+                    console.log(ingredient)
+
+                }
+
                 setIngredient(ingredient);
                 setIsLoading(false);
 
@@ -78,6 +103,8 @@ const IngredientDetail = () => {
 
                 <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.image}`}/>
                 <h2>{ingredient.name}</h2>
+
+                {currentGroceryList && <IngredientAddForm currentUser={currentUser} ingredient={ingredient} onList={onList}/>}
 
             </div>
 
