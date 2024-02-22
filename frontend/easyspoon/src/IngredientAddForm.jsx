@@ -19,7 +19,6 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
     const handleChange = (e) => {
 
         const {name, value} = e.target;
-
         const parsedValue = name === "amount" || name === "minimumAmount" ? parseInt(value, 10) : value;
 
         console.log(name)
@@ -36,12 +35,6 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
     };
 
-    const handleSelect = (e) => {
-
-        console.log(e)
-
-    }
-
     const handleSubmit = async(e) => {
 
         e.preventDefault();
@@ -49,14 +42,9 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
         try {
 
-            // NEED ALT FOR editIngredientOnGroceryList
-            // NEED TO BE ABLE TO DELETE FROM GROCERYLIST AS WELL (HANDLE UP A LEVEL)
-            // NO - Load IngredientAdd or IngredientEdit conditionally - ANOTHER FORM
-
             await currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, ingredientData)
             loadUser(currentUser.token)
             setError(null)
-
 
         } catch(e) {
             setError(e)
@@ -83,8 +71,6 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
                 value={formData.amount}
                 onChange={handleChange}
             />
-
-            {/* UPDATE BELOW BASED ON possibleUnits - make select */}
 
             <label htmlFor="unit">Unit: </label>
             <select
