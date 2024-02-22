@@ -2,12 +2,14 @@ import React, {useState} from "react";
 
 import { useNavigate, Navigate } from "react-router-dom";
 
-const IngredientAddForm = ({currentUser, ingredient, onList}) => {
+const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
 
     const INITIAL_STATE = {
 
-        amount:"",
-        unit:"",
+        ingredientId: ingredient.detail.id,
+        amount: 0,
+        unit: "",
+        minimumAmount: 0,
 
     }
 
@@ -18,6 +20,8 @@ const IngredientAddForm = ({currentUser, ingredient, onList}) => {
 
         const {name, value} = e.target;
 
+        const parsedValue = name === "amount" || name === "minimumAmount" ? parseInt(value, 10) : value;
+
         console.log(name)
         console.log(value)
 
@@ -25,7 +29,7 @@ const IngredientAddForm = ({currentUser, ingredient, onList}) => {
 
             return {
                 ...data,
-                [name]:value
+                [name]:parsedValue
             }
 
         })
@@ -49,7 +53,8 @@ const IngredientAddForm = ({currentUser, ingredient, onList}) => {
             // NEED TO BE ABLE TO DELETE FROM GROCERYLIST AS WELL (HANDLE UP A LEVEL)
             // NO - Load IngredientAdd or IngredientEdit conditionally - ANOTHER FORM
 
-            await currentUser.userApi.postIngredientToGroceryList(ingredient.id, ingredientData)
+            await currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, ingredientData)
+            loadUser(currentUser.token)
             setError(null)
 
 
@@ -65,7 +70,7 @@ const IngredientAddForm = ({currentUser, ingredient, onList}) => {
 
         {error && <p>{error.message}</p>}
 
-        <h2> {onList ? "Edit" : "Add"} Ingredient</h2>
+        <h2>Ingredient</h2>
 
         <form onSubmit={handleSubmit}>
 
@@ -88,9 +93,7 @@ const IngredientAddForm = ({currentUser, ingredient, onList}) => {
                 value={formData.unit}
                 onChange={handleChange}
             >
-                {ingredient.possibleUnits.map((option) => {
-
-                    console.log(option)
+                {ingredient.detail.possibleUnits.map((option) => {
 
                     return (
                         <option key ={option} value={option}>
@@ -102,7 +105,7 @@ const IngredientAddForm = ({currentUser, ingredient, onList}) => {
 
             </select>
 
-            <button>{onList ? "Edit" : "Add"}</button>
+            <button>Add</button>
 
         </form>
 

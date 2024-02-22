@@ -12,11 +12,10 @@ const IngredientDetail = () => {
 
     const {id} = useParams();
 
-    const {currentUser, currentGroceryList} = useUserContext();
+    const {currentUser, loadUser, currentGroceryList} = useUserContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [onList, setOnList] = useState(false)
     const [ingredient, setIngredient] = useState(null);
 
     if(!currentUser) {
@@ -27,53 +26,52 @@ const IngredientDetail = () => {
 
     useEffect(() => {
 
-        async function getIngredient() {
+        async function getIngredientAndDetail() {
+
+            let ingredient;
 
             try {
 
-                let ingredient;
+                if(currentGroceryList) {
 
-                if(currentGroceryList
-
-                    // && currentGroceryList.ingredients.some(i => i.id === id)
-
-                    ){
+                    console.log("THERE IS A CURRENT")
 
                     console.log(currentGroceryList)
+                    console.log(id)
+                    console.log(parseInt(id))
 
-                    ingredient = currentGroceryList.ingredients.find(i => i.id === id);
+                    ingredient = currentGroceryList.ingredients.find(i => i.ingredientId === parseInt(id)) || {}
                     console.log(ingredient)
-                    if(ingredient) setOnList(true)
-                    
-                } else if(!ingredient) {
 
-                    console.log("Not in grocery list!")
+                } else {
+                    console.log("getIngredient ELSE RAN")
+                    ingredient = {}
+                }
 
-                    // IF CURRENTGROCERYLIST
-                    // NEED TO FIRST CHECK FOR INGREDIENT WITH INGREDIENTID on CURRENTGROCERYLIST
-                    // ASSIGN BOOLEAN STATE? - PASS TO FORM (TO DETERMINE postIngredientToGroceryList vs editIngredientOnGroceryList) - NO RENDER TWO DIFFERENT FORMS CONDITIONALLY BELOW
-                    // IF ONGROCERYLIST - LOAD FROM THERE
-                    // ELSE DO BELOW -
+                if(!ingredient.detail) {
 
-                    ingredient = await currentUser.userApi.getIngredientById(id);
+                    console.log("trying to get details")
+                    const detail = await currentUser.userApi.getIngredientById(id);
+                    console.log(detail)
+                    ingredient["detail"] = detail
                     console.log(ingredient)
 
                 }
 
-                setIngredient(ingredient);
-                setIsLoading(false);
+                setIngredient(ingredient)
+                setIsLoading(false)
 
             } catch (e) {
-                setError(e);
+                setError(e)
             } finally {
                 setIsLoading(false)
             }
 
         }
 
-        getIngredient();
+        getIngredientAndDetail();
 
-    }, []);
+    }, [currentUser])
 
     if (isLoading) {
 
@@ -101,10 +99,12 @@ const IngredientDetail = () => {
 
             <div className="title">
 
-                <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.image}`}/>
-                <h2>{ingredient.name}</h2>
+                <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.detail.image}`}/>
+                <h2>{ingredient.detail.name}</h2>
 
-                {currentGroceryList && <IngredientAddForm currentUser={currentUser} ingredient={ingredient} onList={onList}/>}
+                <p>{ingredient.ingredientId}</p>
+
+                {currentGroceryList && !ingredient.ingredientId && <IngredientAddForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient}/>}
 
             </div>
 
