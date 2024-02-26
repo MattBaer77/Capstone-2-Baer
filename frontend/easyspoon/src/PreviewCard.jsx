@@ -1,13 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { NavLink } from "react-router-dom";
 
 import "./PreviewCard.css"
 import { useUserContext } from "./hooks";
 
-const PreviewCard = ({item, currentUser, loadUser, currentGroceryList}) => {
+const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryListId}) => {
 
-    // console.log(currentGroceryList)
+    const [error, setError] = useState(null)
 
     const handleAdd = async(item) => {
 
@@ -27,10 +27,27 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList}) => {
             }
 
         } catch(e) {
-            console.error(e)
+            // console.error(e)
+            setError(e)
         }
 
     };
+
+    const handleDelete = async() => {
+
+        try {
+
+            await currentUser.userApi.deleteRecipeOnGroceryList(groceryListId, item.id)
+            await loadUser(currentUser.token)
+            setError(null)
+
+        } catch (e) {
+
+            setError(e)
+
+        }
+
+    }
 
     return(
 
@@ -38,13 +55,17 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList}) => {
 
             <div className="center">
 
+                {error && <p>{error.message}</p>}
+
                 {currentUser ? <NavLink exact="true" to={`/recipes/${item.id}`}><h2>{item.title}</h2></NavLink> : <h2>{item.title}</h2>}
 
                 <div className="image-circle">
                     <img src={item.image}/>
                 </div>
 
-                {currentGroceryList && <button onClick={() => handleAdd(item)}>Add</button>}
+                {!groceryListId && currentGroceryList && <button onClick={() => handleAdd(item)}>Add</button>}
+
+                {currentGroceryList && currentGroceryList.id === groceryListId && <button onClick={()=>{handleDelete()}}>Delete</button>}
 
             </div>
 

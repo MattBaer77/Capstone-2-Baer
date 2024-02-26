@@ -6,11 +6,6 @@ import "./IngredientCard.css"
 
 const IngredientCard = ({ingredient, currentUser, loadUser, currentGroceryList, groceryListId}) => {
 
-    console.log(currentUser)
-    console.log(ingredient)
-    console.log(currentGroceryList)
-    console.log(groceryListId)
-
     const [error, setError] = useState(null)
 
     const handleDelete = async() => {

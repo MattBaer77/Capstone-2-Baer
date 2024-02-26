@@ -23,7 +23,7 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
                 list owner: {groceryList.owner}
             </p>
 
-            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser}/>)}
+            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
 
             {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
 
