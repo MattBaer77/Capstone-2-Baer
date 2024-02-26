@@ -6,7 +6,7 @@ import "./GroceryListCard.css"
 import IngredientCard from "./IngredientCard";
 import PreviewCard from "./PreviewCard";
 
-const GroceryListCard = ({groceryList, currentUser, currentGroceryList, setCurrentGroceryList}) => {
+const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList, setCurrentGroceryList}) => {
 
     // console.log(groceryList.recipes)
     // console.log(groceryList.ingredients)
@@ -25,7 +25,7 @@ const GroceryListCard = ({groceryList, currentUser, currentGroceryList, setCurre
 
             {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser}/>)}
 
-            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
+            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
 
             {(!currentGroceryList || currentGroceryList.id !== groceryList.id) && <button onClick={()=>setCurrentGroceryList(groceryList)}>Edit This List</button>}
 
