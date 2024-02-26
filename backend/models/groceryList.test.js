@@ -377,6 +377,42 @@ describe("set amount", () => {
 
     });
 
+    test("works - If set to 0", async() => {
+
+        let res = await GroceryList.setAmount(1,100,0)
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            amount
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+
+        )
+
+        expect(ingredientCheck.rows[0].amount).toEqual(0)
+
+    });
+
+    test("works - Sets to 0 if negative", async() => {
+
+        let res = await GroceryList.setAmount(1,100,-5)
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            amount
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+
+        )
+
+        expect(ingredientCheck.rows[0].amount).toEqual(0)
+
+    });
+
     test("throws error if no such grocery_list", async () => {
 
         try{
@@ -420,6 +456,42 @@ describe("set minimum amount", () => {
         )
 
         expect(ingredientCheck.rows[0].minimumAmount).toEqual(3)
+
+    });
+
+    test("works - If set to 0", async() => {
+
+        let res = await GroceryList.setMinimumAmount(1,100,0)
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            minimum_amount AS "minimumAmount"
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+
+        )
+
+        expect(ingredientCheck.rows[0].minimumAmount).toEqual(0)
+
+    });
+
+    test("works - Sets to 0 if negative", async() => {
+
+        let res = await GroceryList.setMinimumAmount(1,100,-5)
+        expect(res).toEqual(true)
+
+        const ingredientCheck = await db.query(
+
+            `SELECT
+            minimum_amount AS "minimumAmount"
+            FROM grocery_lists_ingredients
+            WHERE grocery_list_id = 1 AND ingredient_id = 100`
+
+        )
+
+        expect(ingredientCheck.rows[0].minimumAmount).toEqual(0)
 
     });
 

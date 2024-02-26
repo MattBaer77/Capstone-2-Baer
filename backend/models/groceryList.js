@@ -277,6 +277,8 @@ class GroceryList {
 
     static async setAmount(id, ingredientId, amount) {
 
+        if(amount < 0) amount = 0
+
         const validUpdateCheck = await db.query(
             `SELECT grocery_list_id AS "id",
                     ingredient_id AS "ingredientId",
@@ -309,6 +311,8 @@ class GroceryList {
     **/
 
     static async setMinimumAmount(id, ingredientId, minimumAmount) {
+
+        if(minimumAmount < 0) minimumAmount = 0
 
         const validUpdateCheck = await db.query(
             `SELECT grocery_list_id AS "id",
