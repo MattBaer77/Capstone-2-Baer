@@ -1675,6 +1675,33 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
     ]
   }
 
+  const groceryListAfterTwoAddDeleteIngredientThenOneDelete = {
+    id: 1,
+    listName: 'testlistU1-1',
+    owner: 'u1',
+    ingredients: [
+      { ingredientId: 52, amount: 1, unit: 'pound', minimumAmount: 1 },
+      {
+        ingredientId: 100,
+        amount: 2,
+        unit: 'Some Unit',
+        minimumAmount: 0
+      },
+      {
+        ingredientId: 101,
+        amount: 2,
+        unit: 'Some Unit',
+        minimumAmount: 0
+      }
+    ],
+    recipes: [
+      { id: 1, recipeId: 11 },
+      { id: 2, recipeId: 12 },
+      { id: 3, recipeId: 32 },
+      { id: 16, recipeId: 100 }
+    ]
+  }
+
   describe('recipeId exists', () => {
 
     // ANON
@@ -1764,6 +1791,50 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       const dataCheck = await GroceryList.get(1)
       expect(dataCheck).toEqual(groceryListAfterTwoAddOneDelete)
 
+
+    });
+
+    test("works for users - NOT ADMIN IS USER - DELETED IF INGREDIENT MISSING FROM GROCERYLIST", async () => {
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      // DELETE ONE INGREDIENT
+      await GroceryList.deleteIngredient(1, 51)
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(200)
+      expect(resp.body).toEqual(true)
+
+      const dataCheck = await GroceryList.get(1)
+      expect(dataCheck).toEqual(groceryListInitial)
+
+    });
+
+    test("works for users - NOT ADMIN IS USER - DELETED IF SAME RECIPE PREVIOUSLY ADDED TWICE AND INGREDIENT MISSING FROM GROCERYLIST", async () => {
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      // DELETE ONE INGREDIENT
+      await GroceryList.deleteIngredient(1, 51)
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(200)
+      expect(resp.body).toEqual(true)
+
+      const dataCheck = await GroceryList.get(1)
+      expect(dataCheck).toEqual(groceryListAfterTwoAddDeleteIngredientThenOneDelete)
 
     });
 

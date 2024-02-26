@@ -279,18 +279,21 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
 
             const groceryListIngredient = groceryList.ingredients.find(i => i.ingredientId === ingredient.id);
 
-            if(ingredient.amount === groceryListIngredient.minimumAmount){
+            if(groceryListIngredient){
 
-                await GroceryList.deleteIngredient(groceryList.id, ingredient.id)
+                if(ingredient.amount === groceryListIngredient.minimumAmount){
 
-            } else {
+                    await GroceryList.deleteIngredient(groceryList.id, ingredient.id)
 
-                const newAmount = (groceryListIngredient.amount - ingredient.amount)
-                const newMinimumAmount = (groceryListIngredient.minimumAmount - ingredient.amount)
+                } else {
 
-                await GroceryList.setAmount(groceryList.id, ingredient.id, newAmount);
-                await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, newMinimumAmount);
+                    const newAmount = (groceryListIngredient.amount - ingredient.amount)
+                    const newMinimumAmount = (groceryListIngredient.minimumAmount - ingredient.amount)
 
+                    await GroceryList.setAmount(groceryList.id, ingredient.id, newAmount);
+                    await GroceryList.setMinimumAmount(groceryList.id, ingredient.id, newMinimumAmount);
+
+                }
             }
 
         }
