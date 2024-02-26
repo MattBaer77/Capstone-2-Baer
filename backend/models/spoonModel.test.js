@@ -278,14 +278,31 @@ describe("test main methods", () => {
 
         })
 
+        // PRE CACHE IMPLEMENTATION - AMOUNT / UNIT NOT FUNCTIONAL FOR API CALL (NEVER USED BY FRONTEND)
+
+        // test("works - id: valid, includeNutrition: true", async () => {
+
+        //     const results = await SpoonApi.recipeInformation(3, true)
+        //     expect(results).toEqual(mockResponseGetRecipeInformation);
+        //     expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: true})
+
+
+        // })
+
+        // PRE CACHE IMPLEMENTATION - AMOUNT / UNIT NOT FUNCTIONAL FOR API CALL (NEVER USED BY FRONTEND)
+
+        // POST CACHE IMPLEMENTATION - includeNutrition DEFAULTS TO FALSE (NEVER USED BY FRONTEND)
+
         test("works - id: valid, includeNutrition: true", async () => {
 
             const results = await SpoonApi.recipeInformation(3, true)
             expect(results).toEqual(mockResponseGetRecipeInformation);
-            expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: true})
+            expect(SpoonApi.getRecipeInformation).toHaveBeenCalledWith(3, {includeNutrition: false})
 
 
         })
+
+        // POST CACHE IMPLEMENTATION - includeNutrition DEFAULTS TO FALSE (NEVER USED BY FRONTEND)
 
         test("error - id: invalid, includeNutrition null", async () => {
 
@@ -412,11 +429,44 @@ describe("test main methods", () => {
 
         })
 
+        // PRE CACHE IMPLEMENTATION - AMOUNT / UNIT NOT FUNCTIONAL FOR API CALL (NEVER USED BY FRONTEND)
+
+        // test("works - id: valid, amount: 1, unit: null", async () => {
+
+        //     const results = await SpoonApi.ingredientInformation(3, 1)
+        //     expect(results).toEqual(mockResponseGetIngredientInformation);
+        //     expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: null})
+
+
+        // })
+
+        // test("works - id: valid, amount: 1, unit: cup", async () => {
+
+        //     const results = await SpoonApi.ingredientInformation(3, 1, 'cup')
+        //     expect(results).toEqual(mockResponseGetIngredientInformation);
+        //     expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: 'cup'})
+
+
+        // })
+
+        // test("works - id: valid, amount: null, unit: cup", async () => {
+
+        //     const results = await SpoonApi.ingredientInformation(3, null, 'cup')
+        //     expect(results).toEqual(mockResponseGetIngredientInformation);
+        //     expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: 'cup'})
+
+
+        // })
+
+        // PRE CACHE IMPLEMENTATION - AMOUNT / UNIT NOT FUNCTIONAL FOR API CALL (NEVER USED BY FRONTEND)
+
+        // POST CACHE IMPLEMENTATION - AMOUNT / UNIT - DEFAULTS TO NULL
+
         test("works - id: valid, amount: 1, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformation(3, 1)
             expect(results).toEqual(mockResponseGetIngredientInformation);
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: null})
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
         })
@@ -425,7 +475,7 @@ describe("test main methods", () => {
 
             const results = await SpoonApi.ingredientInformation(3, 1, 'cup')
             expect(results).toEqual(mockResponseGetIngredientInformation);
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: 1, unit: 'cup'})
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
         })
@@ -434,10 +484,12 @@ describe("test main methods", () => {
 
             const results = await SpoonApi.ingredientInformation(3, null, 'cup')
             expect(results).toEqual(mockResponseGetIngredientInformation);
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: 'cup'})
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
         })
+
+        // POST CACHE IMPLEMENTATION - AMOUNT / UNIT - DEFAULTS TO NULL
 
         test("error - id: invalid, amount: null, unit: null", async () => {
 

@@ -20,22 +20,25 @@ apiKeyScheme.apiKey = spoonacularKey
 // const maxRecipes = 10
 // const maxIngredients = 10
 // consolidate to above variables or export from config
-const cacheExpiration = 59 * 60 * 1000
+
+// 59 min cache
+// const cacheExpiration = 59 * 60 * 1000
+
+// 2 min cache - DEV
+const cacheExpiration = 2 * 60 * 1000
+
 
 class SpoonApi {
 
     // PUBLIC CACHE MANAGEMENT
     static randomCache = null;
-    static recipesCache = [];
-    static ingredientsCache = [];
+    static recipesCache = new Map;
+    static ingredientsCache = new Map;
     static cacheTimestamp = null;
 
     // DEV
-
     static count = 0;
-
     // 
-
 
     static CACHE_EXPIRATION_THRESHOLD = cacheExpiration;
 
@@ -59,9 +62,9 @@ class SpoonApi {
     // METHODS FOR USE IN ROUTES -
 
     // CACHE -
-    static isCacheValid = () => {
-        return this.randomCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
-    };
+    // static isCacheValid = () => {
+    //     return this.randomCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
+    // };
     
     static fetchFreshRandomData = async (number=10) => {
 
@@ -89,16 +92,25 @@ class SpoonApi {
     static clearCacheIfExpired = () => {
 
         this.count++
-
+        console.log("Cache Clear Count")
         console.log(this.count)
 
-        if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
-            console.log("Clearing PUBLIC cache due to expiration");
-            this.randomCache = null;
-            this.recipesCache = [];
-            this.ingredientsCache = [];
-            this.cacheTimestamp = null;
-        }
+        // if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
+        //     console.log("Clearing ALL caches due to expiration");
+        //     this.randomCache = null;
+        //     this.recipesCache.clear()
+        //     this.ingredientsCache.clear()
+        //     this.cacheTimestamp = null;
+        // }
+
+        console.log(this.randomCache)
+        console.log(this.recipesCache)
+        console.log(this.ingredientsCache)
+
+        this.randomCache = null;
+        this.recipesCache.clear()
+        this.ingredientsCache.clear()
+        // this.cacheTimestamp = null;
 
     };
 
@@ -107,26 +119,28 @@ class SpoonApi {
     }
     
     static serveRandomCache = async () => {
-        try {
-            if (this.isCacheValid()) {
 
-                console.log(`Serving randomCache - Cached at ${this.cacheTimestamp} still valid as of ${Date.now()}`);
+        try {
+
+            if (this.randomCache) {
+
+                console.log(`Serving cached randomCache`)
                 return this.randomCache
 
             } else {
 
                 console.log(`Filling randomCache`)
                 const data = await this.fetchFreshRandomData();
-                // this.startCacheTimer();
                 this.randomCache = data;
 
             }
-    
-            this.clearCacheIfExpired();
+
             return this.randomCache;
+
         } catch (e) {
             throw e;
         }
+
     };
 
     // MAIN -
@@ -150,7 +164,7 @@ class SpoonApi {
 
         try {
 
-            const results = await SpoonApi.getSearchRecipes(opts);
+            const results = await this.getSearchRecipes(opts);
             return results;
 
         } catch (e) {
@@ -177,7 +191,7 @@ class SpoonApi {
 
         try {
 
-            const results = await SpoonApi.getSearchIngredients(opts);
+            const results = await this.getSearchIngredients(opts);
             return results;
 
         } catch (e) {
@@ -190,11 +204,25 @@ class SpoonApi {
 
         if(typeof id !== "number" || isNaN(id)) throw new ExpressError(`Bad Request - id must be a number`, 400)
 
-        const opts = {includeNutrition: includeNutrition};
+        // const opts = {includeNutrition: includeNutrition};
+
+        // OVERWRITE - ALWAYS FALSE
+        const opts = {includeNutrition: false};
 
         try {
 
-            const results = await SpoonApi.getRecipeInformation(id, opts);
+            let results;
+
+            if(this.recipesCache.has(id)) {
+
+                results = this.recipesCache.get(id)
+                return results
+
+            }
+
+            results = await this.getRecipeInformation(id, opts);
+
+            this.recipesCache.set(id, results)
             return results;
 
         } catch (e) {
@@ -207,14 +235,33 @@ class SpoonApi {
 
         if(typeof id !== "number" || isNaN(id)) throw new ExpressError(`Bad Request - id must be a number`, 400)
 
+        // const opts = {
+        //     amount: amount,
+        //     unit: unit
+        // };
+
+        // OVERWRITE - ALWAYS NULL
         const opts = {
-            amount: amount,
-            unit: unit
+            amount: null,
+            unit: null
         };
 
         try {
 
-            const results = await SpoonApi.getIngredientInformation(id, opts);
+            let results;
+
+            if(this.ingredientsCache.has(id)) {
+                
+                results = this.ingredientsCache.get(id)
+                console.log(this.ingredientsCache)
+                return results
+
+            }
+
+            results = await this.getIngredientInformation(id, opts);
+
+            this.ingredientsCache.set(id, results)
+            console.log(this.ingredientsCache)
             return results;
 
         } catch (e) {
