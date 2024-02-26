@@ -11,6 +11,7 @@ jest.mock('../models/spoonModel', () => {
     const originalSpoonModel = jest.requireActual('../models/spoonModel');
 
     return {...originalSpoonModel,
+        startCacheTimer:jest.fn(),
         getARandomFoodJoke:jest.fn().mockResolvedValue({ text: "Mocked food joke data" })
     };
 

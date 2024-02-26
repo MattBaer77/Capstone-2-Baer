@@ -3,8 +3,6 @@
 const request = require("supertest")
 
 const db = require("../db.js");
-const app = require("../app");
-
 
 const {
 
@@ -19,6 +17,9 @@ beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
+
+require("../models/spoonModelTestSetup.js")
+const app = require("../app");
 
 // POST TOKEN - /auth/token
 
