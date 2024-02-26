@@ -10,6 +10,9 @@ const { authenticateJWT } = require("./middleware/auth");
 
 const app = express();
 
+const spoonModel = require("./models/spoonModel")
+spoonModel.startCacheTimer();
+
 app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));

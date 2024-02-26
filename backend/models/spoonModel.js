@@ -26,9 +26,17 @@ class SpoonApi {
 
     // PUBLIC CACHE MANAGEMENT
     static randomCache = null;
-    static recipesCache = null;
-    static ingredientsCache = null;
+    static recipesCache = [];
+    static ingredientsCache = [];
     static cacheTimestamp = null;
+
+    // DEV
+
+    static count = 0;
+
+    // 
+
+
     static CACHE_EXPIRATION_THRESHOLD = cacheExpiration;
 
     // API
@@ -79,11 +87,19 @@ class SpoonApi {
     };
     
     static clearCacheIfExpired = () => {
+
+        this.count++
+
+        console.log(this.count)
+
         if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
             console.log("Clearing PUBLIC cache due to expiration");
             this.randomCache = null;
+            this.recipesCache = [];
+            this.ingredientsCache = [];
             this.cacheTimestamp = null;
         }
+
     };
 
     static startCacheTimer = () => {
@@ -101,7 +117,7 @@ class SpoonApi {
 
                 console.log(`Filling randomCache`)
                 const data = await this.fetchFreshRandomData();
-                this.startCacheTimer();
+                // this.startCacheTimer();
                 this.randomCache = data;
 
             }
