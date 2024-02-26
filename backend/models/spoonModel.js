@@ -25,7 +25,9 @@ const cacheExpiration = 59 * 60 * 1000
 class SpoonApi {
 
     // PUBLIC CACHE MANAGEMENT
+    static randomCache = null;
     static recipesCache = null;
+    static ingredientsCache = null;
     static cacheTimestamp = null;
     static CACHE_EXPIRATION_THRESHOLD = cacheExpiration;
 
@@ -50,7 +52,7 @@ class SpoonApi {
 
     // CACHE -
     static isCacheValid = () => {
-        return this.recipesCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
+        return this.randomCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
     };
     
     static fetchFreshRandomData = async (number=10) => {
@@ -66,7 +68,7 @@ class SpoonApi {
             };
     
             const data = await this.getRandomRecipes(opts);
-            this.recipesCache = data;
+            this.randomCache = data;
             this.cacheTimestamp = Date.now();
             return data;
 
@@ -79,7 +81,7 @@ class SpoonApi {
     static clearCacheIfExpired = () => {
         if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
             console.log("Clearing PUBLIC cache due to expiration");
-            this.recipesCache = null;
+            this.randomCache = null;
             this.cacheTimestamp = null;
         }
     };
@@ -88,24 +90,24 @@ class SpoonApi {
         setInterval(this.clearCacheIfExpired, this.CACHE_EXPIRATION_THRESHOLD);
     }
     
-    static serveRecipesCache = async () => {
+    static serveRandomCache = async () => {
         try {
             if (this.isCacheValid()) {
 
-                console.log(`Serving recipesCache - Cached at ${this.cacheTimestamp} still valid as of ${Date.now()}`);
-                return this.recipesCache
+                console.log(`Serving randomCache - Cached at ${this.cacheTimestamp} still valid as of ${Date.now()}`);
+                return this.randomCache
 
             } else {
 
-                console.log(`Filling recipesCache`)
+                console.log(`Filling randomCache`)
                 const data = await this.fetchFreshRandomData();
                 this.startCacheTimer();
-                this.recipesCache = data;
+                this.randomCache = data;
 
             }
     
             this.clearCacheIfExpired();
-            return this.recipesCache;
+            return this.randomCache;
         } catch (e) {
             throw e;
         }

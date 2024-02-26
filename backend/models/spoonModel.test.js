@@ -12,7 +12,7 @@ const {
 
 const SpoonApi = require('./spoonModel');
 
-beforeAll(() => SpoonApi.recipesCache = null)
+beforeAll(() => SpoonApi.randomCache = null)
 
 // CHECKING THAT MOCKS HAVE REPLACED API CALLS
 describe("confirms mock replace API calls", () => {
@@ -136,22 +136,22 @@ describe("test cache management", () => {
     
     })
     
-    describe("test serveRecipesCache", () => {
+    describe("test serveRandomCache", () => {
 
-        test("serveRecipesCache - No Cache Currently Saved", async () => {
+        test("serveRandomCache - No Cache Currently Saved", async () => {
 
-            SpoonApi.recipesCache = null
+            SpoonApi.randomCache = null
             expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(8);
-            const fauxResponse = await SpoonApi.serveRecipesCache()    
+            const fauxResponse = await SpoonApi.serveRandomCache()    
             expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
             expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(9);
     
         })
     
-        test("serveRecipesCache - Cache Currently Saved", async () => {
+        test("serveRandomCache - Cache Currently Saved", async () => {
 
             expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(9);
-            const fauxResponse = await SpoonApi.serveRecipesCache()    
+            const fauxResponse = await SpoonApi.serveRandomCache()    
             expect(fauxResponse).toEqual(mockResponseGetRandomRecipes)
             expect(SpoonApi.getRandomRecipes).toHaveBeenCalledTimes(9);
 
