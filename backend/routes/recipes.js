@@ -28,7 +28,7 @@ const { ensureUserLoggedIn } = require("../middleware/auth");
 router.get('/cache', async (req, res, next) => {
 
     try {
-        const {recipes} = await SpoonApi.serveRecipesCache()
+        const {recipes} = await SpoonApi.serveRandomCache()
         return res.json(recipes)
     } catch (e) {
         return next(e)
