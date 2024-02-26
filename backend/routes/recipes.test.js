@@ -12,7 +12,7 @@ const {
 
 const SpoonApi = require('../models/spoonModel.js');
 
-beforeAll(() => SpoonApi.recipesCache = null)
+beforeAll(() => SpoonApi.randomCache = null)
 
 const {
     commonBeforeAll,
@@ -425,6 +425,8 @@ describe('GET /recipes/:id', () => {
         const resp = await request(app)
             .get(`/recipes/12`)
             .set("authorization", `Bearer ${u1Token}`)
+
+        console.log(resp.body)
 
         expect(resp.statusCode).toEqual(200);
         expect(resp.body).toEqual(mockResponseGetRecipeInformation)

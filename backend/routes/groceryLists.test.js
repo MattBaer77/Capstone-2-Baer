@@ -12,7 +12,7 @@ const {
 
 const SpoonApi = require('../models/spoonModel.js');
 
-beforeAll(() => SpoonApi.recipesCache = null)
+beforeAll(() => SpoonApi.randomCache = null)
 
 const {
     commonBeforeAll,
