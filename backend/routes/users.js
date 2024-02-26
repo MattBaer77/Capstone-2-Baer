@@ -67,8 +67,8 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
 
             const { intolerances } = await User.getIntolerances(req.params.username)
             // console.log(intolerances)
-            const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
-            // const { recipes } = await SpoonApi.serveRandomCache()
+            // const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+            const { recipes } = await SpoonApi.serveRandomCache()
             user.cache = recipes
 
         }
