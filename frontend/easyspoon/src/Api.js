@@ -207,6 +207,22 @@ class EasySpoonAPI {
 
     };
 
+    static async createGroceryList(username, listName) {
+
+        let res = await this.request(`grocery-lists/${username}`, listName, {}, "POST")
+
+        return res
+
+    }
+
+    static async deleteGroceryListById(id) {
+
+        let res = await this.request(`grocery-lists/${id}`, {}, {}, "DELETE")
+
+        return res
+
+    }
+
     static async postIngredientToGroceryList(id, ingredientData) {
 
         let res = await this.request(`grocery-lists/${id}/ingredients`, ingredientData, {}, "POST");
