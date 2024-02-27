@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useUserContext } from "./hooks";
 
+import GroceryListAddForm from "./GroceryListAddForm";
 import GroceryListCard from "./GroceryListCard";
 
 const GroceryListsList = () => {
@@ -44,6 +45,8 @@ const GroceryListsList = () => {
     return(
 
         <div>
+
+            <GroceryListAddForm/>
 
             {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} setCurrentGroceryList={setCurrentGroceryList}/>)}
 
