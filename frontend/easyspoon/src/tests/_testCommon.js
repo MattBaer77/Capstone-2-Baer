@@ -1,4 +1,44 @@
 
+class FauxEasySpoonApi {
+
+    static token = "fauxtoken";
+
+    static async request() {};
+
+    static async loginUser(){};
+    static async signUpUser(){};
+    static async getIntolerancesAll(){};
+    static async getUserInfo(){};
+    static async getUserDetails(){};
+    static async editUser(){};
+    static async deleteUser(){};
+    static async getUserCache(){};
+    static async getUserCacheOnly(){};
+    static async addUserIntolerance(){};
+    static async deleteUserIntolerance(){};
+    static async getRecipesCache(){};
+    static async getRecipesSearch(){};
+    static async getRecipeById(){};
+    static async getRecipeByIdWithNutrition(){};
+    static async getIngredientSearch(){};
+    static async getIngredientById(){};
+    static async getAllUsersGroceryLists(){};
+    static async getGroceryListById(){};
+    static async createGroeryList(){};
+    static async deleteGroceryListById(){};
+    static async postIngredientToGroceryList(){};
+    static async patchAmountIngredientOnGroceryList(){};
+    static async deleteIngredientOnGroceryList(){};
+    static async postRecipeToGroceryList(){};
+    static async deleteRecipeOnGroceryList(){};
+
+}
+
+const intolerance = {}
+const fauxRecipe = [];
+const fauxIngredient = [];
+const fauxGroceryList = [];
+
 class LoggedOutUser {
 
     static currentUser = null;
@@ -14,8 +54,41 @@ class LoggedOutUser {
 
 class LoggedInUser {
 
-    currentUser = "User";
-    currentGroceryList = {}
+    static currentUser = {
+
+        username:"fauxUser",
+        token:FauxEasySpoonApi.token,
+        firstName:"fauxFirstName",
+        lastName:"fauxLastName",
+        email:"fauxEmail@email.com",
+
+        instolerances:[
+            intolerance,
+        ],
+
+        cache:[
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe,
+            fauxRecipe
+        ],
+
+        userApi: FauxEasySpoonApi,
+
+        groceryLists:[
+            fauxGroceryList,
+            fauxGroceryList
+        ]
+
+    };
+
+    currentGroceryList = fauxGroceryList
 
     // functions
 
@@ -24,7 +97,5 @@ class LoggedInUser {
     logout = () => {};
 
 }
-
-// export {loggedOutUser, loggedInUser}
 
 export {LoggedOutUser, LoggedInUser}
