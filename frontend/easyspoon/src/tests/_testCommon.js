@@ -38,9 +38,38 @@ class FauxEasySpoonApi {
 EasySpoonAPI = FauxEasySpoonApi
 
 const intolerance = {}
-const fauxRecipe = [];
-const fauxIngredient = [];
-const fauxGroceryList = [];
+const fauxRecipe = {
+
+    id:1,
+    recipeId:1,
+    detail:{}
+    
+};
+
+const fauxIngredient = {
+
+    ingredientId:1,
+    amount:1,
+    minimumAmount:1,
+    unit:"fauxUnit",
+    detail:{},
+
+};
+
+const fauxGroceryList = {
+    id:1,
+    listName: "fauxListName",
+    owner:"fauxUser",
+    ingredients:[
+        fauxIngredient,
+        fauxIngredient,
+        fauxIngredient
+    ],
+    recipes:[
+        fauxRecipe,
+        fauxRecipe
+    ]
+};
 
 class LoggedOutUser {
 
