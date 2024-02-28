@@ -136,9 +136,9 @@ class LoggedInUser {
 
     // functions
 
-    loadUser = () => {};
-    setCurrentGroceryList = () => {};
-    logout = () => {};
+    static loadUser = () => {};
+    static setCurrentGroceryList = () => {};
+    static logout = () => {return "Beans"};
 
 }
 
