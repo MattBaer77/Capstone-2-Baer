@@ -3,18 +3,11 @@ import App from '../App'
 import Home from '../Home'
 import UserContext from '../UserContext'
 
-const currentUser = null
-const currentGroceryList = null
-
-// functions
-
-const loadUser = null
-const setCurrentGroceryList = null
-const logout = null
+import {LoggedOutUser, LoggedInUser} from './_testCommon';
 
 it('renders correctly - NO USER', async () => {
 
-    await act (async() => {render(<UserContext.Provider value={{currentUser, loadUser, currentGroceryList, setCurrentGroceryList, logout}}>
+    await act (async() => {render(<UserContext.Provider value={{currentUser: LoggedOutUser.currentUser , loadUser: LoggedOutUser.loadUser, currentGroceryList: LoggedOutUser.currentGroceryList, setCurrentGroceryList: LoggedOutUser.setCurrentGroceryList, logout: LoggedOutUser.logout}}>
 
         <Home/>
 
