@@ -7,6 +7,7 @@ import { useParams, NavLink, Navigate } from "react-router-dom";
 import IngredientAddForm from "./IngredientAddForm";
 import IngredientEditForm from "./IngredientEditForm";
 
+import "./Content.css"
 import "./IngredientDetail.css"
 
 const IngredientDetail = () => {
@@ -94,9 +95,9 @@ const IngredientDetail = () => {
 
     return (
 
-        <div className="Content IngredientDetail">
+        <div className="Card Content IngredientDetail">
 
-            <p>{JSON.stringify(ingredient)}</p>
+            {/* <p>{JSON.stringify(ingredient)}</p> */}
 
             <div className="title">
 
