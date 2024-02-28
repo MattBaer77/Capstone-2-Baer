@@ -2,13 +2,8 @@ import {render, screen, act} from '@testing-library/react'
 import IngredientDetail from '../IngredientDetail'
 import UserContext from '../UserContext'
 
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
-
+import { BrowserRouter } from 'react-router-dom'
 import {LoggedOutUser, LoggedInUser} from './_testCommon';
-
-console.log(LoggedInUser.currentUser)
-
-import { Params } from 'react-router-dom';
 
 // vi.mock('react-router-dom', () => {
 
@@ -20,12 +15,14 @@ import { Params } from 'react-router-dom';
 // });
 
 vi.mock("react-router-dom", async (importOriginal) => {
+
     const actual = await importOriginal()
     return {
       ...actual,
       useParams: () => ({ id : 1 }),
     }
-  })
+    
+})
 
 describe("Smoke Test", () => {
 
