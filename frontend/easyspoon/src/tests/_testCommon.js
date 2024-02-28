@@ -42,7 +42,10 @@ const fauxRecipe = {
 
     id:1,
     recipeId:1,
-    detail:{}
+    detail:{
+        id:1,
+        image:"fauxRecipeImage.jpg",
+    }
     
 };
 
@@ -52,7 +55,16 @@ const fauxIngredient = {
     amount:1,
     minimumAmount:1,
     unit:"fauxUnit",
-    detail:{},
+    detail:{
+        id:1,
+        image:"fauxIngredientImage.jpg",
+        name:"name",
+        possibleUnits:[
+            "fauxPossibleUnit1",
+            "fauxPossibleUnit2",
+            "fauxPossibleUnit3"
+        ]
+    },
 
 };
 
@@ -120,7 +132,7 @@ class LoggedInUser {
 
     };
 
-    currentGroceryList = fauxGroceryList
+    static currentGroceryList = fauxGroceryList
 
     // functions
 
