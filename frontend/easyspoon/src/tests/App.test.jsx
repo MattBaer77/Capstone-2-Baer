@@ -1,6 +1,5 @@
 import {render, screen} from '@testing-library/react'
 import App from '../App'
-import { expect } from 'vitest';
 
 it('renders correctly', () => {
 
