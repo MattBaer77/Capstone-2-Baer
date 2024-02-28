@@ -1,3 +1,4 @@
+import EasySpoonAPI from "../Api"
 
 class FauxEasySpoonApi {
 
@@ -33,6 +34,8 @@ class FauxEasySpoonApi {
     static async deleteRecipeOnGroceryList(){};
 
 }
+
+EasySpoonAPI = FauxEasySpoonApi
 
 const intolerance = {}
 const fauxRecipe = [];
