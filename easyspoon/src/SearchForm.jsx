@@ -34,7 +34,7 @@ const SearchForm = ({handleSearch}) => {
 
     return (
 
-        <div className="Card SearchCard">
+        <div className="Card FormCard">
 
             <form className="SearchForm" onSubmit={handleSubmit}>
 

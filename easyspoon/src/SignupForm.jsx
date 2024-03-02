@@ -70,92 +70,92 @@ const SignupForm = () => {
 
             {error && <p>{error.message}</p>}
 
-        <h2>Sign Up:</h2>
+            <h2>Sign Up:</h2>
 
-        <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
 
-            <div className="field">
+                <div className="field">
 
-                <label htmlFor="username">Username: </label>
+                    <label htmlFor="username">Username: </label>
+                    <input
+                        type="text"
+                        placeholder="username"
+                        name="username"
+                        id="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+
+                <div className="field">
+
+                    <label htmlFor="password">Password: </label>
+                    <input
+                        type="password"
+                        placeholder="password"
+                        name="password"
+                        id="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+
+                <div className="field">
+
+                    <label htmlFor="firstName">First Name: </label>
+                    <input
+                        type="text"
+                        placeholder="First Name"
+                        name="firstName"
+                        id="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+
+                <div className="field">
+
+                    <label htmlFor="lastName">Last Name: </label>
+                    <input
+                        type="text"
+                        placeholder="Last Name"
+                        name="lastName"
+                        id="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+
+                <div className="field">
+
+                <label htmlFor="email">Email: </label>
                 <input
-                    type="text"
-                    placeholder="username"
-                    name="username"
-                    id="username"
-                    value={formData.username}
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    id="email"
+                    value={formData.email}
                     onChange={handleChange}
                 />
 
-            </div>
+                </div>
 
+                <div className="submit">
 
-            <div className="field">
+                    <button className="positive">Signup</button>
 
-                <label htmlFor="password">Password: </label>
-                <input
-                    type="password"
-                    placeholder="password"
-                    name="password"
-                    id="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
+                </div>
 
-            </div>
-
-
-            <div className="field">
-
-                <label htmlFor="firstName">First Name: </label>
-                <input
-                    type="text"
-                    placeholder="First Name"
-                    name="firstName"
-                    id="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                />
-
-            </div>
-
-
-            <div className="field">
-
-                <label htmlFor="lastName">Last Name: </label>
-                <input
-                    type="text"
-                    placeholder="Last Name"
-                    name="lastName"
-                    id="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                />
-
-            </div>
-
-
-            <div className="field">
-
-            <label htmlFor="email">Email: </label>
-            <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-            />
-
-            </div>
-
-            <div className="submit">
-
-                <button className="positive">Signup</button>
-
-            </div>
-
-        </form>
+            </form>
 
         </div>
 

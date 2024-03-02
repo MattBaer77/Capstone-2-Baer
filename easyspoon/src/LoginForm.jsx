@@ -64,50 +64,50 @@ const LoginForm = () => {
 
         <div className="Content">
 
-        <div className="Card Form">
+        <div className="Card">
 
             {error && <p>{error.message}</p>}
 
-        <h2>Login:</h2>
+            <h2>Login:</h2>
 
-        <form onSubmit={handleSubmit}>
+            <form className="Form" onSubmit={handleSubmit}>
 
-            <div className="field">
+                <div className="field">
 
-                <label htmlFor="username">Username: </label>
+                    <label htmlFor="username">Username: </label>
+                    <input
+                        type="text"
+                        placeholder="username"
+                        name="username"
+                        id="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+                <div className="field">
+
+                <label htmlFor="password">Password: </label>
                 <input
-                    type="text"
-                    placeholder="username"
-                    name="username"
-                    id="username"
-                    value={formData.username}
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    id="password"
+                    value={formData.password}
                     onChange={handleChange}
                 />
 
-            </div>
+                </div>
 
-            <div className="field">
+                <div className="submit">
 
-            <label htmlFor="password">Password: </label>
-            <input
-                type="password"
-                placeholder="password"
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
+                    <button className="positive">Login</button>
 
-            </div>
-
-            <div className="submit">
-
-                <button className="positive">Login</button>
-
-            </div>
+                </div>
 
 
-        </form>
+            </form>
 
         </div>
 

@@ -1,0 +1,17 @@
+
+.GroceryListAddForm {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.GroceryListAddForm input {
+
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+
+}
+

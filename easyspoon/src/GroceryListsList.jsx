@@ -4,6 +4,9 @@ import { useUserContext } from "./hooks";
 import GroceryListAddForm from "./GroceryListAddForm";
 import GroceryListCard from "./GroceryListCard";
 
+import "./GroceryListsList.css"
+
+
 const GroceryListsList = () => {
 
     const {currentUser, loadUser, currentGroceryList, setCurrentGroceryList} = useUserContext();
@@ -44,11 +47,15 @@ const GroceryListsList = () => {
 
     return(
 
-        <div>
+        <div className="GroceryListsList">
 
             <GroceryListAddForm/>
 
-            {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} setCurrentGroceryList={setCurrentGroceryList}/>)}
+            <div className="Content">
+
+                {groceryLists.map(list => <GroceryListCard key={list.id} groceryList={list} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} setCurrentGroceryList={setCurrentGroceryList}/>)}
+
+            </div>
 
         </div>
 

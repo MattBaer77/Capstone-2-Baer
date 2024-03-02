@@ -4,7 +4,9 @@ import { Navigate } from "react-router-dom";
 
 import { useUserContext } from "./hooks";
 
-import './Form.css'
+import './Card.css'
+// import './Form.css'
+import './GroceryListAddForm.css'
 
 const GroceryListAddForm = () => {
 
@@ -66,16 +68,16 @@ const GroceryListAddForm = () => {
 
     return (
 
-    <div className="Form">
+        <div className="Card FormCard">
 
-        <h2>Create New Grocery List:</h2>
+            <h1>Create New Grocery List:</h1>
 
-        {error && <p className="Error">{error}</p>}
-        {success && <p className="Success">{success}</p>}
+            {error && <p className="Error">{error}</p>}
+            {success && <p className="Success">{success}</p>}
 
-        <form onSubmit={handleSubmit}>
+            <form className="GroceryListAddForm" onSubmit={handleSubmit}>
 
-            <label htmlFor="listName">Grocery List Name: </label>
+                <label hidden="hidden" htmlFor="listName">Grocery List Name: </label>
                 <input
                     type="text"
                     placeholder="Grocery List Name"
@@ -85,11 +87,11 @@ const GroceryListAddForm = () => {
                     onChange={handleChange}
                 />
 
-            <button>Create New Grocery List</button>
+                <button>Create New Grocery List</button>
 
-        </form>
+            </form>
 
-    </div>
+        </div>
 
     )
 

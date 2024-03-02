@@ -1,0 +1,13 @@
+.GroceryListsList {
+
+    max-width: 800px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* align-items: center; */
+
+    padding: 20px;
+
+}
