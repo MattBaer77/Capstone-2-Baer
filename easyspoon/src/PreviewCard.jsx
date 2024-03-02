@@ -63,12 +63,15 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
                     <img src={item.image}/>
                 </div>
 
-                {!groceryListId && currentGroceryList && <button onClick={() => handleAdd(item)}>Add</button>}
+                <div className="button-space">
 
-                {currentGroceryList && currentGroceryList.id === groceryListId && <button onClick={()=>{handleDelete()}}>Delete</button>}
+                    {!groceryListId && currentGroceryList && <button className="positive" onClick={() => handleAdd(item)}>Add</button>}
+
+                    {currentGroceryList && currentGroceryList.id === groceryListId && <button className="negative" onClick={()=>{handleDelete()}}>Delete</button>}
+
+                </div>
 
             </div>
-
 
         </div>
 

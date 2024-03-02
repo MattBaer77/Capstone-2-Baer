@@ -1,10 +1,14 @@
 .Card {
 
-    margin-top: 50px;
+    /* margin-top: 50px; */
     padding: 20px;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
     box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
     text-align: start;
+    /* max-width: 670px; */
+    /* display: inline-block; */
+    margin-right: 45px;
+    margin-left: 45px;
 
 }

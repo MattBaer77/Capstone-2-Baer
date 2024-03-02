@@ -5,6 +5,7 @@ import { useNavigate, Navigate } from "react-router-dom"
 import EasySpoonAPI from "./Api";
 import {useUserContext} from "./hooks"
 
+import './Content.css'
 import './Card.css'
 import './Form.css'
 
@@ -61,6 +62,8 @@ const LoginForm = () => {
 
     return (
 
+        <div className="Content">
+
         <div className="Card Form">
 
             {error && <p>{error.message}</p>}
@@ -105,6 +108,8 @@ const LoginForm = () => {
 
 
         </form>
+
+        </div>
 
         </div>
 

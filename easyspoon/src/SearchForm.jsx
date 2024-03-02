@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from "react";
 
+import './Card.css'
+import "./SearchForm.css"
+
 const SearchForm = ({handleSearch}) => {
 
     const INITIAL_STATE = {
@@ -31,7 +34,9 @@ const SearchForm = ({handleSearch}) => {
 
     return (
 
-        <form className="Card" onSubmit={handleSubmit}>
+        <div className="Card">
+
+        <form className="SearchForm" onSubmit={handleSubmit}>
 
             <label hidden="hidden" htmlFor="searchTerms">Search: </label>
             <input
@@ -46,6 +51,8 @@ const SearchForm = ({handleSearch}) => {
             <button>Search</button>
 
         </form>
+
+        </div>
 
     )
 

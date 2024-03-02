@@ -106,7 +106,7 @@ const RecipesList = () => {
 
         {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
 
-    </div>
+        </div>
     )
 
 };

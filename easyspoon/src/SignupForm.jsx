@@ -64,6 +64,8 @@ const SignupForm = () => {
 
     return (
 
+        <div className="Content">
+
         <div className="Card Form">
 
             {error && <p>{error.message}</p>}
@@ -154,6 +156,8 @@ const SignupForm = () => {
             </div>
 
         </form>
+
+        </div>
 
         </div>
 

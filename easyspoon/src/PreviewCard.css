@@ -1,9 +1,9 @@
 .Card.PreviewCard {
     margin: 15px;
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
+    /* box-shadow: 4px 4px 8px rgba(0,0,0,0.1); */
     display: inline-block;
     width: 300px;
-    height: 300px;
+    min-height: 400px;
     text-align: center;
 }
 
@@ -26,6 +26,9 @@
 }
 
 .image-circle {
+
+    margin: 10px;
+
     width: 200px; /* Adjust size as needed */
     height: 200px; /* Adjust size as needed */
     border-radius: 50%; /* Creates a circle */
@@ -36,7 +39,13 @@
 }
 
 .image-circle img {
-    width: 120%; /* Fill the circle */
-    height: 120%; /* Fill the circle */
+    width: 150%; /* Fill the circle */
+    height: 150%; /* Fill the circle */
     object-fit: cover; /* Crop image to fit */
+}
+
+.button-space {
+
+    margin-top: 10px;
+
 }
