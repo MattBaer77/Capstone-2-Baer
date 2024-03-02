@@ -1,0 +1,17 @@
+.RecipeDetail {
+
+    background-color: white;
+    
+}
+
+/* .RecipeDetail .title {
+    text-align: center;
+} */
+
+.RecipeDetail .title img {
+    width: 100%;
+}
+
+.RecipeDetail .ingredient-card-stage {
+    text-align: center;
+}

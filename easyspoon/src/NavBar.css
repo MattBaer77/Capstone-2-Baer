@@ -1,0 +1,37 @@
+.NavBar {
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    background-color: green;
+    vertical-align: middle;
+    height: 40px;
+    padding: 10px;
+
+}
+
+.NavBar p,
+.NavBar a {
+    font-family: sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    margin: 10px;
+}
+
+.NavBar a:hover {
+    text-decoration: underline;
+}
+
+.wordmark {
+
+    color:white;
+    margin-right: auto;
+
+}
+
+.wordmark a:hover {
+    
+    text-decoration: none;
+
+}
