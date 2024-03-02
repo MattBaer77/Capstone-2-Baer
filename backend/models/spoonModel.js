@@ -22,10 +22,10 @@ apiKeyScheme.apiKey = spoonacularKey
 // consolidate to above variables or export from config
 
 // 59 min cache
-// const cacheExpiration = 59 * 60 * 1000
+const cacheExpiration = 59 * 60 * 1000
 
 // 2 min cache - DEV
-const cacheExpiration = 2 * 60 * 1000
+// const cacheExpiration = 2 * 60 * 1000
 
 
 class SpoonApi {
