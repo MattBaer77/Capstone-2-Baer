@@ -1,38 +1,28 @@
-.PreviewCard {
-
-    font-family: sans-serif;
+.Card.PreviewCard {
     margin: 15px;
-    padding-top: -50px;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-bottom: 20px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 15px;
     box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
     display: inline-block;
     width: 300px;
-    min-height: 350px;
-
-
+    height: 300px;
+    text-align: center;
 }
 
-.PreviewCard a {
+.PreviewCard h2 {
 
-    color: black;
     text-decoration: none;
-    margin-bottom: 5px;
-
+    color: green;
+    margin-bottom: 20px;
+    
 }
 
-.PreviewCard a:hover {
-    text-decoration: underline;
+.title-link:hover {
+    color: darkgreen;
 }
 
 .center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 .image-circle {

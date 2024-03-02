@@ -78,8 +78,6 @@ button.negative:hover {
 
 }
 
-
-
 h1 {
 
   font-family: sans-serif;
@@ -104,3 +102,18 @@ h2 {
 
 }
 
+a {
+
+  font-weight: normal;
+  text-decoration: none;
+  color: green;
+
+}
+
+a:hover {
+  color: darkgreen;
+}
+
+a:visited {
+  color: darkgreen;
+}

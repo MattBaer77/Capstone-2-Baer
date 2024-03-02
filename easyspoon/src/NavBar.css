@@ -19,8 +19,12 @@
     margin: 10px;
 }
 
+.NavBar a:visited {
+    color: white;
+}
+
 .NavBar a:hover {
-    text-decoration: underline;
+    color: lightgrey;
 }
 
 .wordmark {

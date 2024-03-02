@@ -51,13 +51,13 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
 
     return(
 
-        <div className="PreviewCard">
+        <div className="Card PreviewCard">
 
             <div className="center">
 
                 {error && <p>{error.message}</p>}
 
-                {currentUser ? <NavLink exact="true" to={`/recipes/${item.id}`}><h2>{item.title}</h2></NavLink> : <h2>{item.title}</h2>}
+                {currentUser ? <NavLink exact="true" to={`/recipes/${item.id}`}><h2 className="title-link">{item.title}</h2></NavLink> : <h2>{item.title}</h2>}
 
                 <div className="image-circle">
                     <img src={item.image}/>
