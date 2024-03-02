@@ -1,17 +1,17 @@
-.Content {
+.CardContent {
 
     padding-top: 20px;
     max-width: 800px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
+    justify-content: center;
+    gap: 15px;
     
 }
 
-.Content.ingredients {
+.CardContent.ingredients {
 
-    gap: 10px;
+    gap: 5px;
 
 }

@@ -1,4 +1,4 @@
-.GroceryListCard {
+/* .GroceryListCard {
 
     font-family: sans-serif;
     margin: 50px;
@@ -10,4 +10,29 @@
     box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
     text-align: start;
 
+} */
+
+.Card.GroceryListCard {
+
+    /* width: 670px; */
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+.grocerylist-card-title {
+
+    width: 100%;
+    text-align: start;
+    
+}
+
+.button-space {
+    text-align: center;
 }

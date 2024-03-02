@@ -2,9 +2,11 @@ import React, {useState} from "react";
 
 import { NavLink } from "react-router-dom";
 
-import "./GroceryListCard.css"
 import IngredientCard from "./IngredientCard";
 import PreviewCard from "./PreviewCard";
+
+import "./GroceryListCard.css"
+import "./CardContent.css"
 
 const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList, setCurrentGroceryList}) => {
 
@@ -32,23 +34,40 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
     return(
 
-        <div className="GroceryListCard">
+        <div className="Card GroceryListCard">
 
-            {error && <p>{error.message}</p>}
+            <div className="grocerylist-card-title">
 
-            <h1>
-                {groceryList.listName}
-            </h1>
-            <p>
-                list owner: {groceryList.owner}
-            </p>
+                <div>
 
-            {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
+                    {error && <p>{error.message}</p>}
 
-            {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
+                    <h1>
+                        {groceryList.listName}
+                    </h1>
 
-            {(!currentGroceryList || currentGroceryList.id !== groceryList.id) && <button onClick={()=>setCurrentGroceryList(groceryList)}>Edit This List</button>}
-            {(currentGroceryList && currentGroceryList.id === groceryList.id) && <button onClick={() => {handleDelete()}}>Delete This List</button>}
+                </div>
+
+                <div className="button-space">
+
+                {(!currentGroceryList || currentGroceryList.id !== groceryList.id) && <button className="positive" onClick={()=>setCurrentGroceryList(groceryList)}>Edit This List</button>}
+                {(currentGroceryList && currentGroceryList.id === groceryList.id) && <button className="negative" onClick={() => {handleDelete()}}>Delete This List</button>}
+
+                </div>
+
+            </div>
+
+                <div className="CardContent">
+
+                {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
+
+                </div>
+
+                <div className="CardContent ingredients">
+
+                {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
+
+                </div>
 
         </div>
 
