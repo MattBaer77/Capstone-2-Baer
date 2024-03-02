@@ -7,6 +7,7 @@ import { useUserContext } from "./hooks.jsx";
 import PreviewCard from "./PreviewCard.jsx";
 import "./Content.css"
 import "./Home.css"
+import "./App.css"
 
 const Home = () => {
 

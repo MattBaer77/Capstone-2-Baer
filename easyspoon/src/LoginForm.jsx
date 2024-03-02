@@ -5,6 +5,8 @@ import { useNavigate, Navigate } from "react-router-dom"
 import EasySpoonAPI from "./Api";
 import {useUserContext} from "./hooks"
 
+import './Card.css'
+import './Form.css'
 
 const LoginForm = () => {
 
@@ -59,7 +61,7 @@ const LoginForm = () => {
 
     return (
 
-        <div className="Form">
+        <div className="Card Form">
 
             {error && <p>{error.message}</p>}
 
@@ -67,15 +69,21 @@ const LoginForm = () => {
 
         <form onSubmit={handleSubmit}>
 
-            <label htmlFor="username">Username: </label>
-            <input
-                type="text"
-                placeholder="username"
-                name="username"
-                id="username"
-                value={formData.username}
-                onChange={handleChange}
-            />
+            <div className="field">
+
+                <label htmlFor="username">Username: </label>
+                <input
+                    type="text"
+                    placeholder="username"
+                    name="username"
+                    id="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                />
+
+            </div>
+
+            <div className="field">
 
             <label htmlFor="password">Password: </label>
             <input
@@ -87,7 +95,14 @@ const LoginForm = () => {
                 onChange={handleChange}
             />
 
-            <button>Login</button>
+            </div>
+
+            <div className="submit">
+
+                <button className="positive">Login</button>
+
+            </div>
+
 
         </form>
 

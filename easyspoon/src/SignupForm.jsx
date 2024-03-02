@@ -5,6 +5,9 @@ import { useNavigate, Navigate } from "react-router-dom"
 import EasySpoonAPI from "./Api";
 import {useUserContext} from "./hooks"
 
+import './Card.css'
+import './Form.css'
+
 const SignupForm = () => {
 
     const navigate = useNavigate()
@@ -61,7 +64,7 @@ const SignupForm = () => {
 
     return (
 
-        <div className="Form">
+        <div className="Card Form">
 
             {error && <p>{error.message}</p>}
 
@@ -69,45 +72,68 @@ const SignupForm = () => {
 
         <form onSubmit={handleSubmit}>
 
-            <label htmlFor="username">Username: </label>
-            <input
-                type="text"
-                placeholder="username"
-                name="username"
-                id="username"
-                value={formData.username}
-                onChange={handleChange}
-            />
 
-            <label htmlFor="password">Password: </label>
-            <input
-                type="password"
-                placeholder="password"
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
+            <div className="field">
 
-            <label htmlFor="firstName">First Name: </label>
-            <input
-                type="text"
-                placeholder="First Name"
-                name="firstName"
-                id="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-            />
+                <label htmlFor="username">Username: </label>
+                <input
+                    type="text"
+                    placeholder="username"
+                    name="username"
+                    id="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                />
 
-            <label htmlFor="lastName">Last Name: </label>
-            <input
-                type="text"
-                placeholder="Last Name"
-                name="lastName"
-                id="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-            />
+            </div>
+
+
+            <div className="field">
+
+                <label htmlFor="password">Password: </label>
+                <input
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    id="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                />
+
+            </div>
+
+
+            <div className="field">
+
+                <label htmlFor="firstName">First Name: </label>
+                <input
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                    id="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                />
+
+            </div>
+
+
+            <div className="field">
+
+                <label htmlFor="lastName">Last Name: </label>
+                <input
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                />
+
+            </div>
+
+
+            <div className="field">
 
             <label htmlFor="email">Email: </label>
             <input
@@ -119,7 +145,13 @@ const SignupForm = () => {
                 onChange={handleChange}
             />
 
-            <button>Signup</button>
+            </div>
+
+            <div className="submit">
+
+                <button className="positive">Signup</button>
+
+            </div>
 
         </form>
 
