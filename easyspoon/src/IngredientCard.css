@@ -10,32 +10,9 @@
     box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
     display: inline-block;
     width: 175px;
-    /* height: 175px; */
+    min-height: 250px;
 
 }
-
-.IngredientCard a {
-
-    color: black;
-    text-decoration: none;
-    /* margin-bottom: 5px; */
-
-}
-
-.IngredientCard a:hover {
-    text-decoration: underline;
-}
-
-/* .center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.ingredient-text {
-    max-height: 10%;
-} */
 
 .ingredient-image {
 

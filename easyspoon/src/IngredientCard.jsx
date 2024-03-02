@@ -33,7 +33,7 @@ const IngredientCard = ({ingredient, currentUser, loadUser, currentGroceryList, 
                 {error && <p>{error.message}</p>}
 
                 <div className="ingredient-text">
-                    <NavLink exact="true" to={`/ingredients/${ingredient.detail ? ingredient.detail.id : ingredient.id}`}><h4>{((ingredient.detail ? ingredient.detail.name : ingredient.name))}</h4></NavLink>
+                    <NavLink exact="true" to={`/ingredients/${ingredient.detail ? ingredient.detail.id : ingredient.id}`}><h3>{((ingredient.detail ? ingredient.detail.name : ingredient.name))}</h3></NavLink>
                     {ingredient.amount && <span>{parseFloat(ingredient.amount).toFixed(2)} {ingredient.unit}</span>}
                 </div>
 
@@ -41,7 +41,7 @@ const IngredientCard = ({ingredient, currentUser, loadUser, currentGroceryList, 
                     <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.detail ? ingredient.detail.image : ingredient.image}`}/>
                 </div>
 
-               {currentGroceryList && currentGroceryList.id === groceryListId && <button onClick={()=>{handleDelete()}}>Delete</button>}
+               {currentGroceryList && currentGroceryList.id === groceryListId && <button className="negative" onClick={()=>{handleDelete()}}>Delete</button>}
 
             </div>
 
