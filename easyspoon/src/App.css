@@ -60,9 +60,21 @@ button.positive {
 
 }
 
+button.positive:hover {
+
+  background-color: darkgreen;
+
+}
+
 button.negative {
 
   background-color: lightsalmon;
+
+}
+
+button.negative:hover {
+
+  background-color: salmon;
 
 }
 

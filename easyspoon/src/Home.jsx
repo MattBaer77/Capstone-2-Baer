@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
+import { NavLink } from "react-router-dom";
 
 import EasySpoonAPI from "./Api";
-
 import { useUserContext } from "./hooks.jsx";
 
 import PreviewCard from "./PreviewCard.jsx";
 import "./Content.css"
 import "./Home.css"
-import "./App.css"
 
 const Home = () => {
 
@@ -71,16 +70,25 @@ const Home = () => {
         return (
             <div className="Content Home">
     
-                <h1>Welcome {currentUser.username}!</h1>
+                <h1>Welcome
+                    <NavLink exact="true" to={'/user'}> {currentUser.username}, </NavLink>
+                    happy cooking!</h1>
 
                 {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
-    
+            
             </div>
         )
     } else {
         return (
             <div className="Content Home">
-    
+
+                <h1>
+                    <NavLink exact="true" to={'/login'}>Login </NavLink>
+                    or
+                     <NavLink exact="true" to={'/signup'}> Signup, </NavLink>
+                    and lets get cooking!
+                </h1>
+
                 {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
 
             </div>
