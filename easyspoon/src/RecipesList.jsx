@@ -77,9 +77,9 @@ const RecipesList = () => {
 
             <div className="RecipesList">
 
-                <div className="Content">
+                <SearchForm handleSearch={handleSearch}/>
 
-                    <SearchForm handleSearch={handleSearch}/>
+                <div className="Content">
 
                     <h2>No recipes match your search criteria.</h2>
 

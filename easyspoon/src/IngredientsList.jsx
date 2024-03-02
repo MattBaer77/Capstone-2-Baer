@@ -5,6 +5,8 @@ import { removeDuplicateById } from "./helpers";
 import IngredientCard from "./IngredientCard";
 import SearchForm from "./SearchForm";
 
+import "./IngredientsList.css"
+
 const IngredientsList = () => {
 
     const {currentUser} = useUserContext();
@@ -80,13 +82,18 @@ const IngredientsList = () => {
 
         return (
 
-            <div className="Content IngredientsList">
+            <div className="IngredientsList">
 
                 <SearchForm handleSearch={handleSearch}/>
 
-                <h2>No ingredients match your search criteria.</h2>
+                <div className="Content ingredients">
+
+                    <h2>No ingredients match your search criteria.</h2>
+
+                </div>
 
             </div>
+
         )
     }
 
@@ -94,7 +101,7 @@ const IngredientsList = () => {
 
         return (
 
-            <div className="Content RecipesList">
+            <div className="Content">
                 <h3>Error Loading Ingredients</h3>
                 <p>{JSON.stringify(error)}</p>
             </div>
@@ -105,11 +112,15 @@ const IngredientsList = () => {
 
     return(
 
-        <div className="Content RecipesList">
+        <div className="IngredientsList">
 
             <SearchForm handleSearch={handleSearch}/>
 
-            {ingredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
+            <div className="Content ingredients">
+
+                {ingredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
+
+            </div>
 
         </div>
 
