@@ -53,23 +53,23 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
 
         <div className="Card PreviewCard">
 
-            <div className="center">
+            <div className="card-title">
 
-                {error && <p>{error.message}</p>}
+            {error && <p>{error.message}</p>}
 
-                {currentUser ? <NavLink exact="true" to={`/recipes/${item.id}`}><h2 className="title-link">{item.title}</h2></NavLink> : <h2>{item.title}</h2>}
+            {currentUser ? <NavLink exact="true" to={`/recipes/${item.id}`}><h2 className="title-link">{item.title}</h2></NavLink> : <h2>{item.title}</h2>}
 
-                <div className="image-circle">
-                    <img src={item.image}/>
-                </div>
+            </div>
 
-                <div className="button-space">
+            <div className="image-circle">
+                <img src={item.image}/>
+            </div>
 
-                    {!groceryListId && currentGroceryList && <button className="positive" onClick={() => handleAdd(item)}>Add</button>}
+            <div className="button-space">
 
-                    {currentGroceryList && currentGroceryList.id === groceryListId && <button className="negative" onClick={()=>{handleDelete()}}>Delete</button>}
+                {!groceryListId && currentGroceryList && <button className="positive" onClick={() => handleAdd(item)}>Add</button>}
 
-                </div>
+                {currentGroceryList && currentGroceryList.id === groceryListId && <button className="negative" onClick={()=>{handleDelete()}}>Delete</button>}
 
             </div>
 

@@ -4,6 +4,8 @@ import { useUserContext } from "./hooks";
 import PreviewCard from "./PreviewCard";
 import SearchForm from "./SearchForm";
 
+import "./RecipesList.css"
+
 const RecipesList = () => {
 
     const {currentUser, loadUser, currentGroceryList} = useUserContext();
@@ -73,11 +75,15 @@ const RecipesList = () => {
 
         return (
 
-            <div className="Content RecipesList">
+            <div className="RecipesList">
 
-                <SearchForm handleSearch={handleSearch}/>
+                <div className="Content">
 
-                <h2>No recipes match your search criteria.</h2>
+                    <SearchForm handleSearch={handleSearch}/>
+
+                    <h2>No recipes match your search criteria.</h2>
+
+                </div>
 
             </div>
 
@@ -100,13 +106,18 @@ const RecipesList = () => {
 
     return(
 
-        <div className="Content RecipesList">
+        <div className="RecipesList">
 
-        <SearchForm handleSearch={handleSearch}/>
+            <SearchForm handleSearch={handleSearch}/>
 
-        {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
+            <div className="Content">
+
+                {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
+
+            </div>
 
         </div>
+
     )
 
 };

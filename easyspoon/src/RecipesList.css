@@ -1,11 +1,13 @@
-.Content {
+.RecipesList {
 
-    padding-top: 20px;
     max-width: 800px;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    
+    /* align-items: center; */
+
+    padding: 20px;
+
 }

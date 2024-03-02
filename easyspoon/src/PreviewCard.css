@@ -1,6 +1,5 @@
-.Card.PreviewCard {
+/* .Card.PreviewCard {
     margin: 15px;
-    /* box-shadow: 4px 4px 8px rgba(0,0,0,0.1); */
     display: inline-block;
     width: 300px;
     min-height: 400px;
@@ -29,23 +28,65 @@
 
     margin: 10px;
 
-    width: 200px; /* Adjust size as needed */
-    height: 200px; /* Adjust size as needed */
-    border-radius: 50%; /* Creates a circle */
-    overflow: hidden; /* Hides overflow */
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
     display:flex;
     justify-content: center;
     align-items: center;
 }
 
 .image-circle img {
-    width: 150%; /* Fill the circle */
-    height: 150%; /* Fill the circle */
-    object-fit: cover; /* Crop image to fit */
+    width: 150%;
+    height: 150%;
+    object-fit: cover;
 }
 
 .button-space {
 
     margin-top: 10px;
+
+} */
+
+.Card.PreviewCard {
+
+    /* margin: 15px; */
+    display: flex;
+    width: 300px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 400px;
+    /* text-align: center; */
+
+}
+
+.image-circle{
+
+    width: 200px;
+    height: 200px;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.PreviewCard h2 {
+
+    text-decoration: none;
+    color: green;
+    margin-bottom: 20px;
+    
+}
+
+.title-link:hover {
+
+    color: darkgreen;
 
 }

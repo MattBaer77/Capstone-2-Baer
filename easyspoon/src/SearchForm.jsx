@@ -34,23 +34,23 @@ const SearchForm = ({handleSearch}) => {
 
     return (
 
-        <div className="Card">
+        <div className="Card SearchCard">
 
-        <form className="SearchForm" onSubmit={handleSubmit}>
+            <form className="SearchForm" onSubmit={handleSubmit}>
 
-            <label hidden="hidden" htmlFor="searchTerms">Search: </label>
-            <input
-                type="text"
-                placeholder="Enter a search term"
-                name="searchTerms"
-                id="searchTerms"
-                value={formData.searchTerms}
-                onChange={handleChange}
-            />
+                <label hidden="hidden" htmlFor="searchTerms">Search: </label>
+                <input
+                    type="text"
+                    placeholder="Enter a search term"
+                    name="searchTerms"
+                    id="searchTerms"
+                    value={formData.searchTerms}
+                    onChange={handleChange}
+                />
 
-            <button>Search</button>
+                <button>Search</button>
 
-        </form>
+            </form>
 
         </div>
 

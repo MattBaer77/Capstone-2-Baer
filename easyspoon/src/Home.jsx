@@ -67,20 +67,30 @@ const Home = () => {
     }
 
     if (currentUser) {
+
         return (
-            <div className="Content Home">
-    
+
+            <div className="Home">
+
                 <h1>Welcome
                     <NavLink exact="true" to={'/user'}> {currentUser.username}, </NavLink>
-                    happy cooking!</h1>
+                    happy cooking!
+                </h1>
 
-                {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
-            
+                <div className="Content">
+
+                    {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
+                
+                </div>
+
             </div>
         )
+
     } else {
+
         return (
-            <div className="Content Home">
+
+            <div className="Home">
 
                 <h1>
                     <NavLink exact="true" to={'/login'}>Login </NavLink>
@@ -89,10 +99,16 @@ const Home = () => {
                     and lets get cooking!
                 </h1>
 
-                {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
+                <div className="Content">
+
+                    {recipesCache.map(r => <PreviewCard key={r.id} item={r}/>)}
+
+                </div>
 
             </div>
+
         )
+
     }
 
 }

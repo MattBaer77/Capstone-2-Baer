@@ -8,7 +8,16 @@
     text-align: start;
     /* max-width: 670px; */
     /* display: inline-block; */
-    margin-right: 45px;
-    margin-left: 45px;
+    /* margin-right: 45px; */
+    /* margin-left: 45px; */
+
+}
+
+.Card.SearchCard {
+
+    width: 100%;
+    /* margin-right: 45px; */
+    /* margin-left: 45px; */
+    max-width: 670px;
 
 }
