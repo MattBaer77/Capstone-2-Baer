@@ -1,8 +1,8 @@
 const request = require("supertest");
 
+require("./models/spoonModelTestSetup.js")
 const app = require("./app");
 const db = require("./db");
-
 
 test("not found for site 404", async function () {
 
