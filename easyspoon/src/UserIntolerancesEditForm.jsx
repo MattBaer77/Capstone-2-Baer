@@ -98,35 +98,43 @@ const UserIntolerancesEditForm = () => {
 
     return (
 
-        <div className="Form UserIntolerancesForm">
+        <div className="Content">
 
-            <h2>Select Any Dietary Intolerances:</h2>
+            <div className="Card Form UserIntolerancesForm">
 
-            <form>
+                <h2>Select Any Dietary Intolerances:</h2>
 
-                {intolerancesAll.map(intolerance => {
+                <div className="CenteredForm">
 
-                    return (
+                <form className="">
 
-                        <div>
+                    {intolerancesAll.map(intolerance => {
 
-                        <input
-                            type="checkbox"
-                            onChange={handleToggle}
-                            id={intolerance.id}
-                            key={intolerance.id}
-                            name={intolerance.intoleranceName}
-                            checked={formData.some(i => i.intoleranceId === intolerance.id)}
-                        />
+                        return (
 
-                        <label htmlFor={intolerance.intoleranceName}>{intolerance.intoleranceName}</label>
+                            <div>
 
-                        </div>
+                            <input
+                                type="checkbox"
+                                onChange={handleToggle}
+                                id={intolerance.id}
+                                key={intolerance.id}
+                                name={intolerance.intoleranceName}
+                                checked={formData.some(i => i.intoleranceId === intolerance.id)}
+                            />
 
-                    )
-                })}
+                            <label htmlFor={intolerance.intoleranceName}>{intolerance.intoleranceName}</label>
 
-            </form>
+                            </div>
+
+                        )
+                    })}
+
+                </form>
+
+                </div>
+
+            </div>
 
         </div>
 

@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import {useUserContext} from "./hooks"
 import MessageCard from "./MessageCard";
 
+import './Card.css'
 import './Form.css'
 
 const UserEditForm = () => {
@@ -67,71 +68,86 @@ const UserEditForm = () => {
 
     return (
 
-        <div className="Form">
+        <div className="Content">
 
-            <h2>Edit User Profile:</h2>
+            <div className="Card Form">
 
-        {error && <MessageCard className="error" message={error.message}/>}
-        {success && <MessageCard className="" message={success.message}/>}
+                {error && <MessageCard className="error" message={error.message}/>}
+                {success && <MessageCard className="" message={success.message}/>}
 
-        <form onSubmit={handleSubmit}>
+                <h2>Edit User Profile:</h2>
 
-            <label htmlFor="username">Username: </label>
-            <input
-                type="text"
-                placeholder={currentUser.username}
-                name="username"
-                id="username"
-                readOnly="readonly"
-                onFocus={(e) => {
-                    e.preventDefault()
-                    document.getElementById("username").blur();
-                }}
-            />
+                <form onSubmit={handleSubmit}>
 
-            <label htmlFor="firstName">First Name: </label>
-            <input
-                type="text"
-                placeholder="First Name"
-                name="firstName"
-                id="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-            />
+                    <div className="field">
 
-            <label htmlFor="lastName">Last Name: </label>
-            <input
-                type="text"
-                placeholder="Last Name"
-                name="lastName"
-                id="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-            />
+                        <label htmlFor="username">Username: </label>
+                        <input
+                            type="text"
+                            placeholder={currentUser.username}
+                            name="username"
+                            id="username"
+                            readOnly="readonly"
+                            onFocus={(e) => {
+                                e.preventDefault()
+                                document.getElementById("username").blur();
+                            }}
+                        />
 
-            <label htmlFor="email">Email: </label>
-            <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-            />
+                    </div>
 
-            {/* <label htmlFor="email">Password: </label>
-            <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-            /> */}
+                    <div className="field">
 
-            <button>Save Changes</button>
+                        <label htmlFor="firstName">First Name: </label>
+                        <input
+                            type="text"
+                            placeholder="First Name"
+                            name="firstName"
+                            id="firstName"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                        />
 
-        </form>
+                    </div>
+
+                    <div className="field">
+
+                    <label htmlFor="lastName">Last Name: </label>
+                    <input
+                        type="text"
+                        placeholder="Last Name"
+                        name="lastName"
+                        id="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                    />
+
+                    </div>
+                    
+
+                    <div className="field">
+
+                    <label htmlFor="email">Email: </label>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        id="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+
+                    </div>
+
+                    <div className="submit">
+
+                        <button className="positive">Save Changes</button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
 
