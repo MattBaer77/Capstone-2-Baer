@@ -53,10 +53,10 @@ router.get('/cache', async (req, res, next) => {
 
 router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
-    console.log("/recipes/search hit with:")
-    console.log(`query(s):`, req.query.query)
-    console.log(`intolerance(s)`, req.query.intolerances)
-    console.log(`diet(s)`, req.query.diet )
+    // console.log("/recipes/search hit with:")
+    // console.log(`query(s):`, req.query.query)
+    // console.log(`intolerance(s)`, req.query.intolerances)
+    // console.log(`diet(s)`, req.query.diet )
 
     const { intolerances } = await User.getIntolerances(res.locals.user.username)
 
@@ -82,7 +82,7 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
     intoleranceString = intoleranceString.slice(0, -1);
 
-    console.log(intoleranceString)
+    // console.log(intoleranceString)
 
     try {
 
@@ -107,9 +107,9 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
 router.get('/:id', ensureUserLoggedIn, async (req, res, next) => {
 
-    console.log("/recipes/:id hit with id of:")
+    // console.log("/recipes/:id hit with id of:")
     const id = parseInt(req.params.id)
-    console.log(id)
+    // console.log(id)
 
     try {
 
@@ -136,9 +136,9 @@ router.get('/:id', ensureUserLoggedIn, async (req, res, next) => {
 
 router.get('/:id/nutrition', ensureUserLoggedIn, async (req, res, next) => {
 
-    console.log("/recipes/:id/nutrition hit with id of:")
+    // console.log("/recipes/:id/nutrition hit with id of:")
     const id = parseInt(req.params.id)
-    console.log(id)
+    // console.log(id)
 
     try {
 
