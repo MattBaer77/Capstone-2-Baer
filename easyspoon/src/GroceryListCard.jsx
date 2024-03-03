@@ -36,7 +36,7 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
         <div className="Card GroceryListCard">
 
-            <div className="grocerylist-card-title">
+            <div className="title">
 
                 <div>
 
@@ -50,24 +50,26 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
                 <div className="button-space">
 
-                {(!currentGroceryList || currentGroceryList.id !== groceryList.id) && <button className="positive" onClick={()=>setCurrentGroceryList(groceryList)}>Edit This List</button>}
-                {(currentGroceryList && currentGroceryList.id === groceryList.id) && <button className="negative" onClick={() => {handleDelete()}}>Delete This List</button>}
+                    {(!currentGroceryList || currentGroceryList.id !== groceryList.id) && <button className="positive" onClick={()=>setCurrentGroceryList(groceryList)}>Edit This List</button>}
+                    {(currentGroceryList && currentGroceryList.id === groceryList.id) && <button className="negative" onClick={() => {handleDelete()}}>Delete This List</button>}
 
                 </div>
 
             </div>
 
-                <div className="CardContent">
+            <div className="CardContent">
 
                 {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
 
-                </div>
+            </div>
 
-                <div className="CardContent ingredients">
+            <hr></hr>
+
+            <div className="CardContent ingredients">
 
                 {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
 
-                </div>
+            </div>
 
         </div>
 

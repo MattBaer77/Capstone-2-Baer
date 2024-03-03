@@ -1,4 +1,4 @@
-.RecipeDetail {
+/* .RecipeDetail {
 
     background-color: white;
     
@@ -9,5 +9,48 @@
 }
 
 .RecipeDetail .ingredient-card-stage {
+    text-align: center;
+} */
+
+.RecipeDetail {
+
+    max-width: 800px;
+
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+    align-items: center;
+
+    padding: 20px;
+
+}
+
+.RecipeDetail .image {
+
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+
+}
+
+.RecipeDetail .image img {
+
+    min-width: 100%;
+    max-width: 100%;
+
+}
+
+
+.RecipeDetail .title {
+
+    width: 100%;
+    text-align: center;
+    
+}
+
+.RecipeDetail .button-space {
     text-align: center;
 }

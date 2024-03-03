@@ -82,33 +82,31 @@ const RecipeDetail = () => {
 
     return (
 
-        <div className="Content RecipeDetail">
+        <div className="RecipeDetail">
 
-            <div className="title">
-                <img src={recipe.image}/>
-                <h2>{recipe.title}</h2>
-            </div>
+            <div className="Card">
 
-            {currentGroceryList && <button onClick={() => handleAdd(recipe)}>Add</button>}
+                <div className="image">
+                    <img src={recipe.image}/>
+                </div>
 
-            <div className="ingredient-card-stage">
-                {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
-            </div>
+                <div className="title">
+                    <h1>{recipe.title}</h1>
+                </div>
 
-            <div className="recipe-card-stage">
-                {/* <h3>
-                    Steps:
-                </h3>
-                {recipe.analyzedInstructions[0].steps.map(s => <p>{JSON.stringify(s)}</p>)} */}
+                <div className="button-space">
+                    {currentGroceryList && <button className="positive" onClick={() => handleAdd(recipe)}>Add</button>}
+                </div>
+
+                <hr/>
+
+                <div className="CardContent ingredients">
+                    {recipe.extendedIngredients.map(i => <IngredientCard key={i.id} ingredient={i}/>)}
+                </div>
+
                 <RecipeCard recipe={recipe}/>
 
             </div>
-
-            {/* <div>
-                {recipe.extendedIngredients.map(i => JSON.stringify(i))}
-            </div> */}
-
-            {/* <p>{JSON.stringify(recipe.analyzedInstructions)}</p> */}
 
         </div>
 

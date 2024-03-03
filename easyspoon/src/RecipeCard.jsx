@@ -1,25 +1,19 @@
 import React from "react";
 
-import { NavLink } from "react-router-dom";
-
-import "./RecipeCard.css"
+import "./Card.css"
 
 const RecipeCard = ({recipe}) => {
 
     return(
 
-        <div className="RecipeCard">
+        <div className="Card">
 
             <h3>
-
                 Steps:
-
             </h3>
 
             <ol>
-
                 {recipe.analyzedInstructions[0].steps.map(s => <li key={s.number}>{s.step}</li>)}
-
             </ol>
 
         </div>

@@ -26,13 +26,13 @@
 
 }
 
-.grocerylist-card-title {
+.GroceryListCard .title {
 
     width: 100%;
-    text-align: start;
+    text-align: center;
     
 }
 
-.button-space {
+.GroceryListCard .button-space {
     text-align: center;
 }
