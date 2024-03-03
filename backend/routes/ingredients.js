@@ -30,9 +30,9 @@ const router = express.Router();
 
 router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
-    console.log("/ingredients/search hit with:")
-    console.log(`query(s):`, req.query.query)
-    console.log(`intolerance(s)`, req.query.intolerances)
+    // console.log("/ingredients/search hit with:")
+    // console.log(`query(s):`, req.query.query)
+    // console.log(`intolerance(s)`, req.query.intolerances)
 
     const { intolerances } = await User.getIntolerances(res.locals.user.username)
 
@@ -58,7 +58,7 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
     intoleranceString = intoleranceString.slice(0, -1);
 
-    console.log(intoleranceString)
+    // console.log(intoleranceString)
 
     try {
 
