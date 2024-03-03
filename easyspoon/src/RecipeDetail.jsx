@@ -5,8 +5,9 @@ import { useUserContext } from "./hooks";
 import { useParams, NavLink, Navigate } from "react-router-dom";
 
 import RecipeCard from "./RecipeCard.jsx";
-// import PreviewCard from "./PreviewCard.jsx";
 import IngredientCard from "./IngredientCard.jsx";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import "./Content.css"
 import "./RecipeDetail.css"
@@ -63,22 +64,26 @@ const RecipeDetail = () => {
     };
 
     if (isLoading) {
+        return (
 
-        return <p>Loading Recipe...</p>
+            <LoadingCard/>
 
-    };
+        )
+    }
 
     if (error) {
 
         return (
-        <div>
-            <h3>Error Loading Recipe</h3>
-            {/* <p>{error.message}.</p> */}
-            <NavLink exact="true" to={'/recipes'}>Back to Recipes</NavLink>
-        </div>
+
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
+            </div>
+
         )
 
-    };
+    }
 
     return (
 

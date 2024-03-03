@@ -4,6 +4,8 @@ import { Navigate } from "react-router-dom";
 
 import EasySpoonAPI from "./Api";
 import { useUserContext } from "./hooks";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import './Form.css'
 
@@ -73,27 +75,30 @@ const UserIntolerancesEditForm = () => {
     };
 
     if (isLoading) {
-        return <p>Loading...</p>
+        return (
+
+            <LoadingCard/>
+
+        )
     }
 
     if (error) {
 
         return (
 
-            <div className="Content">
-                <p>Error!</p>
-                <p>{JSON.stringify(error)}</p>
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
             </div>
 
         )
+
     }
 
     return (
 
         <div className="Form UserIntolerancesForm">
-
-            {/* <p>{JSON.stringify(intolerancesAll)}</p> */}
-            {/* <p>{JSON.stringify(formData)}</p> */}
 
             <h2>Select Any Dietary Intolerances:</h2>
 

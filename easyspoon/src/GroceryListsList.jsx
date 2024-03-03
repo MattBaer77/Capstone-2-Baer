@@ -3,9 +3,10 @@ import { useUserContext } from "./hooks";
 
 import GroceryListAddForm from "./GroceryListAddForm";
 import GroceryListCard from "./GroceryListCard";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import "./GroceryListsList.css"
-
 
 const GroceryListsList = () => {
 
@@ -44,6 +45,28 @@ const GroceryListsList = () => {
         getGroceryLists()
 
     },[currentUser]);
+
+    if (isLoading) {
+        return (
+
+            <LoadingCard/>
+
+        )
+    }
+
+    if (error) {
+
+        return (
+
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
+            </div>
+
+        )
+
+    }
 
     return(
 

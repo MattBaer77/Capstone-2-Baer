@@ -5,6 +5,9 @@ import EasySpoonAPI from "./Api";
 import { useUserContext } from "./hooks.jsx";
 
 import PreviewCard from "./PreviewCard.jsx";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
+
 import "./Content.css"
 import "./Home.css"
 
@@ -48,9 +51,9 @@ const Home = () => {
 
     if (isLoading) {
         return (
-            <div className="Content Home">
-                <h3>Loading...</h3>
-            </div>
+
+            <LoadingCard/>
+
         )
     }
 
@@ -58,12 +61,14 @@ const Home = () => {
 
         return (
 
-            <div className="Content Home">
-                <h3>Error Loading Homepage</h3>
-                <p>{JSON.stringify(error)}</p>
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
             </div>
 
         )
+
     }
 
     if (currentUser) {

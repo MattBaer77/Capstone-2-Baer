@@ -1,18 +1,13 @@
 import React, {useState} from "react";
 
-import { NavLink } from "react-router-dom";
-
 import IngredientCard from "./IngredientCard";
 import PreviewCard from "./PreviewCard";
+import MessageCard from "./MessageCard";
 
 import "./GroceryListCard.css"
 import "./CardContent.css"
 
 const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList, setCurrentGroceryList}) => {
-
-    // console.log(groceryList.recipes)
-    // console.log(groceryList.ingredients)
-    // console.log(currentGroceryList)
 
     const [error, setError] = useState(null)
 
@@ -36,11 +31,11 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
         <div className="Card GroceryListCard">
 
+            {error && <MessageCard className="error" message={error.message}/>}
+
             <div className="title">
 
                 <div>
-
-                    {error && <p>{error.message}</p>}
 
                     <h1>
                         {groceryList.listName}

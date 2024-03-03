@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import { useNavigate, Navigate } from "react-router-dom";
+import MessageCard from "./MessageCard";
 
 const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
 
@@ -56,7 +56,7 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
         <div className="Form">
 
-        {error && <p>{error.message}</p>}
+            {error && <MessageCard message={{error}}/>}
 
         <form onSubmit={handleSubmit}>
 

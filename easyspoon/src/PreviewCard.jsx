@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
 
 import "./PreviewCard.css"
-import { useUserContext } from "./hooks";
+import MessageCard from "./MessageCard";
 
 const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryListId}) => {
 
@@ -53,9 +53,9 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
 
         <div className="Card PreviewCard">
 
+            {error && <MessageCard className="error" message={error.message}/>}
+            
             <div className="card-title">
-
-            {error && <p>{error.message}</p>}
 
             {currentUser ? <NavLink exact="true" to={`/recipes/${item.id}`}><h2 className="title-link">{item.title}</h2></NavLink> : <h2>{item.title}</h2>}
 

@@ -4,6 +4,7 @@ import { useNavigate, Navigate } from "react-router-dom"
 
 import EasySpoonAPI from "./Api";
 import {useUserContext} from "./hooks"
+import MessageCard from "./MessageCard";
 
 import './Card.css'
 import './Form.css'
@@ -68,7 +69,7 @@ const SignupForm = () => {
 
         <div className="Card Form">
 
-            {error && <p>{error.message}</p>}
+            {error && <MessageCard className="error" message={error.message}/>}
 
             <h2>Sign Up:</h2>
 

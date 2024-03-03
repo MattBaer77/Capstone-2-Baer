@@ -6,6 +6,8 @@ import { useParams, NavLink, Navigate } from "react-router-dom";
 
 import IngredientAddForm from "./IngredientAddForm";
 import IngredientEditForm from "./IngredientEditForm";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import "./Content.css"
 import "./IngredientDetail.css"
@@ -76,22 +78,26 @@ const IngredientDetail = () => {
     }, [])
 
     if (isLoading) {
+        return (
 
-        return <p>Loading Ingredient...</p>
+            <LoadingCard/>
 
-    };
+        )
+    }
 
     if (error) {
 
         return (
-            <div>
-                <h3>Error Loading Ingredients</h3>
-                {/* <p>{error.message}.</p> */}
-                <NavLink exact="true" to={'/ingredients'}>Back to Ingredients</NavLink>
+
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
             </div>
+
         )
 
-    };
+    }
 
     return (
 

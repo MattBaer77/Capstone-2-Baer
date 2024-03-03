@@ -4,6 +4,8 @@ import { removeDuplicateById } from "./helpers";
 
 import IngredientCard from "./IngredientCard";
 import SearchForm from "./SearchForm";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import "./IngredientsList.css"
 
@@ -38,6 +40,7 @@ const IngredientsList = () => {
                 }
 
                 setIngredients([...ingredientsNoDuplicates])
+                setIsLoading(false);
 
             } catch (e) {
                 setError(e);
@@ -75,7 +78,25 @@ const IngredientsList = () => {
     }
 
     if (isLoading) {
-        return <p>Loading Ingredients...</p>
+        return (
+
+            <LoadingCard/>
+
+        )
+    }
+
+    if (error) {
+
+        return (
+
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
+            </div>
+
+        )
+
     }
 
     if (ingredients.length === 0) {
@@ -95,19 +116,6 @@ const IngredientsList = () => {
             </div>
 
         )
-    }
-
-    if (error) {
-
-        return (
-
-            <div className="Content">
-                <h3>Error Loading Ingredients</h3>
-                <p>{JSON.stringify(error)}</p>
-            </div>
-
-        )
-
     }
 
     return(

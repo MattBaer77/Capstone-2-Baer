@@ -2,6 +2,8 @@ import React, {useState} from "react";
 
 import { useNavigate, Navigate } from "react-router-dom";
 
+import MessageCard from "./MessageCard";
+
 import "./Form.css"
 
 const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
@@ -60,7 +62,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
         <div className="Form">
 
-        {error && <p>{error.message}</p>}
+            {error && <MessageCard props={{error}}/>}
 
         <form onSubmit={handleSubmit}>
 

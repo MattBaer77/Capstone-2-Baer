@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import { Navigate } from "react-router-dom";
 
 import {useUserContext} from "./hooks"
+import MessageCard from "./MessageCard";
 
 import './Form.css'
 
@@ -70,8 +71,8 @@ const UserEditForm = () => {
 
             <h2>Edit User Profile:</h2>
 
-        {error && <p className="Error">{error}</p>}
-        {success && <p className="Success">{success}</p>}
+        {error && <MessageCard className="error" message={error.message}/>}
+        {success && <MessageCard className="" message={success.message}/>}
 
         <form onSubmit={handleSubmit}>
 

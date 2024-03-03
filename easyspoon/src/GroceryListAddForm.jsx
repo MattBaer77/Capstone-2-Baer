@@ -4,8 +4,9 @@ import { Navigate } from "react-router-dom";
 
 import { useUserContext } from "./hooks";
 
+import MessageCard from "./MessageCard";
+
 import './Card.css'
-// import './Form.css'
 import './GroceryListAddForm.css'
 
 const GroceryListAddForm = () => {
@@ -72,7 +73,9 @@ const GroceryListAddForm = () => {
 
             <h1>Create New Grocery List:</h1>
 
-            {error && <p className="Error">{error}</p>}
+            {error && <MessageCard className="error" message={error.message}/>}
+            {success && <MessageCard className="" message={success.message}/>}
+
             {success && <p className="Success">{success}</p>}
 
             <form className="GroceryListAddForm" onSubmit={handleSubmit}>

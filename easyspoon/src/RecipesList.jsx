@@ -3,6 +3,8 @@ import { useUserContext } from "./hooks";
 
 import PreviewCard from "./PreviewCard";
 import SearchForm from "./SearchForm";
+import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import "./RecipesList.css"
 
@@ -68,7 +70,25 @@ const RecipesList = () => {
     }
 
     if (isLoading) {
-        return <p>Loading Recipes...</p>
+        return (
+
+            <LoadingCard/>
+
+        )
+    }
+
+    if (error) {
+
+        return (
+
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
+            </div>
+
+        )
+
     }
 
     if (recipes.length === 0) {
@@ -85,19 +105,6 @@ const RecipesList = () => {
 
                 </div>
 
-            </div>
-
-        )
-
-    }
-
-    if (error) {
-
-        return (
-
-            <div className="Content RecipesList">
-                <h3>Error Loading Recipes</h3>
-                <p>{JSON.stringify(error)}</p>
             </div>
 
         )
