@@ -2,6 +2,8 @@ import React, {useState} from "react";
 
 import { useNavigate, Navigate } from "react-router-dom";
 
+import "./Form.css"
+
 const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
 
     const INITIAL_STATE = {
@@ -60,8 +62,6 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
         {error && <p>{error.message}</p>}
 
-        <h2>Ingredient</h2>
-
         <form onSubmit={handleSubmit}>
 
             <label htmlFor="amount">Amount: </label>
@@ -93,7 +93,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
             </select>
 
-            <button>Add</button>
+            <button>Edit</button>
 
         </form>
 

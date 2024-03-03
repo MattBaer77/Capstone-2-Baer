@@ -33,6 +33,26 @@ input {
 
 }
 
+select {
+
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: medium;
+
+  color: inherit; /* Inherit text color */
+
+  margin: 10px;
+  padding: 10px;
+
+  display: inline-block;
+  vertical-align: middle;
+
+  border: 1px solid lightgrey;
+  cursor: auto;
+  border-radius: 10px;
+
+}
+
 button {
 
   box-sizing: border-box;
@@ -74,13 +94,13 @@ button.positive:hover {
 
 button.negative {
 
-  background-color: lightsalmon;
+  background-color: salmon;
 
 }
 
 button.negative:hover {
 
-  background-color: salmon;
+  background-color: darksalmon;
 
 }
 

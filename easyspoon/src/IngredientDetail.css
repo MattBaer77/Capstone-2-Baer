@@ -1,9 +1,26 @@
+
 .IngredientDetail {
 
-    background-color: white;
-    
+    max-width: 800px;
+
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+    align-items: center;
+
+    padding: 20px;
+
 }
 
-.IngredientDetail .ingredient-card-stage {
-    text-align: center;
+.IngredientDetail .image {
+
+    margin: 10px;
+
+}
+
+.IngredientDetail .title {
+
+    margin: 10px;
+
 }

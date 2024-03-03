@@ -58,8 +58,6 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
         {error && <p>{error.message}</p>}
 
-        <h2>Ingredient</h2>
-
         <form onSubmit={handleSubmit}>
 
             <label htmlFor="amount">Amount: </label>
@@ -91,7 +89,7 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
             </select>
 
-            <button>Add</button>
+            <button className="positive">Add</button>
 
         </form>
 

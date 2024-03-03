@@ -95,16 +95,21 @@ const IngredientDetail = () => {
 
     return (
 
-        <div className="Card Content IngredientDetail">
+        <div className="Content">
 
-            {/* <p>{JSON.stringify(ingredient)}</p> */}
+            <div className="Card IngredientDetail">
 
-            <div className="title">
+                <div className="image">
 
-                <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.detail.image}`}/>
-                <h2>{ingredient.detail.name}</h2>
+                    <img src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.detail.image}`}/>
 
-                <p>{ingredient.ingredientId}</p>
+                </div>
+
+                <div className="title">
+
+                    <h2>{ingredient.detail.name}</h2>
+
+                </div>
 
                 {currentGroceryList && !ingredient.ingredientId && <IngredientAddForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient}/>}
                 {currentGroceryList && ingredient.ingredientId && <IngredientEditForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient}/>}
@@ -112,6 +117,7 @@ const IngredientDetail = () => {
             </div>
 
         </div>
+
 
     )
 
