@@ -312,8 +312,76 @@ class SpoonApi {
 
             }
 
+            const normalizedIngredientFromCache = this.ingredientsCache.get(id)
+
             console.log(this.ingredientsCache)
-            return results;
+
+            return normalizedIngredientFromCache;
+
+        } catch (e) {
+            throw (e)
+        };
+
+    };
+
+    static ingredientInformationPossibleUnits = async (id, amount=null, unit=null) => {
+
+        if(typeof id !== "number" || isNaN(id)) throw new ExpressError(`Bad Request - id must be a number`, 400)
+
+        // const opts = {
+        //     amount: amount,
+        //     unit: unit
+        // };
+
+        // OVERWRITE - ALWAYS NULL
+        const opts = {
+            amount: null,
+            unit: null
+        };
+
+        try {
+
+            let results;
+
+            if(this.ingredientsPossibleUnitsCache.has(id)) {
+                
+                results = this.ingredientsPossibleUnitsCache.get(id)
+                console.log(this.ingredientsPossibleUnitsCache)
+                return results
+
+            }
+
+            results = await this.getIngredientInformation(id, opts);
+
+            // check if id in ingredientsPossibleUnitsCache
+            // save {id, possibleUnits} to ingredientsPossibleUnitsCache
+            // normalize ingredient
+            // save normalized ingredient to ingredientsCache
+
+            if(!this.ingredientsPossibleUnitsCache.has(results.id)){
+                this.ingredientsPossibleUnitsCache.set(results.id, results.possibleUnits)
+            }
+
+            if(!this.ingredientsCache.has(results.id)){
+
+                const normalizedIngredient = {
+
+                    id:results.id,
+                    name:results.name,
+                    aisle:results.aisle,
+                    image:results.image
+
+                }
+
+                this.ingredientsCache.set(id, normalizedIngredient)
+
+            }
+
+            const possibleUnitsFromCache = this.ingredientsPossibleUnitsCache.get(id)
+
+            console.log(this.ingredientsPossibleUnitsCache)
+            
+            return possibleUnitsFromCache;
 
         } catch (e) {
             throw (e)

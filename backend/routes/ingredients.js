@@ -102,4 +102,31 @@ router.get('/:id', ensureUserLoggedIn, async (req, res, next) => {
 
 });
 
+// GET - BY ID
+/** GET INGREDIENT - /ingredients/[id]/possible-units
+ * 
+ * Accepts ?id
+ * 
+ * Returns {ingredientPossibleUnits} like {id, [possibleUnits]}
+ * 
+*/
+
+router.get('/:id/possible-units', ensureUserLoggedIn, async (req, res, next) => {
+
+    try {
+
+        const id = parseInt(req.params.id)
+
+        console.log(id)
+        console.log(typeof id)
+
+        const data = await SpoonApi.ingredientInformationPossibleUnits(id)
+        return res.json(data)
+
+    } catch (e) {
+        return next(e)
+    }
+
+});
+
 module.exports = router;
