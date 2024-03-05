@@ -1,10 +1,16 @@
 .MessageCard {
 
-    background-color: lightgreen;
+    background-color: lightgray;
     margin: 10px;
     padding-right: 10px;
     padding-left: 10px;
     border-radius: 15px;
+
+}
+
+.MessageCard.success{
+
+    background-color: lightgreen;
 
 }
 

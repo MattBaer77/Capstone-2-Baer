@@ -6,7 +6,9 @@ import MessageCard from "./MessageCard";
 
 import "./Form.css"
 
-const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
+const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient, setIsLoading}) => {
+
+    console.log(ingredient)
 
     const INITIAL_STATE = {
 
@@ -19,6 +21,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(null)
 
     const handleChange = (e) => {
 
@@ -47,10 +50,10 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
         try {
 
             console.log(ingredientData)
-
             await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
             await loadUser(currentUser.token)
             setError(null)
+            setSuccess("Ingredient Successfully Updated")
 
         } catch(e) {
             setError(e)
@@ -62,7 +65,8 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
         <div className="Form">
 
-            {error && <MessageCard props={{error}}/>}
+            {error && <MessageCard className={"error"} message={error.message}/>}
+            {success && <MessageCard className={"success"} message={success}/>}
 
         <form onSubmit={handleSubmit}>
 
@@ -95,7 +99,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
             </select>
 
-            <button>Edit</button>
+            <button className="positive">Save Changes</button>
 
         </form>
 

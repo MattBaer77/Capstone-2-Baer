@@ -8,7 +8,7 @@ const MessageCard = ({ className, message }) => {
 
         <div className={`MessageCard ${className || ""}`}>
 
-            <p>Error! {"-" + JSON.stringify(message) || ""}</p>
+            <p>{message}</p>
 
         </div>
 

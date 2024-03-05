@@ -84,7 +84,7 @@ const Home = () => {
 
                 <div className="Content">
 
-                    {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
+                    {recipesCache.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} setIsLoading={setIsLoading}/>)}
                 
                 </div>
 

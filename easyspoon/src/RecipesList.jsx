@@ -119,7 +119,7 @@ const RecipesList = () => {
 
             <div className="Content">
 
-                {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList}/>)}
+                {recipes.map(r => <PreviewCard key={r.id} item={r} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} setIsLoading={setIsLoading}/>)}
 
             </div>
 

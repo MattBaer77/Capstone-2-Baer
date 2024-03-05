@@ -1,16 +1,19 @@
 import React, {useState} from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import "./PreviewCard.css"
 import MessageCard from "./MessageCard";
 
-const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryListId}) => {
+const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryListId, setIsLoading}) => {
 
     const [error, setError] = useState(null)
 
+    const navigate = useNavigate()
+
     const handleAdd = async(item) => {
 
+        setIsLoading(true)
         console.log(item)
         console.log(currentGroceryList)
         try {
@@ -19,16 +22,21 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
 
                 await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, item.id)
                 await loadUser(currentUser.token)
+                setIsLoading(false)
+                navigate('/grocery-lists')
 
             } else if (item.name) {
 
                 // const ingredient = currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, item.id)
                 console.log(item.name)
+                setIsLoading(false)
             }
 
         } catch(e) {
             // console.error(e)
             setError(e)
+            setIsLoading(false)
+
         }
 
     };

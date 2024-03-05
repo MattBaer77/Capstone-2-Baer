@@ -20,7 +20,7 @@ const GroceryListAddForm = () => {
     };
 
     const [formData, setFormData] = useState(INITIAL_STATE);
-    const [success, toggleSuccess] = useState("");
+    const [success, setSuccess] = useState("");
     const [error, setError] = useState(null);
 
     if (!currentUser) {
@@ -58,6 +58,7 @@ const GroceryListAddForm = () => {
             const res = await currentUser.userApi.createGroceryList(currentUser.username, listName)
             console.log(res)
             await loadUser(currentUser.token)
+            setSuccess(`New GroceryList: "${listName.listName}" added!`)
             setError(null)
 
         } catch (e) {
@@ -74,9 +75,7 @@ const GroceryListAddForm = () => {
             <h1>Create New Grocery List:</h1>
 
             {error && <MessageCard className="error" message={error.message}/>}
-            {success && <MessageCard className="" message={success.message}/>}
-
-            {success && <p className="Success">{success}</p>}
+            {success && <MessageCard className="success" message={success}/>}
 
             <form className="GroceryListAddForm" onSubmit={handleSubmit}>
 
