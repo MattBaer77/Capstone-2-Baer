@@ -12,7 +12,10 @@ const {
 
 const SpoonApi = require('./spoonModel');
 
-beforeAll(() => SpoonApi.randomCache = null)
+// beforeAll(() => SpoonApi.randomCache = null)
+// beforeAll(() => SpoonApi.recipesCache = new Map)
+// beforeAll(() => SpoonApi.ingredientsCache = new Map)
+// beforeAll(() => SpoonApi.ingredientsPossibleUnitsCache = new Map)
 
 // CHECKING THAT MOCKS HAVE REPLACED API CALLS
 describe("confirms mock replace API calls", () => {
@@ -420,10 +423,34 @@ describe("test main methods", () => {
 
     describe("test ingredientInformation", () => {
 
+        const mockNormalizedIngredientInformation = {
+
+            id: 100,
+            // original: 'guacamole',
+            // originalName: 'guacamole',
+            name: 'guacamole',
+            // nameClean: undefined,
+            // amount: undefined,
+            // unit: undefined,
+            // unitShort: undefined,
+            // unitLong: undefined,
+            // possibleUnits: [ 'cup', 'tablespoon' ],
+            // estimatedCost: undefined,
+            // consistency: 'solid',
+            // shoppingListUnits: undefined,
+            aisle: 'Refrigerated',
+            image: 'guac.jpg',
+            // meta: [],
+            // nutrition: undefined,
+            // categoryPath: [ 'dip' ]
+        
+        };
+
         test("works - id: valid, amount: null, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformation(3)
-            expect(results).toEqual(mockResponseGetIngredientInformation);
+            console.log(results)
+            expect(results).toEqual(mockNormalizedIngredientInformation);
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
@@ -465,7 +492,7 @@ describe("test main methods", () => {
         test("works - id: valid, amount: 1, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformation(3, 1)
-            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(results).toEqual(mockNormalizedIngredientInformation);
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
@@ -474,7 +501,7 @@ describe("test main methods", () => {
         test("works - id: valid, amount: 1, unit: cup", async () => {
 
             const results = await SpoonApi.ingredientInformation(3, 1, 'cup')
-            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(results).toEqual(mockNormalizedIngredientInformation);
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
@@ -483,7 +510,7 @@ describe("test main methods", () => {
         test("works - id: valid, amount: null, unit: cup", async () => {
 
             const results = await SpoonApi.ingredientInformation(3, null, 'cup')
-            expect(results).toEqual(mockResponseGetIngredientInformation);
+            expect(results).toEqual(mockNormalizedIngredientInformation);
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
 
 
@@ -531,6 +558,99 @@ describe("test main methods", () => {
 
             try {
                 await SpoonApi.ingredientInformation("not a number", null, 'cup')
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: null, unit: "cup"})
+
+        })
+
+    })
+
+    describe("test ingredientInformation", () => {
+
+        const mockOnlyPossibleUnits = [ 'cup', 'tablespoon' ]
+
+        test("works - id: valid, amount: null, unit: null", async () => {
+
+            const results = await SpoonApi.ingredientInformationPossibleUnits(3)
+            console.log(results)
+            expect(results).toEqual(mockOnlyPossibleUnits);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
+
+
+        })
+
+        test("works - id: valid, amount: 1, unit: null", async () => {
+
+            const results = await SpoonApi.ingredientInformationPossibleUnits(3, 1)
+            expect(results).toEqual(mockOnlyPossibleUnits);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
+
+
+        })
+
+        test("works - id: valid, amount: 1, unit: cup", async () => {
+
+            const results = await SpoonApi.ingredientInformationPossibleUnits(3, 1, 'cup')
+            expect(results).toEqual(mockOnlyPossibleUnits);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
+
+
+        })
+
+        test("works - id: valid, amount: null, unit: cup", async () => {
+
+            const results = await SpoonApi.ingredientInformationPossibleUnits(3, null, 'cup')
+            expect(results).toEqual(mockOnlyPossibleUnits);
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
+
+
+        })
+
+        // POST CACHE IMPLEMENTATION - AMOUNT / UNIT - DEFAULTS TO NULL
+
+        test("error - id: invalid, amount: null, unit: null", async () => {
+
+            try {
+                await SpoonApi.ingredientInformationPossibleUnits("not a number")
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: null, unit: null})
+
+        })
+
+        test("error - id: invalid, amount: 1", async () => {
+
+            try {
+                await SpoonApi.ingredientInformationPossibleUnits("not a number", 1)
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: 1, unit: null})
+
+        })
+
+        test("error - id: invalid, amount: 1, unit: cup", async () => {
+
+            try {
+                await SpoonApi.ingredientInformationPossibleUnits("not a number", 1, 'cup')
+                fail();
+            } catch (e) {
+                expect (e instanceof ExpressError).toBeTruthy();
+            }
+            expect(SpoonApi.getIngredientInformation).not.toHaveBeenCalledWith("not a number", {amount: 1, unit: "cup"})
+
+        })
+
+        test("error - id: invalid, amount: null, unit: cup", async () => {
+
+            try {
+                await SpoonApi.ingredientInformationPossibleUnits("not a number", null, 'cup')
                 fail();
             } catch (e) {
                 expect (e instanceof ExpressError).toBeTruthy();

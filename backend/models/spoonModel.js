@@ -244,7 +244,7 @@ class SpoonApi {
                         
                     }
 
-                    this.ingredientsCache.set(id, normalizedIngredient)
+                    this.ingredientsCache.set(ingredient.id, normalizedIngredient)
 
                 }
 
@@ -308,11 +308,11 @@ class SpoonApi {
 
                 }
 
-                this.ingredientsCache.set(id, normalizedIngredient)
+                this.ingredientsCache.set(results.id, normalizedIngredient)
 
             }
 
-            const normalizedIngredientFromCache = this.ingredientsCache.get(id)
+            const normalizedIngredientFromCache = this.ingredientsCache.get(results.id)
 
             console.log(this.ingredientsCache)
 
@@ -373,11 +373,11 @@ class SpoonApi {
 
                 }
 
-                this.ingredientsCache.set(id, normalizedIngredient)
+                this.ingredientsCache.set(results.id, normalizedIngredient)
 
             }
 
-            const possibleUnitsFromCache = this.ingredientsPossibleUnitsCache.get(id)
+            const possibleUnitsFromCache = this.ingredientsPossibleUnitsCache.get(results.id)
 
             console.log(this.ingredientsPossibleUnitsCache)
             
