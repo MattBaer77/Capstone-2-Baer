@@ -35,6 +35,29 @@ const app = require("../app")
 
 // GET - SEARCH FOR INGREDIENT - USER MUST BE LOGGED IN - ANY
 
+const mockNormalizedIngredientInformation = {
+
+    id: 100,
+    // original: 'guacamole',
+    // originalName: 'guacamole',
+    name: 'guacamole',
+    // nameClean: undefined,
+    // amount: undefined,
+    // unit: undefined,
+    // unitShort: undefined,
+    // unitLong: undefined,
+    // possibleUnits: [ 'cup', 'tablespoon' ],
+    // estimatedCost: undefined,
+    // consistency: 'solid',
+    // shoppingListUnits: undefined,
+    aisle: 'Refrigerated',
+    image: 'guac.jpg',
+    // meta: [],
+    // nutrition: undefined,
+    // categoryPath: [ 'dip' ]
+
+};
+
 describe('GET /ingredients/search', () => {
 
     const fauxQueryAll = '?query=chicken%20broth&intolerances=dairy&diet=vegetarian'
@@ -396,7 +419,7 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${u1Token}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: null})
 
@@ -422,8 +445,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${adminToken}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(2)
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: null})
 
         })
@@ -462,8 +485,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${u1Token}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(3)
             // expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: 'cup'})
 
         })
@@ -488,8 +511,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${adminToken}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(4)
             // expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: 'cup'})
 
         })
@@ -528,8 +551,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${u1Token}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(5)
             // expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: 'cup'})
 
         })
@@ -554,8 +577,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${adminToken}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(6)
             // expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: 'cup'})
 
         })
@@ -594,8 +617,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${u1Token}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(7)
             // expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: null})
 
         })
@@ -620,8 +643,8 @@ describe('GET /ingredients/:id', () => {
                 .set("authorization", `Bearer ${adminToken}`)
 
             expect(resp.statusCode).toEqual(200);
-            expect(resp.body).toEqual(mockResponseGetIngredientInformation)
-            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(1)
+            expect(resp.body).toEqual(mockNormalizedIngredientInformation)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(8)
             // expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: 5, unit: null})
 
         })

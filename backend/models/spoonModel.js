@@ -95,8 +95,8 @@ class SpoonApi {
     static clearCacheIfExpired = () => {
 
         this.count++
-        console.log("Cache Clear Count")
-        console.log(this.count)
+        // console.log("Cache Clear Count")
+        // console.log(this.count)
 
         // if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
         //     console.log("Clearing ALL caches due to expiration");
@@ -106,9 +106,9 @@ class SpoonApi {
         //     this.cacheTimestamp = null;
         // }
 
-        console.log(this.randomCache)
-        console.log(this.recipesCache)
-        console.log(this.ingredientsCache)
+        // console.log(this.randomCache)
+        // console.log(this.recipesCache)
+        // console.log(this.ingredientsCache)
 
         this.randomCache = null;
         this.recipesCache.clear()
@@ -127,12 +127,12 @@ class SpoonApi {
 
             if (this.randomCache) {
 
-                console.log(`Serving cached randomCache`)
+                // console.log(`Serving cached randomCache`)
                 return this.randomCache
 
             } else {
 
-                console.log(`Filling randomCache`)
+                // console.log(`Filling randomCache`)
                 const data = await this.fetchFreshRandomData();
                 this.randomCache = data;
 
@@ -281,7 +281,7 @@ class SpoonApi {
             if(this.ingredientsCache.has(id)) {
                 
                 results = this.ingredientsCache.get(id)
-                console.log(this.ingredientsCache)
+                // console.log(this.ingredientsCache)
                 return results
 
             }
@@ -314,7 +314,7 @@ class SpoonApi {
 
             const normalizedIngredientFromCache = this.ingredientsCache.get(results.id)
 
-            console.log(this.ingredientsCache)
+            // console.log(this.ingredientsCache)
 
             return normalizedIngredientFromCache;
 
@@ -346,7 +346,7 @@ class SpoonApi {
             if(this.ingredientsPossibleUnitsCache.has(id)) {
                 
                 results = this.ingredientsPossibleUnitsCache.get(id)
-                console.log(this.ingredientsPossibleUnitsCache)
+                // console.log(this.ingredientsPossibleUnitsCache)
                 return results
 
             }
@@ -379,7 +379,7 @@ class SpoonApi {
 
             const possibleUnitsFromCache = this.ingredientsPossibleUnitsCache.get(results.id)
 
-            console.log(this.ingredientsPossibleUnitsCache)
+            // console.log(this.ingredientsPossibleUnitsCache)
             
             return possibleUnitsFromCache;
 
@@ -396,7 +396,7 @@ class SpoonApi {
 
         const url = `https://api.spoonacular.com/recipes/random?apiKey=${spoonacularKey}&number=${number}&exclude-tags=${intolerances}`
 
-        console.log(url)
+        // console.log(url)
 
         try {
 
