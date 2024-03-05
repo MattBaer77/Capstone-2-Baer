@@ -226,6 +226,10 @@ class SpoonApi {
 
             const dedupedResults = dedupeRecipeIngredients(results)
 
+            // for ingredient of dedupedResults.extendedIngredients
+            // normalize ingredient
+            // save normalized ingredient to ingredientsCache
+
             this.recipesCache.set(id, dedupedResults)
             return dedupedResults;
 
@@ -263,6 +267,11 @@ class SpoonApi {
             }
 
             results = await this.getIngredientInformation(id, opts);
+
+            // check if id in ingredientsPossibleUnitsCache
+            // save {id, possibleUnits} to ingredientsPossibleUnitsCache
+            // normalize ingredient
+            // save normalized ingredient to ingredientsCache
 
             this.ingredientsCache.set(id, results)
             console.log(this.ingredientsCache)
