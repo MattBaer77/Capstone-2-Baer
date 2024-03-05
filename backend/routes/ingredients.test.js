@@ -911,3 +911,77 @@ describe('GET /ingredients/:id', () => {
     });
 
 })
+
+// GET - INGREDIENT BY ID - POSSIBLE UNITS
+
+describe('GET /ingredients/:id/possible-units', () => {
+
+    const mockOnlyPossibleUnits = [ 'cup', 'tablespoon' ]
+
+    describe('NO QUERY', () => {
+
+        // ANON
+
+        test("unauthorized for anon", async () => {
+
+            const resp = await request(app).get(`/ingredients/12/possible-units`)
+            expect(resp.statusCode).toEqual(401)
+            expect(resp.body.error.message).toEqual("Unauthorized - User must be logged in")
+
+        })
+
+        // ANY USER
+
+        test("authorized for user", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12/possible-units`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockOnlyPossibleUnits)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(9)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: null})
+
+        })
+
+        test("authorized for user - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope/possible-units`)
+                .set("authorization", `Bearer ${u1Token}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+        // ADMIN
+
+        test("authorized for ADMIN", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/12/possible-units`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(200);
+            expect(resp.body).toEqual(mockOnlyPossibleUnits)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledTimes(10)
+            expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(12, {amount: null, unit: null})
+
+        })
+
+        test("authorized for ADMIN - fail ID not valid", async () => {
+
+            const resp = await request(app)
+                .get(`/ingredients/nope/possible-units`)
+                .set("authorization", `Bearer ${adminToken}`)
+
+            expect(resp.statusCode).toEqual(400);
+            expect(resp.body.error.message).toEqual("Bad Request - id must be a number")
+
+        })
+
+    });
+
+});
