@@ -6,7 +6,7 @@ import MessageCard from "./MessageCard";
 
 import "./Form.css"
 
-const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient, setIsLoading}) => {
+const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits}) => {
 
     console.log(ingredient)
 
@@ -87,7 +87,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
                 value={formData.unit}
                 disabled
             >
-                {ingredient.detail.possibleUnits.map((option) => {
+                {possibleUnits.map((option) => {
 
                     return (
                         <option key ={option} value={option}>
@@ -96,6 +96,10 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
                     )
 
                 })}
+
+                {/* <option key ={ingredient.unit} value={ingredient.unit}>
+                {ingredient.unit}
+                </option> */}
 
             </select>
 

@@ -2,7 +2,10 @@ import React, {useState} from "react";
 
 import MessageCard from "./MessageCard";
 
-const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient}) => {
+import "./Form.css"
+import { useEffect } from "react";
+
+const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits}) => {
 
     const INITIAL_STATE = {
 
@@ -15,6 +18,34 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(null)
+    // const [possibleUnits, setPossibleUnits] = useState(null)
+
+    // POSSIBLE INFINITE LOOP, MAYBE MOVE getPossibleUnits ONE LEVEL UP...
+    // useEffect(() => {
+
+    //     async function getPossibleUnits() {
+
+    //         setIsLoading(true)
+
+    //         try {
+
+    //             const possibleUnits = await currentUser.userApi.getIngredientInformationPossibleUnitsById(ingredient.id)
+    //             console.log(possibleUnits)
+    //             setPossibleUnits(possibleUnits)
+    //             setIsLoading(false)
+
+    //         } catch (e) {
+    //             setError(e)
+    //         } finally {
+    //             setIsLoading(false)
+    //         }
+
+    //     }
+
+    //     getPossibleUnits()
+
+    // }, []);
 
     const handleChange = (e) => {
 
@@ -45,6 +76,7 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
             await currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, ingredientData)
             await loadUser(currentUser.token)
             setError(null)
+            setSuccess("Ingredient Successfully Added")
 
         } catch(e) {
             setError(e)
@@ -56,7 +88,8 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
 
         <div className="Form">
 
-            {error && <MessageCard message={{error}}/>}
+            {error && <MessageCard className={"error"} message={error.message}/>}
+            {success && <MessageCard className={"success"} message={success}/>}
 
         <form onSubmit={handleSubmit}>
 
@@ -77,7 +110,7 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
                 value={formData.unit}
                 onChange={handleChange}
             >
-                {ingredient.detail.possibleUnits.map((option) => {
+                {possibleUnits.map((option) => {
 
                     return (
                         <option key ={option} value={option}>

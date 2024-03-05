@@ -189,6 +189,16 @@ class EasySpoonAPI {
 
     };
 
+    static async getIngredientInformationPossibleUnitsById(id) {
+
+        console.log("CALLED POSSIBLE UNITS")
+
+        let res = await this.request(`ingredients/${id}/possible-units`);
+
+        return res
+
+    };
+
     // /grocery-lists
 
     static async getAllUsersGroceryLists(username) {

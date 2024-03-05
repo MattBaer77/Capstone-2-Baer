@@ -21,6 +21,7 @@ const IngredientDetail = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [ingredient, setIngredient] = useState(null);
+    const [possibleUnits, setPossibleUnits] = useState(null);
 
     if(!currentUser) {
 
@@ -33,6 +34,7 @@ const IngredientDetail = () => {
         async function getIngredientAndDetail() {
 
             let ingredient;
+            let possibleUnits;
 
             try {
 
@@ -61,6 +63,9 @@ const IngredientDetail = () => {
                     console.log(ingredient)
 
                 }
+
+                possibleUnits = await currentUser.userApi.getIngredientInformationPossibleUnitsById(id)
+                possibleUnits ? setPossibleUnits(possibleUnits) : setPossibleUnits(["each", "pound", "package"])
 
                 setIngredient(ingredient)
                 setIsLoading(false)
@@ -117,8 +122,8 @@ const IngredientDetail = () => {
 
                 </div>
 
-                {currentGroceryList && !ingredient.ingredientId && <IngredientAddForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient} setIsLoading={setIsLoading}/>}
-                {currentGroceryList && ingredient.ingredientId && <IngredientEditForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient} setIsLoading={setIsLoading}/>}
+                {currentGroceryList && !ingredient.ingredientId && <IngredientAddForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient} setIsLoading={setIsLoading} possibleUnits={possibleUnits}/>}
+                {currentGroceryList && ingredient.ingredientId && <IngredientEditForm currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} ingredient={ingredient} setIsLoading={setIsLoading} possibleUnits={possibleUnits}/>}
 
             </div>
 
