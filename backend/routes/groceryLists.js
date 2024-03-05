@@ -281,9 +281,11 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
 
             const groceryListIngredient = groceryList.ingredients.find(i => i.ingredientId === ingredient.id);
 
+            console.log(groceryListIngredient)
+
             if(groceryListIngredient){
 
-                if(ingredient.amount === groceryListIngredient.minimumAmount){
+                if(ingredient.amount === groceryListIngredient.amount){
 
                     console.log("DELETING")
                     console.log(ingredient.id)

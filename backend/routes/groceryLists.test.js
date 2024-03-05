@@ -1703,6 +1703,33 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
     ]
   }
 
+  // INDEPENDENTLY INCREMENTED INGREDIENTS TESTING VARIABLES -
+  const groceryListRecipeAddedOnceIngredient51Incremented1ThenRecipeDeleted = {
+    id: 1,
+    listName: 'testlistU1-1',
+    owner: 'u1',
+    ingredients: [
+      { ingredientId: 51, amount: 1, unit: 'fillet', minimumAmount: 0 },
+      {
+        ingredientId: 100,
+        amount: 2,
+        unit: 'Some Unit',
+        minimumAmount: 0
+      },
+      {
+        ingredientId: 101,
+        amount: 2,
+        unit: 'Some Unit',
+        minimumAmount: 0
+      }
+    ],
+    recipes: [
+      { id: 1, recipeId: 11 },
+      { id: 2, recipeId: 12 },
+      { id: 3, recipeId: 32 }
+    ]
+  };
+
   describe('recipeId exists', () => {
 
     // ANON
@@ -1836,6 +1863,28 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
 
       const dataCheck = await GroceryList.get(1)
       expect(dataCheck).toEqual(groceryListAfterTwoAddDeleteIngredientThenOneDelete)
+
+    });
+
+    test("works for users - NOT ADMIN IS USER - DELETED IF ADDED ONCE AND INGREDIENT INCREMENTED + BY 1", async () => {
+
+      await request(app)
+      .post(`/grocery-lists/1/recipes/100`)
+      .set("authorization", `Bearer ${u1Token}`);
+
+      // INCREMENT INGREDIENT 51
+      await GroceryList.setAmount(1, 51, 4)
+
+      const resp = await request(app)
+          .delete(`/grocery-lists/1/recipes/100`)
+          .set("authorization", `Bearer ${u1Token}`);
+      expect(resp.statusCode).toEqual(200)
+      expect(resp.body).toEqual(true)
+
+      const dataCheck = await GroceryList.get(1)
+      console.log("***DATA CHECK ---")
+      console.log(dataCheck)
+      expect(dataCheck).toEqual(groceryListRecipeAddedOnceIngredient51Incremented1ThenRecipeDeleted)
 
     });
 
