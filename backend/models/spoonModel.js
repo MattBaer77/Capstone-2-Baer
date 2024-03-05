@@ -36,6 +36,7 @@ class SpoonApi {
     static randomCache = null;
     static recipesCache = new Map;
     static ingredientsCache = new Map;
+    static ingredientsPossibleUnitsCache = new Map;
     static cacheTimestamp = null;
 
     // DEV
@@ -230,6 +231,25 @@ class SpoonApi {
             // normalize ingredient
             // save normalized ingredient to ingredientsCache
 
+            for(let ingredient of dedupedResults.extendedIngredients){
+
+                if(!this.ingredientsCache.has(ingredient.id)){
+
+                    const normalizedIngredient = {
+    
+                        id:ingredient.id,
+                        name:ingredient.name,
+                        aisle:ingredient.aisle,
+                        image:ingredient.image
+                        
+                    }
+
+                    this.ingredientsCache.set(id, normalizedIngredient)
+
+                }
+
+            }
+
             this.recipesCache.set(id, dedupedResults)
             return dedupedResults;
 
@@ -273,7 +293,25 @@ class SpoonApi {
             // normalize ingredient
             // save normalized ingredient to ingredientsCache
 
-            this.ingredientsCache.set(id, results)
+            if(!this.ingredientsPossibleUnitsCache.has(results.id)){
+                this.ingredientsPossibleUnitsCache.set(results.id, results.possibleUnits)
+            }
+
+            if(!this.ingredientsCache.has(results.id)){
+
+                const normalizedIngredient = {
+
+                    id:results.id,
+                    name:results.name,
+                    aisle:results.aisle,
+                    image:results.image
+
+                }
+
+                this.ingredientsCache.set(id, normalizedIngredient)
+
+            }
+
             console.log(this.ingredientsCache)
             return results;
 
