@@ -2,6 +2,8 @@
 
 const { promisify } = require('util')
 
+const dedupeRecipeIngredients = require('../helpers/dedupeRecipeIngredients.js')
+
 const { spoonacularKey } = require('../config.js')
 
 const intolerancesToQueryString = require('../helpers/intolerancesToQueryString.js')
@@ -222,8 +224,10 @@ class SpoonApi {
 
             results = await this.getRecipeInformation(id, opts);
 
-            this.recipesCache.set(id, results)
-            return results;
+            const dedupedResults = dedupeRecipeIngredients(results)
+
+            this.recipesCache.set(id, dedupedResults)
+            return dedupedResults;
 
         } catch (e) {
             throw (e)
