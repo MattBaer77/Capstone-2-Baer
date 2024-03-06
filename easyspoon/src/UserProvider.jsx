@@ -89,10 +89,6 @@ const UserProvider = ({children}) => {
         }
     }
 
-    // TEMPORARY FOR DEVLEOPMENT
-    // localStorage.setItem("token", import.meta.env.VITE_EXAMPLE_TOKEN)
-    // TEMPORARY FOR DEVELOPMENT
-
     const logout = async () => {
 
         setCurrentUser(INITIAL_STATE)
