@@ -11,7 +11,7 @@ class EasySpoonAPI {
     static token;
 
     static async request(endpoint, data = {}, params = {}, method = "GET") {
-        console.debug("API Call:", endpoint, data, params, method);
+        // console.debug("API Call:", endpoint, data, params, method);
 
         const queryString = new URLSearchParams(params).toString();
 
@@ -34,7 +34,7 @@ class EasySpoonAPI {
             }
             return await response.json();
         } catch (error) {
-            console.error("API Error - ", error);
+            // console.error("API Error - ", error);
             throw error;
         }
 
