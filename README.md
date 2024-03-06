@@ -3,7 +3,7 @@
 
 **This project is deployed here:**
 
- - URL
+ - https://easyspoon.surge.sh/
 
 <br>
 
@@ -59,24 +59,6 @@ Additional dependencies used:
     - react-dom
     - react-router-dom
     - jwt-decode
-
-<br>
-
-NOTE - to run this app:
-
-Backend:
- - Clone Spoonacular SDK and place in this project's root directory in a directory named "spoonacularSDK"
- - Signup for [Spoonacular API account](https://spoonacular.com/food-api/console#Dashboard)
- - Create .env file in **backend/** containing ```spoonacularKey=YOUR_API_KEY```
-
-Root Directory should look like this -
-
- - backend/
- - diagrams/
- - easyspoon/
- - proposal/
- - **spoonacularSDK/**
- - .gitignore
 
 <br>
 
