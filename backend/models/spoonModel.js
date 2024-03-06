@@ -8,7 +8,8 @@ const { spoonacularKey } = require('../config.js')
 
 const intolerancesToQueryString = require('../helpers/intolerancesToQueryString.js')
 
-var spoonacularApi = require('../../spoonacularSDK/dist/com.spoonacular.client/index.js');
+// var spoonacularApi = require('../../spoonacularSDK/dist/com.spoonacular.client/index.js');
+var spoonacularApi = require('@mbaer77/spoonacular_api');
 const ExpressError = require('../expressError.js');
 var defaultClient = spoonacularApi.ApiClient.instance;
 
