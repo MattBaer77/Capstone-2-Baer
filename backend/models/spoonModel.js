@@ -34,7 +34,7 @@ class SpoonApi {
     static cacheTimestamp = null;
 
     // DEV
-    static count = 0;
+    // static count = 0;
     // 
 
     static CACHE_EXPIRATION_THRESHOLD = cacheExpiration;
@@ -85,10 +85,14 @@ class SpoonApi {
     
     static clearCacheIfExpired = () => {
 
-        this.count++
+        // console.log(this.randomCache, this.recipesCache, this.ingredientsCache, this.ingredientsPossibleUnitsCache)
+        // this.count++
         this.randomCache = null;
         this.recipesCache.clear()
         this.ingredientsCache.clear()
+        this.ingredientsPossibleUnitsCache.clear()
+        console.log("clearing caches")
+        console.log(this.randomCache, this.recipesCache, this.ingredientsCache, this.ingredientsPossibleUnitsCache)
 
     };
 
