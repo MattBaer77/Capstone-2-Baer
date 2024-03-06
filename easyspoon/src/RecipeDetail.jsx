@@ -50,8 +50,6 @@ const RecipeDetail = () => {
 
     const handleAdd = async(recipe) => {
 
-        console.log(recipe)
-        console.log(currentGroceryList)
         try {
 
             await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, recipe.id)

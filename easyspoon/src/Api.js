@@ -30,7 +30,6 @@ class EasySpoonAPI {
             const response = await fetch(url, { method, body, headers });
             if (!response.ok) {
                 const errorResponse = await response.json()
-                console.log(errorResponse)
                 throw new Error(`${errorResponse.error.message}`);
             }
             return await response.json();
@@ -62,8 +61,6 @@ class EasySpoonAPI {
     // /intolerances
 
     static async getIntolerancesAll() {
-
-        console.log("Get All Intolerances")
 
         let res = await this.request(`intolerances`);
 
@@ -190,8 +187,6 @@ class EasySpoonAPI {
     };
 
     static async getIngredientInformationPossibleUnitsById(id) {
-
-        console.log("CALLED POSSIBLE UNITS")
 
         let res = await this.request(`ingredients/${id}/possible-units`);
 

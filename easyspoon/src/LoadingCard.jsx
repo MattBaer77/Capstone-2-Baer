@@ -1,7 +1,5 @@
 import React from "react";
 
-// import "./LoadingCard.css"
-
 const LoadingCard = () => {
     
     return (

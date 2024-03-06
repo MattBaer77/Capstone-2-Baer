@@ -25,13 +25,10 @@ const Home = () => {
         async function getCache() {
 
             try {
-                // let recipes = await EasySpoonAPI.getRecipesCache();
                 let recipes;
                 if(currentUser) {
-                    console.log("THERE IS A USER")
                     recipes = currentUser.cache
                 } else {
-                    console.log("NO USER")
                     recipes = await EasySpoonAPI.getRecipesCache();
                 }
                 setRecipesCache([...recipes])

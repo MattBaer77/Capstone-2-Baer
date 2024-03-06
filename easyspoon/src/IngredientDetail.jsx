@@ -40,27 +40,16 @@ const IngredientDetail = () => {
 
                 if(currentGroceryList) {
 
-                    console.log("THERE IS A CURRENT")
-
-                    console.log(currentGroceryList)
-                    console.log(id)
-                    console.log(parseInt(id))
-
                     ingredient = currentGroceryList.ingredients.find(i => i.ingredientId === parseInt(id)) || {}
-                    console.log(ingredient)
 
                 } else {
-                    console.log("getIngredient ELSE RAN")
                     ingredient = {}
                 }
 
                 if(!ingredient.detail) {
 
-                    console.log("trying to get details")
                     const detail = await currentUser.userApi.getIngredientById(id);
-                    console.log(detail)
                     ingredient["detail"] = detail
-                    console.log(ingredient)
 
                 }
 

@@ -20,19 +20,12 @@ const UserProvider = ({children}) => {
 
             const { username } = jwtDecode(token)
 
-            console.log(username)
-
             const userApi = EasySpoonAPI;
             userApi.token = token;
-            console.log(username)
             const { user } = await userApi.getUserDetails(username);
-            console.log(user)
 
             // GET GROCERYLISTS DETAIL FOR currentUser
-            // let groceryLists = "Hello"
             let groceryLists = await userApi.getAllUsersGroceryLists(username);
-
-            console.log(groceryLists)
 
             for (let groceryList of groceryLists){
 
@@ -51,8 +44,6 @@ const UserProvider = ({children}) => {
                 }
 
             }
-
-            console.log(groceryLists)
     
             setCurrentUser(() => {
     
@@ -69,8 +60,6 @@ const UserProvider = ({children}) => {
                 }
     
             })
-
-            console.log(currentUser)
 
             if(currentGroceryList) {
 

@@ -14,8 +14,6 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
     const handleAdd = async(item) => {
 
         setIsLoading(true)
-        console.log(item)
-        console.log(currentGroceryList)
         try {
 
             if(item.title){
@@ -28,7 +26,6 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
             } else if (item.name) {
 
                 // const ingredient = currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, item.id)
-                console.log(item.name)
                 setIsLoading(false)
             }
 

@@ -20,9 +20,6 @@ const UserIntolerancesEditForm = () => {
     const [success, toggleSuccess] = useState("")
     const [error, setError] = useState(null)
 
-    console.log(formData)
-    console.log(currentUser)
-
     if (!currentUser) {
 
         return <Navigate to='/login'/>
@@ -36,8 +33,6 @@ const UserIntolerancesEditForm = () => {
             try {
 
                 const {intolerances} = await EasySpoonAPI.getIntolerancesAll();
-
-                console.log(intolerances)
 
                 setIntolerancesAll([...intolerances])
                 setFormData([...currentUser.intolerances])
@@ -68,7 +63,6 @@ const UserIntolerancesEditForm = () => {
             await loadUser(currentUser.token);
 
         } catch (error) {
-            console.log(error);
             setError(error);
         }
 

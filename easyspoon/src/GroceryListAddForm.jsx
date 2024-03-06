@@ -50,19 +50,14 @@ const GroceryListAddForm = () => {
 
         let listName = {...formData}
 
-        console.log(currentUser.username)
-        console.log(listName)
-
         try {
 
             const res = await currentUser.userApi.createGroceryList(currentUser.username, listName)
-            console.log(res)
             await loadUser(currentUser.token)
             setSuccess(`New GroceryList: "${listName.listName}" added!`)
             setError(null)
 
         } catch (e) {
-            console.log(e)
             setError(e)
         }
 

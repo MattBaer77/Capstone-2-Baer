@@ -19,41 +19,11 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
-    // const [possibleUnits, setPossibleUnits] = useState(null)
-
-    // POSSIBLE INFINITE LOOP, MAYBE MOVE getPossibleUnits ONE LEVEL UP...
-    // useEffect(() => {
-
-    //     async function getPossibleUnits() {
-
-    //         setIsLoading(true)
-
-    //         try {
-
-    //             const possibleUnits = await currentUser.userApi.getIngredientInformationPossibleUnitsById(ingredient.id)
-    //             console.log(possibleUnits)
-    //             setPossibleUnits(possibleUnits)
-    //             setIsLoading(false)
-
-    //         } catch (e) {
-    //             setError(e)
-    //         } finally {
-    //             setIsLoading(false)
-    //         }
-
-    //     }
-
-    //     getPossibleUnits()
-
-    // }, []);
 
     const handleChange = (e) => {
 
         const {name, value} = e.target;
         const parsedValue = name === "amount" || name === "minimumAmount" ? parseInt(value, 10) : value;
-
-        console.log(name)
-        console.log(value)
 
         setFormData((data) => {
 

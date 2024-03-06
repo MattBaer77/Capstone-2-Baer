@@ -51,7 +51,6 @@ const RecipesList = () => {
         if (!data.searchTerms) {
 
             let recipes = await currentUser.cache
-            console.log(recipes)
             setRecipes([...recipes])
 
         } else {
@@ -61,7 +60,6 @@ const RecipesList = () => {
                 intolerances:currentUser.intolerances
             }
             let recipes = await currentUser.userApi.getRecipesSearch(search)
-            console.log(recipes)
             setRecipes([...recipes])
 
         }

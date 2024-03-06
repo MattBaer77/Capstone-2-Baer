@@ -8,8 +8,6 @@ import "./Form.css"
 
 const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits}) => {
 
-    console.log(ingredient)
-
     const INITIAL_STATE = {
 
         ingredientId: ingredient.ingredientId,
@@ -27,9 +25,6 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
         const {name, value} = e.target;
         const parsedValue = name === "amount" || name === "minimumAmount" ? parseInt(value, 10) : value;
-
-        console.log(name)
-        console.log(value)
 
         setFormData((data) => {
 
@@ -49,7 +44,6 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
         try {
 
-            console.log(ingredientData)
             await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
             await loadUser(currentUser.token)
             setError(null)

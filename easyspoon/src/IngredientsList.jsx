@@ -32,8 +32,6 @@ const IngredientsList = () => {
                 let ingredients = currentUser.cache.flatMap(r => r.extendedIngredients)
                 const ingredientsNoDuplicates = removeDuplicateById(ingredients)
 
-                console.log(ingredientsNoDuplicates)
-
                 for(let ingredient of ingredientsNoDuplicates) {
                     ingredient.amount = null
                     ingredient.unit = null
@@ -69,7 +67,6 @@ const IngredientsList = () => {
                 intolerances:currentUser.intolerances
             }
             let ingredients = await currentUser.userApi.getIngredientsSearch(search)
-            console.log(ingredients)
             setIngredients([...ingredients])
 
         }

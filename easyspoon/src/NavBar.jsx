@@ -24,9 +24,6 @@ const NavBar = () => {
                 <p>|</p>
 
                 <NavLink exact="true" to={'/logout'}>Log Out</NavLink>
-
-                {/* <p>|</p> */}
-
                 <NavLink exact="true" to={'/user'}>{currentUser.username}</NavLink>
 
             </div>

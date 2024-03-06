@@ -30,8 +30,6 @@ const GroceryListsList = () => {
 
                 let groceryLists = currentUser.groceryLists;
 
-                console.log(currentUser.getGroceryLists)
-
                 setGroceryLists([...groceryLists])
                 setIsLoading(false)
 
