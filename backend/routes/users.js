@@ -66,7 +66,6 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
         if(!user.cache){
 
             const { intolerances } = await User.getIntolerances(req.params.username)
-            console.log(intolerances)
 
             let recipes;
 
@@ -158,7 +157,6 @@ router.get("/:username/cache", ensureAdminOrEffectedUser, async (req, res, next)
         if(!user.cache){
 
             const { intolerances } = await User.getIntolerances(req.params.username)
-            // console.log(intolerances)
             const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
             user.cache = recipes
 
@@ -194,7 +192,6 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
         if(!data){
 
             const { intolerances } = await User.getIntolerances(req.params.username)
-            // console.log(intolerances)
             const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
             data = recipes
 

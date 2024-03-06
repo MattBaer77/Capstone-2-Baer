@@ -20,8 +20,6 @@ const router = express.Router({ mergeParams: true });
 */
 router.get('/', async (req, res, next) => {
 
-  console.log("Joke Test Route");
-
   try {
 
     const data = await SpoonApi.getARandomFoodJoke()

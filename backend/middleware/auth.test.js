@@ -540,8 +540,6 @@ describe("ensureAdminOrListOwner", () => {
 
         const next =  function(e) {
 
-            console.log(e)
-
             expect(e instanceof ExpressError).toBeTruthy();
             expect(e.message).toEqual('Bad Request - Must include id like "1" or "100"')
             expect(e.status).toEqual(400)

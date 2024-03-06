@@ -48,8 +48,6 @@ describe("sqlForPartialUpdate", function () {
 
         reFormattedSql = sqlForPartialUpdate(dataToUpdate, jsToSql)
 
-        console.log(reFormattedSql)
-
         expect(reFormattedSql).toEqual(
             {
                 setCols: '"first_name"=$1, "lastName"=$2',
@@ -73,8 +71,6 @@ describe("sqlForPartialUpdate", function () {
         }
 
         reFormattedSql = sqlForPartialUpdate(dataToUpdate, jsToSql)
-
-        console.log(reFormattedSql)
 
         expect(reFormattedSql).toEqual(
             {

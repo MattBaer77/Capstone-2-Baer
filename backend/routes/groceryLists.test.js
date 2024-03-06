@@ -1882,8 +1882,6 @@ describe('DELETE /grocery-lists/:id/recipes', () => {
       expect(resp.body).toEqual(true)
 
       const dataCheck = await GroceryList.get(1)
-      console.log("***DATA CHECK ---")
-      console.log(dataCheck)
       expect(dataCheck).toEqual(groceryListRecipeAddedOnceIngredient51Incremented1ThenRecipeDeleted)
 
     });

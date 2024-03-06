@@ -426,8 +426,6 @@ describe('GET /recipes/:id', () => {
             .get(`/recipes/12`)
             .set("authorization", `Bearer ${u1Token}`)
 
-        console.log(resp.body)
-
         expect(resp.statusCode).toEqual(200);
         expect(resp.body).toEqual(mockResponseGetRecipeInformation)
         expect(SpoonApi.getRecipeInformation).toHaveBeenCalledTimes(1)

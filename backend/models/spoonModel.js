@@ -16,19 +16,13 @@ var defaultClient = spoonacularApi.ApiClient.instance;
 var apiKeyScheme = defaultClient.authentications['apiKeyScheme'];
 apiKeyScheme.apiKey = spoonacularKey
 
+// NOT USED -
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //apiKeyScheme.apiKeyPrefix['x-api-key'] = "Token"
-
-// const maxRecipes = 10
-// const maxIngredients = 10
-// consolidate to above variables or export from config
+// NOT USED
 
 // 59 min cache
 const cacheExpiration = 59 * 60 * 1000
-
-// 2 min cache - DEV
-// const cacheExpiration = 2 * 60 * 1000
-
 
 class SpoonApi {
 
@@ -65,10 +59,7 @@ class SpoonApi {
     // METHODS FOR USE IN ROUTES -
 
     // CACHE -
-    // static isCacheValid = () => {
-    //     return this.randomCache && this.cacheTimestamp && Date.now() - this.cacheTimestamp < this.CACHE_EXPIRATION_THRESHOLD;
-    // };
-    
+
     static fetchFreshRandomData = async (number=10) => {
 
         // LIMIT API USE
@@ -95,25 +86,9 @@ class SpoonApi {
     static clearCacheIfExpired = () => {
 
         this.count++
-        // console.log("Cache Clear Count")
-        // console.log(this.count)
-
-        // if (this.cacheTimestamp && Date.now() - this.cacheTimestamp > this.CACHE_EXPIRATION_THRESHOLD) {
-        //     console.log("Clearing ALL caches due to expiration");
-        //     this.randomCache = null;
-        //     this.recipesCache.clear()
-        //     this.ingredientsCache.clear()
-        //     this.cacheTimestamp = null;
-        // }
-
-        // console.log(this.randomCache)
-        // console.log(this.recipesCache)
-        // console.log(this.ingredientsCache)
-
         this.randomCache = null;
         this.recipesCache.clear()
         this.ingredientsCache.clear()
-        // this.cacheTimestamp = null;
 
     };
 
@@ -127,12 +102,10 @@ class SpoonApi {
 
             if (this.randomCache) {
 
-                // console.log(`Serving cached randomCache`)
                 return this.randomCache
 
             } else {
 
-                // console.log(`Filling randomCache`)
                 const data = await this.fetchFreshRandomData();
                 this.randomCache = data;
 
@@ -227,10 +200,6 @@ class SpoonApi {
 
             const dedupedResults = dedupeRecipeIngredients(results)
 
-            // for ingredient of dedupedResults.extendedIngredients
-            // normalize ingredient
-            // save normalized ingredient to ingredientsCache
-
             for(let ingredient of dedupedResults.extendedIngredients){
 
                 if(!this.ingredientsCache.has(ingredient.id)){
@@ -281,17 +250,11 @@ class SpoonApi {
             if(this.ingredientsCache.has(id)) {
                 
                 results = this.ingredientsCache.get(id)
-                // console.log(this.ingredientsCache)
                 return results
 
             }
 
             results = await this.getIngredientInformation(id, opts);
-
-            // check if id in ingredientsPossibleUnitsCache
-            // save {id, possibleUnits} to ingredientsPossibleUnitsCache
-            // normalize ingredient
-            // save normalized ingredient to ingredientsCache
 
             if(!this.ingredientsPossibleUnitsCache.has(results.id)){
                 this.ingredientsPossibleUnitsCache.set(results.id, results.possibleUnits)
@@ -313,8 +276,6 @@ class SpoonApi {
             }
 
             const normalizedIngredientFromCache = this.ingredientsCache.get(results.id)
-
-            // console.log(this.ingredientsCache)
 
             return normalizedIngredientFromCache;
 
@@ -346,17 +307,11 @@ class SpoonApi {
             if(this.ingredientsPossibleUnitsCache.has(id)) {
                 
                 results = this.ingredientsPossibleUnitsCache.get(id)
-                // console.log(this.ingredientsPossibleUnitsCache)
                 return results
 
             }
 
             results = await this.getIngredientInformation(id, opts);
-
-            // check if id in ingredientsPossibleUnitsCache
-            // save {id, possibleUnits} to ingredientsPossibleUnitsCache
-            // normalize ingredient
-            // save normalized ingredient to ingredientsCache
 
             if(!this.ingredientsPossibleUnitsCache.has(results.id)){
                 this.ingredientsPossibleUnitsCache.set(results.id, results.possibleUnits)
@@ -378,8 +333,6 @@ class SpoonApi {
             }
 
             const possibleUnitsFromCache = this.ingredientsPossibleUnitsCache.get(results.id)
-
-            // console.log(this.ingredientsPossibleUnitsCache)
             
             return possibleUnitsFromCache;
 
@@ -395,8 +348,6 @@ class SpoonApi {
         intolerances = intolerancesToQueryString(intolerances)
 
         const url = `https://api.spoonacular.com/recipes/random?apiKey=${spoonacularKey}&number=${number}&exclude-tags=${intolerances}`
-
-        // console.log(url)
 
         try {
 
@@ -419,37 +370,6 @@ class SpoonApi {
         }
 
     }
-
-    // IN PROGRESS
-    // static randomRecipesTagsIntolerances = async (number=10, intolerances=[]) => {
-
-    //     // LIMIT API USE
-    //     if (number === null || number <=0 || number > 10 || typeof number !== "number") number = 10;
-
-    //     // intolerances = 'dairy free, gluten free'
-    //     intolerances = 'dairy free, egg free, gluten free, grain free, seafood free'
-    //     // intolerances = '';
-
-    //     try {
-
-    //         const opts = {
-    //             limitLicense: true,
-    //             tags: intolerances,
-    //             number: number
-    //         };
-
-    //         console.log(opts)
-    
-    //         const data = await this.getRandomRecipes(opts);
-    //         this.recipesCache = data;
-    //         this.cacheTimestamp = Date.now();
-    //         return data;
-
-    //     } catch (e) {
-    //         throw e;
-    //     }
-
-    // };
 
 }
 

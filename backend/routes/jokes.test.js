@@ -1,11 +1,5 @@
 "use strict";
 
-// // WORKING BLOCK
-// const SpoonApi = require("../models/spoonModel")
-// jest.mock("../models/spoonModel")
-// SpoonApi.getARandomFoodJoke.mockResolvedValue({ text: "Mocked food joke data" });
-// // WORKING BLOCK
-
 jest.mock('../models/spoonModel', () => {
 
     const originalSpoonModel = jest.requireActual('../models/spoonModel');

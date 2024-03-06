@@ -277,26 +277,15 @@ router.delete("/:id/recipes/:recipeId", ensureAdminOrListOwner, async (req, res,
 
         for(let ingredient of recipe.extendedIngredients) {
 
-            console.log("looking")
-
             const groceryListIngredient = groceryList.ingredients.find(i => i.ingredientId === ingredient.id);
-
-            console.log(groceryListIngredient)
 
             if(groceryListIngredient){
 
                 if(ingredient.amount === groceryListIngredient.amount){
 
-                    console.log("DELETING")
-                    console.log(ingredient.id)
-                    console.log(ingredient.amount)
-                    console.log(groceryListIngredient.minimumAmount)
-
                     await GroceryList.deleteIngredient(groceryList.id, ingredient.id)
 
                 } else {
-
-                    console.log("REDUCING AMOUNT")
 
                     const newAmount = (groceryListIngredient.amount - ingredient.amount)
                     const newMinimumAmount = (groceryListIngredient.minimumAmount - ingredient.amount)

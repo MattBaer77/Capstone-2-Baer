@@ -449,10 +449,8 @@ describe("test main methods", () => {
         test("works - id: valid, amount: null, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformation(3)
-            console.log(results)
             expect(results).toEqual(mockNormalizedIngredientInformation);
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
-
 
         })
 
@@ -575,10 +573,8 @@ describe("test main methods", () => {
         test("works - id: valid, amount: null, unit: null", async () => {
 
             const results = await SpoonApi.ingredientInformationPossibleUnits(3)
-            console.log(results)
             expect(results).toEqual(mockOnlyPossibleUnits);
             expect(SpoonApi.getIngredientInformation).toHaveBeenCalledWith(3, {amount: null, unit: null})
-
 
         })
 

@@ -30,10 +30,6 @@ const router = express.Router();
 
 router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
 
-    // console.log("/ingredients/search hit with:")
-    // console.log(`query(s):`, req.query.query)
-    // console.log(`intolerance(s)`, req.query.intolerances)
-
     const { intolerances } = await User.getIntolerances(res.locals.user.username)
 
     let intoleranceString = '';
@@ -57,8 +53,6 @@ router.get('/search', ensureUserLoggedIn, async (req, res, next) => {
     }
 
     intoleranceString = intoleranceString.slice(0, -1);
-
-    // console.log(intoleranceString)
 
     try {
 
@@ -116,10 +110,6 @@ router.get('/:id/possible-units', ensureUserLoggedIn, async (req, res, next) => 
     try {
 
         const id = parseInt(req.params.id)
-
-        console.log(id)
-        console.log(typeof id)
-
         const data = await SpoonApi.ingredientInformationPossibleUnits(id)
         return res.json(data)
 
