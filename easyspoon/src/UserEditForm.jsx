@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 
 import {useUserContext} from "./hooks"
 import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import './Card.css'
 import './Form.css'
@@ -20,8 +21,9 @@ const UserEditForm = () => {
         
     }
 
+    const[isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState(INITIAL_STATE);
-    const [success, toggleSuccess] = useState("")
+    const [success, toggleSuccess] = useState(null)
     const [error, setError] = useState(null)
 
     if (!currentUser) {
@@ -48,19 +50,45 @@ const UserEditForm = () => {
     const handleSubmit = async(e) => {
 
         e.preventDefault();
+        setIsLoading(true)
         let userInput = {...formData}
 
         try {
 
             const res = await currentUser.userApi.editUser(userInput, currentUser.username)
             await loadUser(currentUser.token)
-            
             setError(null)
             toggleSuccess("User info updated.")
 
+            setIsLoading(false)
+
         } catch (e) {
             setError(e)
+        } finally {
+            setIsLoading(false)
         }
+
+    }
+
+    if (isLoading) {
+        return (
+
+            <LoadingCard/>
+
+        )
+    }
+
+    if (error) {
+
+        return (
+
+            <div className="Err">
+
+                {error && <MessageCard className="error" message={error.message}/>}
+
+            </div>
+
+        )
 
     }
 
@@ -71,7 +99,7 @@ const UserEditForm = () => {
             <div className="Card Form">
 
                 {error && <MessageCard className="error" message={error.message}/>}
-                {success && <MessageCard className="" message={success.message}/>}
+                {success && <MessageCard className="success" message={success}/>}
 
                 <h2>Edit User Profile:</h2>
 

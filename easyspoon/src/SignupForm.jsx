@@ -23,6 +23,7 @@ const SignupForm = () => {
         email:""
     }
 
+    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null)
 
@@ -48,6 +49,7 @@ const SignupForm = () => {
     const handleSubmit = async(e) => {
 
         e.preventDefault();
+        setIsLoading(true)
         const userInput = {...formData}
 
         try {
@@ -59,8 +61,18 @@ const SignupForm = () => {
 
         } catch(e) {
             setError(e)
+        } finally {
+            setIsLoading(false)
         }
 
+    }
+
+    if (isLoading) {
+        return (
+
+            <LoadingCard/>
+
+        )
     }
 
     return (

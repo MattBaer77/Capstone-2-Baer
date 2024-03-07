@@ -17,7 +17,7 @@ const UserIntolerancesEditForm = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const [formData, setFormData] = useState([])
-    const [success, toggleSuccess] = useState("")
+    const [success, toggleSuccess] = useState(null)
     const [error, setError] = useState(null)
 
     if (!currentUser) {
@@ -52,6 +52,8 @@ const UserIntolerancesEditForm = () => {
 
     const handleToggle = async (e) => {
 
+        setIsLoading(true)
+
         try {
 
             const { id, checked } = e.target;
@@ -60,12 +62,17 @@ const UserIntolerancesEditForm = () => {
             } else {
                 await currentUser.userApi.deleteUserIntolerance(currentUser.username, id);
             }
+            setError(null)
+            toggleSuccess("User info updated.")
             await loadUser(currentUser.token);
+
+            setIsLoading(false)
 
         } catch (error) {
             setError(error);
+        } finally {
+            setIsLoading(false)
         }
-
     };
 
     if (isLoading) {
@@ -95,6 +102,9 @@ const UserIntolerancesEditForm = () => {
         <div className="Content">
 
             <div className="Card Form UserIntolerancesForm">
+
+            {error && <MessageCard className="error" message={error.message}/>}
+            {success && <MessageCard className="success" message={success}/>}
 
                 <h2>Select Any Dietary Intolerances:</h2>
 

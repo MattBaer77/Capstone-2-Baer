@@ -5,6 +5,7 @@ import { useNavigate, Navigate } from "react-router-dom"
 import EasySpoonAPI from "./Api";
 import {useUserContext} from "./hooks"
 import MessageCard from "./MessageCard";
+import LoadingCard from "./LoadingCard";
 
 import './Content.css'
 import './Card.css'
@@ -21,6 +22,7 @@ const LoginForm = () => {
         password:""
     }
 
+    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null)
 
@@ -46,6 +48,7 @@ const LoginForm = () => {
     const handleSubmit = async(e) => {
 
         e.preventDefault();
+        setIsLoading(true)
         const userInput = {...formData}
 
         try {
@@ -57,8 +60,18 @@ const LoginForm = () => {
 
         } catch(e) {
             setError(e)
+        } finally {
+            setIsLoading(false)
         }
 
+    }
+
+    if (isLoading) {
+        return (
+
+            <LoadingCard/>
+
+        )
     }
 
     return (
