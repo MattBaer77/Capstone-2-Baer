@@ -16,40 +16,44 @@ const PreviewCard = ({item, currentUser, loadUser, currentGroceryList, groceryLi
         setIsLoading(true)
         try {
 
-            if(item.title){
+            // if(item.title){
 
                 await currentUser.userApi.postRecipeToGroceryList(currentGroceryList.id, item.id)
                 await loadUser(currentUser.token)
                 setIsLoading(false)
                 navigate('/grocery-lists')
 
-            } else if (item.name) {
+            // } else if (item.name) {
 
                 // const ingredient = currentUser.userApi.postIngredientToGroceryList(currentGroceryList.id, item.id)
-                setIsLoading(false)
-            }
+                // setIsLoading(false)
+            // }
 
         } catch(e) {
-            // console.error(e)
             setError(e)
-            setIsLoading(false)
 
+        } finally {
+            setIsLoading(false)
         }
 
     };
 
     const handleDelete = async() => {
 
+        setIsLoading(true)
         try {
 
             await currentUser.userApi.deleteRecipeOnGroceryList(groceryListId, item.id)
             await loadUser(currentUser.token)
             setError(null)
+            setIsLoading(false)
 
         } catch (e) {
 
             setError(e)
 
+        } finally {
+            setIsLoading(false)
         }
 
     }

@@ -6,22 +6,27 @@ import MessageCard from "./MessageCard";
 
 import "./IngredientCard.css"
 
-const IngredientCard = ({ingredient, currentUser, loadUser, currentGroceryList, groceryListId}) => {
+const IngredientCard = ({ingredient, currentUser, loadUser, currentGroceryList, groceryListId, setIsLoading}) => {
 
     const [error, setError] = useState(null)
 
     const handleDelete = async() => {
+
+        setIsLoading(true)
 
         try {
 
             await currentUser.userApi.deleteIngredientOnGroceryList(groceryListId, ingredient.ingredientId)
             await loadUser(currentUser.token)
             setError(null)
+            setIsLoading(false)
 
         } catch (e) {
 
             setError(e)
 
+        } finally {
+            setIsLoading(false)
         }
 
     }

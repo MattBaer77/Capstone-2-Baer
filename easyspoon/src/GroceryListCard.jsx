@@ -7,22 +7,28 @@ import MessageCard from "./MessageCard";
 import "./GroceryListCard.css"
 import "./CardContent.css"
 
-const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList, setCurrentGroceryList}) => {
+const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList, setCurrentGroceryList, setIsLoading}) => {
 
+    // const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const handleDelete = async() => {
+
+        setIsLoading(true)
 
         try {
 
             await currentUser.userApi.deleteGroceryListById(groceryList.id)
             await loadUser(currentUser.token)
             setError(null)
+            setIsLoading(true)
             
         } catch (e) {
 
             setError(e)
 
+        } finally {
+            setIsLoading(false)
         }
 
     }
@@ -54,7 +60,7 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
             <div className="CardContent">
 
-                {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
+                {groceryList.recipes.map(r => <PreviewCard key={r.id} item={r.detail} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id} setIsLoading={setIsLoading}/>)}
 
             </div>
 
@@ -62,7 +68,7 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
             <div className="CardContent ingredients">
 
-                {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id}/>)}
+                {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id} setIsLoading={setIsLoading}/>)}
 
             </div>
 
