@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import { useNavigate, Navigate } from "react-router-dom";
 
@@ -6,18 +6,35 @@ import MessageCard from "./MessageCard";
 
 import "./Form.css"
 
-const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits}) => {
+const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits, setIsLoading}) => {
 
-    const INITIAL_STATE = {
+    // const INITIAL_STATE = {
 
+    //     ingredientId: ingredient.ingredientId,
+    //     amount: ingredient.amount,
+    //     unit: ingredient.unit,
+    //     minimumAmount: ingredient.minimumAmount,
+
+    // }
+
+    // const [formData, setFormData] = useState(INITIAL_STATE);
+
+    const [formData, setFormData] = useState({
         ingredientId: ingredient.ingredientId,
         amount: ingredient.amount,
         unit: ingredient.unit,
         minimumAmount: ingredient.minimumAmount,
+    });
 
-    }
+    useEffect(() => {
+        setFormData({
+            ingredientId: ingredient.ingredientId,
+            amount: ingredient.amount,
+            unit: ingredient.unit,
+            minimumAmount: ingredient.minimumAmount,
+        });
+    }, [ingredient]);
 
-    const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
 
@@ -40,17 +57,24 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
     const handleSubmit = async(e) => {
 
         e.preventDefault();
+
+        setIsLoading(true)
+        
         const ingredientData = {amount:formData.amount}
 
         try {
 
-            await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
+            const res = await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
+            console.log(res)
             await loadUser(currentUser.token)
             setError(null)
             setSuccess("Ingredient Successfully Updated")
+            setIsLoading(false)
 
         } catch(e) {
             setError(e)
+        } finally {
+            setIsLoading(false)
         }
 
     };

@@ -16,6 +16,8 @@ const UserProvider = ({children}) => {
 
     const loadUser = async (token) => {
 
+        console.log("LOADING USER")
+
         try {
 
             const { username } = jwtDecode(token)
@@ -44,6 +46,23 @@ const UserProvider = ({children}) => {
                 }
 
             }
+
+            if(currentGroceryList) {
+
+                console.log("THERE WAS A CURRENT GROCERY LIST")
+
+                console.log(groceryLists)
+
+                const foundList = (groceryLists.find(groceryList => groceryList.id === currentGroceryList.id))
+                console.log(foundList)
+
+                // setCurrentGroceryList((groceryLists.find(groceryList => groceryList.id === currentGroceryList.id)))
+                
+                setCurrentGroceryList(foundList)
+
+                console.log(currentGroceryList)
+
+            }
     
             setCurrentUser(() => {
     
@@ -61,11 +80,15 @@ const UserProvider = ({children}) => {
     
             })
 
-            if(currentGroceryList) {
+            // if(currentGroceryList) {
 
-                setCurrentGroceryList((groceryLists.find(groceryList => groceryList.id === currentGroceryList.id))) 
+            //     console.log("THERE WAS A CURRENT GROCERY LIST")
 
-            }
+            //     setCurrentGroceryList((groceryLists.find(groceryList => groceryList.id === currentGroceryList.id))) 
+
+            //     console.log(currentGroceryList)
+
+            // }
     
             localStorage.setItem("token", token)
             setIsLoading(false)

@@ -20,7 +20,7 @@ const IngredientDetail = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [ingredient, setIngredient] = useState(null);
+    const [ingredient, setIngredient] = useState({});
     const [possibleUnits, setPossibleUnits] = useState(null);
 
     if(!currentUser) {
@@ -33,30 +33,34 @@ const IngredientDetail = () => {
 
         async function getIngredientAndDetail() {
 
-            let ingredient;
+            // setIngredient(INITIAL_STATE)
+            console.log("LOADING INGREDIENT")
+
+            let ingredientLoad;
             let possibleUnits;
 
             try {
 
                 if(currentGroceryList) {
 
-                    ingredient = currentGroceryList.ingredients.find(i => i.ingredientId === parseInt(id)) || {}
+                    ingredientLoad = currentGroceryList.ingredients.find(i => i.ingredientId === parseInt(id)) || {}
+                    console.log(ingredientLoad)
 
                 } else {
-                    ingredient = {}
+                    ingredientLoad = {}
                 }
 
-                if(!ingredient.detail) {
+                if(!ingredientLoad.detail) {
 
                     const detail = await currentUser.userApi.getIngredientById(id);
-                    ingredient["detail"] = detail
+                    ingredientLoad["detail"] = detail
 
                 }
 
                 possibleUnits = await currentUser.userApi.getIngredientInformationPossibleUnitsById(id)
                 possibleUnits ? setPossibleUnits(possibleUnits) : setPossibleUnits(["each", "pound", "package"])
 
-                setIngredient(ingredient)
+                setIngredient(ingredientLoad)
                 setIsLoading(false)
 
             } catch (e) {
@@ -69,7 +73,7 @@ const IngredientDetail = () => {
 
         getIngredientAndDetail();
 
-    }, [])
+    }, [currentGroceryList])
 
     if (isLoading) {
         return (
