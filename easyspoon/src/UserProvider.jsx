@@ -16,7 +16,7 @@ const UserProvider = ({children}) => {
 
     const loadUser = async (token) => {
 
-        console.log("LOADING USER")
+        // console.log("LOADING USER")
 
         try {
 
@@ -49,18 +49,12 @@ const UserProvider = ({children}) => {
 
             if(currentGroceryList) {
 
-                console.log("THERE WAS A CURRENT GROCERY LIST")
-
-                console.log(groceryLists)
-
                 const foundList = (groceryLists.find(groceryList => groceryList.id === currentGroceryList.id))
-                console.log(foundList)
+                // console.log(foundList)
 
                 // setCurrentGroceryList((groceryLists.find(groceryList => groceryList.id === currentGroceryList.id)))
                 
                 setCurrentGroceryList(foundList)
-
-                console.log(currentGroceryList)
 
             }
     

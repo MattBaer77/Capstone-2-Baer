@@ -65,7 +65,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
         try {
 
             const res = await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
-            console.log(res)
+            // console.log(res)
             await loadUser(currentUser.token)
             setError(null)
             setSuccess("Ingredient Successfully Updated")

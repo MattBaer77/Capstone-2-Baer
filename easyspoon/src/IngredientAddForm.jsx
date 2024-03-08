@@ -5,7 +5,7 @@ import MessageCard from "./MessageCard";
 import "./Form.css"
 import { useEffect } from "react";
 
-const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits}) => {
+const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredient, possibleUnits, setIsLoading}) => {
 
     const INITIAL_STATE = {
 
@@ -39,6 +39,9 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
     const handleSubmit = async(e) => {
 
         e.preventDefault();
+
+        setIsLoading(true)
+
         const ingredientData = {...formData}
 
         try {
@@ -47,9 +50,12 @@ const IngredientAddForm = ({currentUser, loadUser, currentGroceryList, ingredien
             await loadUser(currentUser.token)
             setError(null)
             setSuccess("Ingredient Successfully Added")
+            setIsLoading(false)
 
         } catch(e) {
             setError(e)
+        } finally {
+            setIsLoading(false)
         }
 
     };

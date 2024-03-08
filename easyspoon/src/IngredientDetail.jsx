@@ -34,7 +34,7 @@ const IngredientDetail = () => {
         async function getIngredientAndDetail() {
 
             // setIngredient(INITIAL_STATE)
-            console.log("LOADING INGREDIENT")
+            // console.log("LOADING INGREDIENT")
 
             let ingredientLoad;
             let possibleUnits;
@@ -44,7 +44,7 @@ const IngredientDetail = () => {
                 if(currentGroceryList) {
 
                     ingredientLoad = currentGroceryList.ingredients.find(i => i.ingredientId === parseInt(id)) || {}
-                    console.log(ingredientLoad)
+                    // console.log(ingredientLoad)
 
                 } else {
                     ingredientLoad = {}

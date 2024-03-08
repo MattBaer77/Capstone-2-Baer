@@ -68,7 +68,7 @@ const GroceryListCard = ({groceryList, currentUser, loadUser, currentGroceryList
 
             <div className="CardContent ingredients">
 
-                {groceryList.ingredients.map(i => <IngredientCard key={i.id} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id} setIsLoading={setIsLoading}/>)}
+                {groceryList.ingredients.map(i => <IngredientCard key={i.ingredientId} ingredient={i} currentUser={currentUser} loadUser={loadUser} currentGroceryList={currentGroceryList} groceryListId={groceryList.id} setIsLoading={setIsLoading}/>)}
 
             </div>
 
