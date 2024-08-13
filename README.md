@@ -90,3 +90,51 @@ In order to run all **frontend** tests -
 - run "npm run test"
 
 Note: all frontend tests are located in easyspoon/src/tests, but can be run from the easyspoon/ directory.
+
+<br>
+
+## Setup
+
+### Database
+
+- install PostgreSQL 15.1 or later:
+    - https://www.postgresql.org/
+    - follow installation instructions for PostgreSQL
+- navigate to /backend
+- run "psql < easyspoon.sql" to set up database tables and seed development and test database
+
+### Backend
+
+- To set up and run the backend, get an API Key by creating an account at: https://spoonacular.com/food-api
+
+- Select a subscription that is appropriate for your use case. As of 2024 everything in this README can be accomplished through the "free plan."
+
+- Required - node v21.4.0 or later, other requirements and dependencies can be found in: backend/package.json
+- navigate to /backend
+- to set up backend run
+
+        npm i
+
+- to create spoonacularKey environment variable in /backend run:
+
+        echo "spoonacularKey='your_key_here'" > .env
+
+- to start backend run:
+
+        npm start
+        
+    or
+        
+        node server.js
+
+### Frontend
+
+- Required - node v21.4.0 or later, other requirements and dependencies can be found in: easyspoon/package.json
+- navigate to /easyspoon
+- to set up easyspoon run:
+
+        npm i
+
+- to start frontend run:
+
+        npm run dev
