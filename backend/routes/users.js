@@ -70,7 +70,8 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
             let recipes;
 
             if(intolerances.length) {
-                const cache = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+                // const cache = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+                const cache = await SpoonApi.serveRandomCache() // REPLACEMENT TO REDUCE API CALLS DURING DEV - COMMENT THIS LINE AND UNCOMMENT LINE ABOVE
                 recipes = cache.recipes
             } else {
                 const cache = await SpoonApi.serveRandomCache()
