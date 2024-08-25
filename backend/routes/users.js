@@ -70,8 +70,8 @@ router.get("/:username/details", ensureAdminOrEffectedUser, async (req, res, nex
             let recipes;
 
             if(intolerances.length) {
-                // const cache = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
-                const cache = await SpoonApi.serveRandomCache() // REPLACEMENT TO REDUCE API CALLS DURING DEV - COMMENT THIS LINE AND UNCOMMENT LINE ABOVE
+                const cache = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+                // const cache = await SpoonApi.serveRandomCache() // REPLACEMENT TO REDUCE API CALLS DURING DEV - COMMENT THIS LINE AND UNCOMMENT LINE ABOVE
                 recipes = cache.recipes
             } else {
                 const cache = await SpoonApi.serveRandomCache()
@@ -186,14 +186,33 @@ router.get("/:username/cache-only", ensureAdminOrEffectedUser, async (req, res, 
         
         let cache = await User.getCache(req.params.username);
 
+        console.log(cache)
+
         let data;
 
         if(cache) data = cache.data
 
         if(!data){
 
+            // const { intolerances } = await User.getIntolerances(req.params.username)
+            // const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+            // data = recipes
+
             const { intolerances } = await User.getIntolerances(req.params.username)
-            const { recipes } = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+
+            let recipes;
+
+            if(intolerances.length) {
+                console.log("SOME INTOLERANCES")
+                const cache = await SpoonApi.randomRecipesExcludeIntolerances(intolerances)
+                // const cache = await SpoonApi.serveRandomCache() // REPLACEMENT TO REDUCE API CALLS DURING DEV - COMMENT THIS LINE AND UNCOMMENT LINE ABOVE
+                recipes = cache.recipes
+            } else {
+                console.log("NO INTOLERANCES")
+                const cache = await SpoonApi.serveRandomCache()
+                recipes= cache.recipes
+            }
+                        
             data = recipes
 
         }
@@ -253,7 +272,12 @@ router.post("/:username/intolerances/:intoleranceId", ensureAdminOrEffectedUser,
 
         await User.addUserIntolerance(username, intoleranceId)
 
-        return res.json(true)
+        // LEGACY BEHAVIOR -
+        // return res.json(true)
+
+        const {intolerances} = await User.getIntolerances(username)
+        // console.log(intolerances)
+        return res.json({username, intolerances})
 
     } catch (e) {
         return next(e)
@@ -277,7 +301,12 @@ router.delete("/:username/intolerances/:intoleranceId", ensureAdminOrEffectedUse
 
         await User.removeUserIntolerance(username, intoleranceId)
 
-        return res.json(true)
+        // LEGACY BEHAVIOR -
+        // return res.json(true)
+
+        const {intolerances} = await User.getIntolerances(username)
+        // console.log(intolerances)
+        return res.json({username, intolerances})
 
     } catch (e) {
         return next(e)

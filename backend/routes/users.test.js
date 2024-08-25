@@ -971,7 +971,7 @@ describe('/POST /users/:username/intolerances/:intoleranceId', () => {
         const resp = await request(app)
             .post(`/users/u1/intolerances/1`)
             .set("authorization", `Bearer ${adminToken}`);
-        expect(resp.body).toEqual(true)
+        expect(resp.body).toEqual({username:userIntoleranceAdded.username , intolerances: userIntoleranceAdded.intolerances})
 
         const dataCheck = await User.getWithCacheAndIntolerances('u1')
         expect(dataCheck).toEqual(userIntoleranceAdded)
@@ -1008,7 +1008,7 @@ describe('/POST /users/:username/intolerances/:intoleranceId', () => {
         const resp = await request(app)
             .post(`/users/u1/intolerances/1`)
             .set("authorization", `Bearer ${u1Token}`);
-        expect(resp.body).toEqual(true)
+        expect(resp.body).toEqual({username:userIntoleranceAdded.username , intolerances: userIntoleranceAdded.intolerances})
 
         const dataCheck = await User.getWithCacheAndIntolerances('u1')
         expect(dataCheck).toEqual(userIntoleranceAdded)
@@ -1109,7 +1109,7 @@ describe('/DELETE /users/:username/intolerances/:intoleranceId', () => {
         const resp = await request(app)
             .delete(`/users/u1/intolerances/2`)
             .set("authorization", `Bearer ${adminToken}`);
-        expect(resp.body).toEqual(true)
+        expect(resp.body).toEqual({username:userIntoleranceDeleted.username , intolerances: userIntoleranceDeleted.intolerances})
 
         const dataCheck = await User.getWithCacheAndIntolerances('u1')
         expect(dataCheck).toEqual(userIntoleranceDeleted)
@@ -1156,7 +1156,7 @@ describe('/DELETE /users/:username/intolerances/:intoleranceId', () => {
         const resp = await request(app)
             .delete(`/users/u1/intolerances/2`)
             .set("authorization", `Bearer ${u1Token}`);
-        expect(resp.body).toEqual(true)
+        expect(resp.body).toEqual({username:userIntoleranceDeleted.username , intolerances: userIntoleranceDeleted.intolerances})
 
         const dataCheck = await User.getWithCacheAndIntolerances('u1')
         expect(dataCheck).toEqual(userIntoleranceDeleted)
