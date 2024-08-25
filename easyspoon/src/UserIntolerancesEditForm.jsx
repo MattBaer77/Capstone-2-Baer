@@ -16,7 +16,7 @@ const UserIntolerancesEditForm = () => {
     const [intolerancesAll, setIntolerancesAll] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const [formData, setFormData] = useState([])
+    const [formData, setFormData] = useState(currentUser ? [...currentUser.intolerances] : [])
     const [success, toggleSuccess] = useState(null)
     const [error, setError] = useState(null)
 
@@ -35,7 +35,7 @@ const UserIntolerancesEditForm = () => {
                 const {intolerances} = await EasySpoonAPI.getIntolerancesAll();
 
                 setIntolerancesAll([...intolerances])
-                setFormData([...currentUser.intolerances])
+                // setFormData([...currentUser.intolerances])
                 setIsLoading(false)
 
             } catch (e) {
@@ -48,7 +48,7 @@ const UserIntolerancesEditForm = () => {
 
         getIntolerancesAllList();
 
-    }, [currentUser]);
+    }, []);
 
     const handleToggle = async (e) => {
 
@@ -57,14 +57,33 @@ const UserIntolerancesEditForm = () => {
         try {
 
             const { id, checked } = e.target;
+            let res;
+
             if (checked) {
-                await currentUser.userApi.addUserIntolerance(currentUser.username, id);
+                res = await currentUser.userApi.addUserIntolerance(currentUser.username, id);
             } else {
-                await currentUser.userApi.deleteUserIntolerance(currentUser.username, id);
+                res = await currentUser.userApi.deleteUserIntolerance(currentUser.username, id);
             }
             setError(null)
-            toggleSuccess("User info updated.")
-            await loadUser(currentUser.token);
+
+            // DO NOT FULLY RELOAD USER
+            // await loadUser(currentUser.token);
+
+            // INSTEAD - INDIVIDUAL SIDE EFFECTS
+            // Update currentUser.intolerances
+            console.log(res)
+            currentUser.intolerances = res.intolerances
+            console.log(currentUser.intolerances)
+            setFormData(currentUser.intolerances)
+
+            // Update currentUser.cache
+            const cache = await currentUser.userApi.getUserCacheOnly(currentUser.username)
+            console.log(cache)
+            currentUser.cache = cache
+
+            // CHECK USER -
+            // console.log("NEW CURRENT USER-")
+            // console.log(currentUser)
 
             setIsLoading(false)
 
