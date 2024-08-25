@@ -130,7 +130,7 @@ class LoggedInUser {
         lastName:"fauxLastName",
         email:"fauxEmail@email.com",
 
-        instolerances:[
+        intolerances:[
             intolerance,
         ],
 
