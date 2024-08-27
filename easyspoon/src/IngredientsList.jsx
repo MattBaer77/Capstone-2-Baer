@@ -31,13 +31,14 @@ const IngredientsList = () => {
 
                 let ingredients = currentUser.cache.flatMap(r => r.extendedIngredients)
                 const ingredientsNoDuplicates = removeDuplicateById(ingredients)
+                const ingredientsNoDuplicatesTruncated = ingredientsNoDuplicates.slice(0,12) // LIMIT TO 12 TO MITIGATE RATE LIMITING
 
-                for(let ingredient of ingredientsNoDuplicates) {
+                for(let ingredient of ingredientsNoDuplicatesTruncated) {
                     ingredient.amount = null
                     ingredient.unit = null
                 }
 
-                setIngredients([...ingredientsNoDuplicates])
+                setIngredients([...ingredientsNoDuplicatesTruncated])
                 setIsLoading(false);
 
             } catch (e) {

@@ -66,7 +66,25 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
 
             const res = await currentUser.userApi.patchAmountIngredientOnGroceryList(currentGroceryList.id, ingredient.ingredientId, ingredientData)
             // console.log(res)
+
+            // DO NOT FULLY RELOAD USER
             await loadUser(currentUser.token)
+
+            // INSTEAD - INDIVIDUAL SIDE EFFECTS
+
+            // UPDATE ingredient
+
+            ingredient.amount = ingredientData.amount
+
+            // UPDATE currentGroceryList - MAY NOT NEED DUE TO REFERENCE TO "INGREDIENT"
+            // UPDATE currentUser.groceryLists - MAY NOT NEED DUE TO REFERENCE TO "INGREDIENT"
+            
+            console.log(ingredient)
+            console.log(ingredientData)
+            console.log(currentGroceryList)
+            console.log(currentUser)
+
+
             setError(null)
             setSuccess("Ingredient Successfully Updated")
             setIsLoading(false)

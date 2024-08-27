@@ -73,7 +73,7 @@ const IngredientDetail = () => {
 
         getIngredientAndDetail();
 
-    }, [currentGroceryList])
+    }, [ingredient])
 
     if (isLoading) {
         return (
