@@ -16,7 +16,7 @@ const UserProvider = ({children}) => {
 
     const loadUser = async (token) => {
 
-        // console.log("LOADING USER")
+        console.log("LOADING USER")
 
         try {
 

@@ -16,8 +16,24 @@ const IngredientCard = ({ingredient, currentUser, loadUser, currentGroceryList, 
 
         try {
 
+            console.log(ingredient)
+            console.log(ingredient.ingredientId)
+
             await currentUser.userApi.deleteIngredientOnGroceryList(groceryListId, ingredient.ingredientId)
-            await loadUser(currentUser.token)
+
+            console.log(currentGroceryList)
+            // await loadUser(currentUser.token)
+
+            console.log(currentGroceryList)
+
+            const updatedGroceryListIngredients = currentGroceryList.ingredients.filter(i => i.ingredientId !== ingredient.ingredientId)
+
+            console.log(updatedGroceryListIngredients)
+
+            currentGroceryList.ingredients = updatedGroceryListIngredients
+
+            console.log(currentGroceryList)
+
             setError(null)
             setIsLoading(false)
 

@@ -68,7 +68,7 @@ const IngredientEditForm = ({currentUser, loadUser, currentGroceryList, ingredie
             // console.log(res)
 
             // DO NOT FULLY RELOAD USER
-            await loadUser(currentUser.token)
+            // await loadUser(currentUser.token)
 
             // INSTEAD - INDIVIDUAL SIDE EFFECTS
 

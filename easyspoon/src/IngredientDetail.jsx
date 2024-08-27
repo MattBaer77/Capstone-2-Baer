@@ -34,7 +34,7 @@ const IngredientDetail = () => {
         async function getIngredientAndDetail() {
 
             // setIngredient(INITIAL_STATE)
-            // console.log("LOADING INGREDIENT")
+            console.log("LOADING INGREDIENT")
 
             let ingredientLoad;
             let possibleUnits;
@@ -73,7 +73,7 @@ const IngredientDetail = () => {
 
         getIngredientAndDetail();
 
-    }, [ingredient])
+    }, [JSON.stringify(currentGroceryList)])
 
     if (isLoading) {
         return (
